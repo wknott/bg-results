@@ -24,7 +24,8 @@ export default class ScoreInput extends Component {
       return (
         <tr>
             <td>
-                <select value={score.user || ''}
+                <select className="form-control"
+                value={score.user || ''}
                 onChange={this.onChangeUser}
                 >
                     <option value=""></option>
@@ -36,7 +37,8 @@ export default class ScoreInput extends Component {
                 </select>
             </td>
             <td>
-                <input value={score.points || ''}
+                <input className="form-control"
+                value={score.points || ''}
                 onChange={this.onChangePoints}
                 type="number"/>
             </td>

@@ -40,16 +40,15 @@ export default class ResultsList extends Component {
   render() {
     return (
     <div>
-        <h3>Logged Results</h3>
-        <table>
-            <thead>
+        <table className="table table-dark">
+            <thead className = "thead-dark">
                 <tr>
                     <th>Game</th>
                     <th>Date</th>
                     <th>Scores</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody className = "thead-light">
                 {this.resultsList()}
             </tbody>
         </table>

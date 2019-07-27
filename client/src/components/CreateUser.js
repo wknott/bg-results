@@ -27,14 +27,13 @@ export default class CreateUser extends Component {
     render() {
         return (
             <div>
-                <h3>Create new user</h3>
-                <form onSubmit={this.onSubmit}>
-                    <div>
-                        <label>Username: </label>
-                        <input type="text" required value={this.state.username} onChange={this.onChangeUsername} />
+                <form  onSubmit={this.onSubmit}>
+                    <div className="form-group">
+                        <input className="form-control" placeholder ='Username'
+                        type="text" required value={this.state.username} onChange={this.onChangeUsername} />
                     </div>
-                    <div>
-                        <input type="submit" value="Create User" />
+                    <div className="form-group">
+                        <input type="submit" value="Create User" className="btn btn-primary"/>
                     </div>
                 </form>
             </div>

@@ -13,7 +13,6 @@ function App() {
     <Router>
       <div className="container">
         <Navbar />
-        <br />
         <Route path="/" exact component={ResultsList} />
         <Route path="/user" exact component={CreateUser} />
         <Route path="/game" exact component={CreateGame} />

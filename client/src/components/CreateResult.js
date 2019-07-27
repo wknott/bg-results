@@ -25,6 +25,7 @@ export default class CreateResult extends Component {
 				if(games.length > 0){
 					this.setState({
 						games,
+						game: games[0],
 						numberOfPlayers: games[0].minPlayers,
 					})
 				}
@@ -73,8 +74,9 @@ export default class CreateResult extends Component {
 				method: 'POST',
 				body: JSON.stringify(result),
 				headers: { 'Content-Type': 'application/json' }
-			});
-			window.location = '/';
+			}).then(() => {
+			 	this.props.history.push('/');
+			 });
 	}
 
 	render() {
@@ -84,8 +86,9 @@ export default class CreateResult extends Component {
 		return (
 			<div>
 				<form onSubmit={this.onSubmit}>
-				<div>
-					<select value={this.state.game}
+				<div className="form-group">
+					<select className="form-control"
+						value={this.state.game}
 						onChange={this.onChangeGame}>
 						{this.state.games.map(game => (
 							<option key={game._id} value={game._id}>
@@ -94,18 +97,15 @@ export default class CreateResult extends Component {
 						))}
 					</select>
 				</div>
-				<div>
-					<input value={this.state.numberOfPlayers}
+				<div className="form-group">
+					<input className="form-control"
+						value={this.state.numberOfPlayers}
 						onChange={this.onChangeNumberOfPlayers}
 						type="number" min={game && game.minPlayers} max={game && game.maxPlayers} />
 				</div>
-				<div>
+				<div className="form-group">
 					<table>
-						<thead>
-							<tr>
-								<th>Players</th>
-								<th>Points</th>
-							</tr>
+						<thead className = "thead-dark">
 						</thead>
 						<tbody>
 							{scores.map((score, index) => (
@@ -125,8 +125,8 @@ export default class CreateResult extends Component {
 						</tbody>
 					</table>
 				</div>
-				<div>
-					<input type="submit" value="Create Result" />
+				<div className="form-group">
+					<input type="submit" value="Create Result" className="btn btn-primary"/>
 				</div>
 				</form>
 			</div>

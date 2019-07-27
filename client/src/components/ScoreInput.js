@@ -1,27 +1,21 @@
 import React, { Component } from 'react';
-// jesteś tu? tak tak
-//xd
-// będą zaraz ^^ 
 export default class ScoreInput extends Component {
   constructor(props) {
     super(props);
-    this.onChangeUserId = this.onChangeUserId.bind(this);
+    this.onChangeUser = this.onChangeUser.bind(this);
     this.onChangePoints = this.onChangePoints.bind(this);
   }
 
-  onChangeUserId(e) {
-    const { score, onChange } = this.props; //to dostajemy
-    const userId = e.target.value; // nowa wartosc
-    onChange({ ...score, userId }); // wywołujemy onChange które dostalismy z score, ale zaktulizowanym userId 
-    // onchagne z obslugi komponentu tak? nom to co tam wcześniej pisalismy okok
+  onChangeUser(e) {
+    const { score, onChange } = this.props; 
+    const user = e.target.value; 
+    onChange({ ...score, user }); 
   }
 
   onChangePoints(e) {
-    const { score, onChange } = this.props; //to dostajemy
-    const points = e.target.value; // nowa wartosc
+    const { score, onChange } = this.props; 
+    const points = e.target.value; 
     onChange({ ...score, points });
-    // to samo okej
-    // a jeszcze users trzeba przekazać
   }
 
     render() {
@@ -30,8 +24,8 @@ export default class ScoreInput extends Component {
       return (
         <tr>
             <td>
-                <select value={score.userId || ''}
-                onChange={this.onChangeUserId}
+                <select value={score.user || ''}
+                onChange={this.onChangeUser}
                 >
                     <option value=""></option>
                     {users.map(user => (

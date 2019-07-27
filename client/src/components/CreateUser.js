@@ -7,8 +7,8 @@ export default class CreateUser extends Component {
         this.onChangeUsername = this.onChangeUsername.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.state = { username: '' };
-    }    
-
+    }
+    
     onChangeUsername(e){
         this.setState({ username: e.target.value});
     }

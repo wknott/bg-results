@@ -15,7 +15,7 @@ router.route('/:id').get((req,res) => {
 router.route('/add').post((req,res) => {
     const gameId = req.body.gameId;
     const scores = req.body.scores;
-    const date = Date.parse(req.body.date);
+    const date = new Date();
 
     newResult = new Result({
         gameId,

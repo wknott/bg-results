@@ -6,7 +6,7 @@ const resultSchema = new Schema({
         userId: Schema.Types.ObjectId,
         points: Number
     }], required: true },
-    date: { type: Date, require: true },
+    date: { type: Date },
 });
 const Result = mongoose.model('Result', resultSchema);
 module.exports = Result;

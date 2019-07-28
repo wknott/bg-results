@@ -29,7 +29,7 @@ export default class CreateUser extends Component {
             <div>
                 <form  onSubmit={this.onSubmit}>
                     <div className="form-group">
-                        <input className="form-control" placeholder ='Username'
+                        <input className="form-control-lg" placeholder ='Username'
                         type="text" required value={this.state.username} onChange={this.onChangeUsername} />
                     </div>
                     <div className="form-group">

@@ -11,7 +11,7 @@ export default class CreateResult extends Component {
 		this.state = {
 			game: null,  
 			scores: [],
-			numberOfPlayers: 0, 
+			numberOfPlayers: '', 
 			games: [],
 			users: [],
 		}
@@ -26,7 +26,6 @@ export default class CreateResult extends Component {
 					this.setState({
 						games,
 						game: games[0],
-						numberOfPlayers: games[0].minPlayers,
 					})
 				}
 				this.initializeScores(games[0].minPlayers);
@@ -52,10 +51,11 @@ export default class CreateResult extends Component {
 	}
 
 	initializeScores(length) {
-		const scores = Array.from({ length }, () => ({
+		const emptyScores = Array.from({ length }, () => ({
 			user: null,
 			points: null,
 		}));
+		const scores = this.state.scores.concat(emptyScores).slice(0, length);
 		this.setState({ scores });
 	}
 	
@@ -87,9 +87,10 @@ export default class CreateResult extends Component {
 			<div>
 				<form onSubmit={this.onSubmit}>
 				<div className="form-group">
-					<select className="form-control"
+					<select className="form-control form-control-lg"
 						value={this.state.game}
 						onChange={this.onChangeGame}>
+						<option value="">Select game</option>
 						{this.state.games.map(game => (
 							<option key={game._id} value={game._id}>
 							{game.name}
@@ -98,7 +99,8 @@ export default class CreateResult extends Component {
 					</select>
 				</div>
 				<div className="form-group">
-					<input className="form-control"
+					<input className="form-control form-control-lg"
+						placeholder='Number of Players'
 						value={this.state.numberOfPlayers}
 						onChange={this.onChangeNumberOfPlayers}
 						type="number" min={game && game.minPlayers} max={game && game.maxPlayers} />

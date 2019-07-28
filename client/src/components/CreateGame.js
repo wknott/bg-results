@@ -39,16 +39,16 @@ export default class CreateGame extends Component {
             <div>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
-                        <input className="form-control"  placeholder="Name"
+                        <input className="form-control-lg"  placeholder="Name"
                         type="text" required value={this.state.name} onChange={this.onChangeName} />
                     </div>
                     <div className="form-group">
-                        <input className="form-control" placeholder="Minimum number of players"
-                         type="text" required value={this.state.minPlayers} onChange={this.onChangeMinPlayers} />
+                        <input className="form-control-lg" placeholder="Min number of players"
+                         type="number" required value={this.state.minPlayers} onChange={this.onChangeMinPlayers} />
                     </div>
                     <div className="form-group">
-                        <input className="form-control" placeholder="Maximum number of players"
-                        type="text" required value={this.state.maxPlayers} onChange={this.onChangeMaxPlayers} />
+                        <input className="form-control-lg" placeholder="Max number of players"
+                        type="number" required value={this.state.maxPlayers} onChange={this.onChangeMaxPlayers} />
                     </div>
                     <div className="form-group">
                         <input type="submit" value="Create Game" className="btn btn-primary"/>

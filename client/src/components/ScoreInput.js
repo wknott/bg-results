@@ -28,7 +28,7 @@ export default class ScoreInput extends Component {
                 value={score.user || ''}
                 onChange={this.onChangeUser}
                 >
-                    <option value=""></option>
+                    <option value="">Player</option>
                     {users.map(user => (
                         <option key={user._id} value={user._id}>
                           {user.username}
@@ -37,7 +37,8 @@ export default class ScoreInput extends Component {
                 </select>
             </td>
             <td>
-                <input className="form-control"
+                <input placeholder='Points'
+                className="form-control"
                 value={score.points || ''}
                 onChange={this.onChangePoints}
                 type="number"/>

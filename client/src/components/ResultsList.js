@@ -32,7 +32,7 @@ export default class ResultsList extends Component {
   };
 
   resultsList(){
-    return this.state.results.map(currentresult => {
+    return this.state.results.slice(0).reverse().map(currentresult => {
       return <Result result={currentresult} key={currentresult._id}/>;
     })
   }

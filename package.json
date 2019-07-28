@@ -20,7 +20,7 @@
   "homepage": "https://github.com/wknott/bg-results#readme",
   "scripts": {
     "postinstall": "npm install --prefix client && npm install --prefix server",
-    "build": "npm build --prefix client",
+    "build": "npm run build --prefix client",
     "start": "node server/index.js"
   }
 }

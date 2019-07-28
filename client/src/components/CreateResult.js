@@ -18,7 +18,7 @@ export default class CreateResult extends Component {
 	}
 
 	componentDidMount() {
-		fetch('http://localhost:5000/games/')
+		fetch(' /games/')
 			.then(response => response.json())
 			.then(data => {
 				const games = data;
@@ -31,7 +31,7 @@ export default class CreateResult extends Component {
 				this.initializeScores(games[0].minPlayers);
 			});
 
-		fetch('http://localhost:5000/users/')
+		fetch(' /users/')
 			.then(response => response.json())
 			.then(data => {
 				if(data.length > 0){
@@ -70,7 +70,7 @@ export default class CreateResult extends Component {
 		const {game, scores} = this.state;
 		const result = { game, scores };
 		console.log(result);
-		fetch('http://localhost:5000/results/add', {
+		fetch(' /results/add', {
 				method: 'POST',
 				body: JSON.stringify(result),
 				headers: { 'Content-Type': 'application/json' }

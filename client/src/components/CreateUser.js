@@ -16,7 +16,7 @@ export default class CreateUser extends Component {
         e.preventDefault();
         const user = { username: this.state.username,}
         console.log(user);
-        fetch('http://localhost:5000/users/add', {
+        fetch(' /users/add', {
             method: 'POST',
             body: JSON.stringify(user),
             headers: { 'Content-type': 'application/json'}

@@ -22,7 +22,7 @@ export default class ResultsList extends Component {
   }
   
   componentDidMount() {
-    fetch('http://localhost:5000/results/')
+    fetch(' /results/')
       .then(response => response.json())
       .then(data => {
         if(data.length > 0) {

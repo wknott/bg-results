@@ -26,7 +26,7 @@ export default class CreateGame extends Component {
         e.preventDefault();
         const game = { name: this.state.name, minPlayers: this.state.minPlayers, maxPlayers: this.state.maxPlayers}
         console.log(game);
-        fetch('http://localhost:5000/games/add',{
+        fetch(' /games/add',{
             method: 'POST',
             body: JSON.stringify(game),
             headers: {'Content-type':  'application/json'}

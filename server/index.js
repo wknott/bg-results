@@ -12,7 +12,7 @@ app.listen(port, () =>{
     console.log(`Server is running on port: ${port}`);
 });
 
-mongoose.connect('mongodb://localhost:27017/bgresults', { useNewUrlParser: true, useCreateIndex: true } );
+mongoose.connect('mongodb+srv://Wojtek:UfwE0T6hKcZRkRNT@cluster0-oym6e.gcp.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true, useCreateIndex: true } );
 const dbConnection = mongoose.connection;
 dbConnection.on('error', console.error.bind(console, 'connection error:'));
 dbConnection.once('open', () => {

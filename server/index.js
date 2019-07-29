@@ -4,6 +4,11 @@ const mongoose = require('mongoose');
 const path = require('path');
 
 const app = express();
+if(process.env.NODE_ENV === 'production') {
+  app.use((req, res, next) => {
+    req.headers['x-forwarded-proto'] === 'https' ? next() : res.redirect(`https://${req.headers.host}${req.originalUrl}`);
+  });
+}
 const port = process.env.PORT || 5000;
 const dbUrl = process.env.MONGO_URL || 'mongodb://localhost:27017/bgresults';
 app.use(cors());

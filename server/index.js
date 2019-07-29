@@ -5,11 +5,11 @@ const path = require('path');
 
 const app = express();
 const port = process.env.PORT || 5000;
-
+const dbUrl = process.env.MONGO_URL || 'mongodb://localhost:27017/bgresults';
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect('mongodb+srv://Wojtek:UfwE0T6hKcZRkRNT@cluster0-oym6e.gcp.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true, useCreateIndex: true } );
+mongoose.connect(dbUrl, { useNewUrlParser: true, useCreateIndex: true } );
 const dbConnection = mongoose.connection;
 dbConnection.on('error', console.error.bind(console, 'connection error:'));
 dbConnection.once('open', () => {

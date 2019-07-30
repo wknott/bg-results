@@ -16,6 +16,14 @@ router.route('/:id').get((req,res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/game/:id').get((req,res) => {
+    Result.find({game: req.params.id})
+    .populate('game')
+    .populate({path: 'scores.user'})
+    .then(result => res.json(result))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
 router.route('/add').post((req,res) => {
     const game = req.body.game;
     const scores = req.body.scores;

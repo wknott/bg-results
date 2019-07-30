@@ -26,7 +26,7 @@ export default class CreateGame extends Component {
     onSubmit(e){
         e.preventDefault();
         const game = { name: this.state.name, minPlayers: this.state.minPlayers, maxPlayers: this.state.maxPlayers}
-        console.log(game);
+        //console.log(game);
         fetch(' /games/add',{
             method: 'POST',
             body: JSON.stringify(game),

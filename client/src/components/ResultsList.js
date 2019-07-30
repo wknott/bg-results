@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import { Alert, Spinner, Table, Button, Form } from 'react-bootstrap';
+import { Alert, Spinner, Table, Form } from 'react-bootstrap';
 
 const Result = props => {
   const {game,scores} = props.result;
   const score = scores.map(score => {
   return (score.user.username + ': ' + score.points + ' ' )});
   return (<tr>
-    <td onClick={props.onClick } style={{ cursor: 'pointer' }}>{game.name}</td>
+    <td>{game.name}</td>
     <td>{props.result.date.substring(0,10)}</td>
     <td>{score}</td>
   </tr>)
@@ -15,6 +15,7 @@ const Result = props => {
 export default class ResultsList extends Component {
   constructor(props) {
     super(props);
+    this.onChangeId = this.onChangeId.bind(this);
     this.state = {
       games: [],
       results: null,
@@ -23,7 +24,6 @@ export default class ResultsList extends Component {
   }
   
   componentDidMount() {
-    console.log('przeladowanie');
     fetch('/results/')
       .then(response => response.json())
       .then(data => {
@@ -37,26 +37,29 @@ export default class ResultsList extends Component {
 				this.setState({games});
       });
     };
-
-  onGame(){
-    fetch('/results/')
+  
+  onChangeId(e){
+    
+    if(e.target.value.length > 1){
+    this.setState({id: e.target.value})
+    fetch('/results/game/' + e.target.value)
+      .then(response => response.json())
+      .then( data => {
+          this.setState({results: data});
+      });}
+      else {
+      this.setState({id: ''})
+        fetch('/results/')
       .then(response => response.json())
       .then(data => {
           this.setState({results: data});
       });
-  }
-  
-  onChangeId(e){
-    fetch('/results/game/' + e)
-      .then(response => response.json())
-      .then( data => {
-          this.setState({results: data});
-      });
+      }
   }
 
   resultsList(){
     return this.state.results.slice(0).reverse().map(currentresult => {
-      return <Result onClick={() => this.onChangeId(currentresult.game._id)} result={currentresult} key={currentresult._id}/>
+      return <Result result={currentresult} key={currentresult._id}/>
     })
   }
 
@@ -70,16 +73,29 @@ export default class ResultsList extends Component {
     else if (this.state.results.length === 0){
       return (
         <Alert key='index' variant='primary'>
-          <Alert.Link href="/result" > Create result</Alert.Link>
+          <Alert.Link href="/result" > Create result </Alert.Link>of this game!
         </Alert> 
       )}
     else {
     return (
-        
+        <div>
+        <Form>
+          <Form.Group>
+            <Form.Control as="select"
+              value={this.state.id||''}
+              onChange={this.onChangeId}>
+              <option value="">All games</option>
+              {this.state.games.map(game => (
+                <option key={game._id} value={game._id}>
+                {game.name}
+                </option>
+              ))}></Form.Control>
+          </Form.Group>
+        </Form>
         <Table striped bordered hover variant="dark">
               <thead>
                   <tr>
-                      <th onClick={() => this.onGame()} style={{ cursor: 'pointer' }}>Game</th>
+                      <th>Game</th>
                       <th>Date</th>
                       <th>Scores</th>
                   </tr>
@@ -89,6 +105,7 @@ export default class ResultsList extends Component {
                   {this.resultsList()}
               </tbody>
           </Table>
+        </div>
     )}
   }
 }

@@ -82,7 +82,6 @@ export default class CreateResult extends Component {
 
 	render() {
 		const { games, scores } = this.state;
-		console.log(games);
 		if (games === null) {
 				return (<Spinner animation="border" variant="light" />)
 		}

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Form, Button } from 'react-bootstrap';
 
 export default class CreateUser extends Component {
     constructor(props){
@@ -26,17 +27,13 @@ export default class CreateUser extends Component {
 
     render() {
         return (
-            <div>
-                <form  onSubmit={this.onSubmit}>
-                    <div className="form-group">
-                        <input className="form-control-lg" placeholder ='Username'
-                        type="text" required value={this.state.username} onChange={this.onChangeUsername} />
-                    </div>
-                    <div className="form-group">
-                        <input type="submit" value="Create User" className="btn btn-primary"/>
-                    </div>
-                </form>
-            </div>
+            <Form onSubmit={this.onSubmit}>
+                <Form.Group>
+                    <Form.Control placeholder = "Username"
+                     type="text" required value={this.state.username} onChange={this.onChangeUsername} />
+                </Form.Group>
+                <Button type="submit" variant="primary">Create User</Button>
+            </Form>
         )
     }
 

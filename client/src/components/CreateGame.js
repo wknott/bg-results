@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Form,Button} from 'react-bootstrap';
 
 export default class CreateGame extends Component {
     constructor(props){
@@ -36,25 +37,21 @@ export default class CreateGame extends Component {
 
     render() {
         return (
-            <div>
-                <form onSubmit={this.onSubmit}>
-                    <div className="form-group">
-                        <input className="form-control-lg"  placeholder="Name"
+                <Form onSubmit={this.onSubmit}>
+                    <Form.Group>
+                        <Form.Control placeholder="Name"
                         type="text" required value={this.state.name} onChange={this.onChangeName} />
-                    </div>
-                    <div className="form-group">
-                        <input className="form-control-lg" placeholder="Min number of players"
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Control placeholder="Min number of players"
                          type="number" required value={this.state.minPlayers} onChange={this.onChangeMinPlayers} />
-                    </div>
-                    <div className="form-group">
-                        <input className="form-control-lg" placeholder="Max number of players"
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Control placeholder="Max number of players"
                         type="number" required value={this.state.maxPlayers} onChange={this.onChangeMaxPlayers} />
-                    </div>
-                    <div className="form-group">
-                        <input type="submit" value="Create Game" className="btn btn-primary"/>
-                    </div>
-                </form>
-            </div>
+                    </Form.Group>
+                    <Button variant='primary' type="submit">Create Game</Button>
+                </Form>
         )
     }
 

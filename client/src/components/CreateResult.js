@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import ScoreInput from './ScoreInput';
+import { Alert, Form, Spinner, Button } from 'react-bootstrap';
 
 export default class CreateResult extends Component {
 	constructor(props){
@@ -12,7 +13,7 @@ export default class CreateResult extends Component {
 			game: null,  
 			scores: [],
 			numberOfPlayers: '', 
-			games: [],
+			games: null,
 			users: [],
 		}
 	}
@@ -22,13 +23,13 @@ export default class CreateResult extends Component {
 			.then(response => response.json())
 			.then(data => {
 				const games = data;
+				this.setState({games});
 				if(games.length > 0){
 					this.setState({
-						games,
 						game: games[0],
 					})
-				}
 				this.initializeScores(games[0].minPlayers);
+			}
 			});
 
 		fetch(' /users/')
@@ -64,7 +65,7 @@ export default class CreateResult extends Component {
 		this.setState({ numberOfPlayers });
 		this.initializeScores(numberOfPlayers);
 	}
-
+	
 	onSubmit(e){
 		e.preventDefault();
 		const {game, scores} = this.state;
@@ -81,31 +82,40 @@ export default class CreateResult extends Component {
 
 	render() {
 		const { games, scores } = this.state;
+		console.log(games);
+		if (games === null) {
+				return (<Spinner animation="border" variant="light" />)
+		}
+		else if (games.length === 0){
+				return (
+						<Alert key='index' variant='primary'>
+							<Alert.Link href="/game" > Create game </Alert.Link>
+							before you add the result!
+						</Alert> 
+					)}
+		else {
 		const game = games.find(game => game._id === this.state.game);
-		if (games.length === 0) return "Loading";
 		return (
-			<div>
-				<form onSubmit={this.onSubmit}>
-				<div className="form-group">
-					<select className="form-control form-control-lg"
-						value={this.state.game}
-						onChange={this.onChangeGame}>
-						<option value="">Select game</option>
-						{this.state.games.map(game => (
-							<option key={game._id} value={game._id}>
-							{game.name}
-							</option>
-						))}
-					</select>
-				</div>
-				<div className="form-group">
-					<input className="form-control form-control-lg"
+				<Form onSubmit={this.onSubmit}>
+					<Form.Group>
+						<Form.Control as="select"
+							value={this.state.game}
+							onChange={this.onChangeGame}>
+							<option value="">Select game</option>
+							{this.state.games.map(game => (
+								<option key={game._id} value={game._id}>
+								{game.name}
+								</option>
+							))}></Form.Control>
+					</Form.Group>
+					<Form.Group>
+					<Form.Control
 						placeholder='Number of Players'
 						value={this.state.numberOfPlayers}
 						onChange={this.onChangeNumberOfPlayers}
 						type="number" min={game && game.minPlayers} max={game && game.maxPlayers} />
-				</div>
-				<div className="form-group">
+					</Form.Group>
+					<Form.Group>
 					<table>
 						<thead className = "thead-dark">
 						</thead>
@@ -126,14 +136,10 @@ export default class CreateResult extends Component {
 							))}
 						</tbody>
 					</table>
-				</div>
-				<div className="form-group">
-					<input type="submit" value="Create Result" className="btn btn-primary"/>
-				</div>
-				</form>
-			</div>
-				
-		)
+				</Form.Group>
+					<Button type="submit" variant="primary"> Create Result </Button>
+				</Form>		
+		)}
 	}
 }
 

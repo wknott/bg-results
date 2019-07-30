@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Alert, Spinner, Table } from 'react-bootstrap';
 
 const Result = props => {
   const {game,scores} = props.result;
@@ -15,19 +16,17 @@ export default class ResultsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      results: [],
+      results: null,
       games: [],
       users: [] };
       
   }
   
   componentDidMount() {
-    fetch(' /results/')
+    fetch('/results/')
       .then(response => response.json())
       .then(data => {
-        if(data.length > 0) {
           this.setState({results: data});
-        }
       });
   };
 
@@ -38,21 +37,33 @@ export default class ResultsList extends Component {
   }
 
   render() {
+    if (this.state.results === null) {
+      return(
+        <Spinner animation="border" variant="light" />
+      )
+    }
+    else if (this.state.results.length === 0){
+      return (
+        <Alert key='index' variant='primary'>
+          <Alert.Link href="/result" > Create result</Alert.Link>
+        </Alert> 
+      )}
+    else {
     return (
     <div>
-        <table className="table table-dark">
-            <thead className = "thead-dark">
+      <Table striped bordered hover variant="dark">
+            <thead>
                 <tr>
                     <th>Game</th>
                     <th>Date</th>
                     <th>Scores</th>
                 </tr>
             </thead>
-            <tbody className = "thead-light">
+            <tbody>
                 {this.resultsList()}
             </tbody>
-        </table>
+        </Table>
     </div>
-    );
+    )}
   }
 }

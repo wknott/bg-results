@@ -25,3 +25,7 @@
 Route{
   padding-right: 1rem;
 }
+
+.table-hover .table-dark:hover{
+  background-color: #007bff;
+}

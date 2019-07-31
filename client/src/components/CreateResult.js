@@ -28,7 +28,7 @@ export default class CreateResult extends Component {
 					this.setState({
 						game: games[0],
 					})
-				this.initializeScores(games[0].minPlayers);
+				// this.initializeScores(games[0].minPlayers);
 			}
 			});
 
@@ -62,6 +62,9 @@ export default class CreateResult extends Component {
 	
 	onChangeNumberOfPlayers(e){
 		const numberOfPlayers = e.target.value;
+		const game = this.state.games.find(game => game._id === this.state.game);
+		const { minPlayers, maxPlayers } = game;
+		if (numberOfPlayers > maxPlayers || numberOfPlayers < minPlayers) return;
 		this.setState({ numberOfPlayers });
 		this.initializeScores(numberOfPlayers);
 	}
@@ -97,7 +100,7 @@ export default class CreateResult extends Component {
 				<Form onSubmit={this.onSubmit}>
 					<Form.Group>
 						<Form.Control as="select"
-							value={this.state.game}
+							value={this.state.game || ''}
 							onChange={this.onChangeGame}>
 							<option value="">Select game</option>
 							{this.state.games.map(game => (
@@ -111,6 +114,7 @@ export default class CreateResult extends Component {
 						placeholder='Number of Players'
 						value={this.state.numberOfPlayers}
 						onChange={this.onChangeNumberOfPlayers}
+						disabled={!game}
 						type="number" min={game && game.minPlayers} max={game && game.maxPlayers} />
 					</Form.Group>
 					<Form.Group>

@@ -1,12 +1,12 @@
 import React from 'react';
-import {BrowserRouter as Router, Route } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-import CreateUser from "./components/CreateUser";
-import CreateGame from "./components/CreateGame";
-import CreateResult from "./components/CreateResult";
-import ResultsList from "./components/ResultsList";
-import Navbar from "./components/Navbar";
+import CreateUser from './components/CreateUser';
+import CreateGame from './components/CreateGame';
+import CreateResult from './components/CreateResult';
+import ResultsList from './components/ResultsList';
+import Navbar from './components/Navbar';
 
 function App() {
   return (

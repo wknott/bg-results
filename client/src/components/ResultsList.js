@@ -2,13 +2,38 @@ import React, {Component} from 'react';
 import { Alert, Spinner, Table, Form } from 'react-bootstrap';
 
 const Result = props => {
+  
   const {game,scores} = props.result;
-  const score = scores.map(score => {
-  return (score.user.username + ': ' + score.points + ' ' )});
+  function compare(a,b) {
+    const pointsA = a.points;
+    const pointsB = b.points;
+    let comparison = 0;
+    if(pointsA>pointsB) comparison = -1;
+    else if(pointsA<pointsB) comparison = 1;
+    return comparison;
+  }
+  const sortedScores=scores.sort(compare);
+  const places = [1];
+  for(let i=1;i<sortedScores.length;i++)
+  {
+    if(sortedScores[i].points === sortedScores[i-1].points) places[i]=places[i-1];
+    else places[i]=i+1;
+  }
+  const score = sortedScores.map((score,index) => {
+  return (
+    <tr>
+      <td>{places[index]}</td>
+      <td>{score.user.username}</td> 
+      <td>{score.points}</td>
+    </tr>
+    )
+  });
   return (<tr>
     <td>{game.name}</td>
     <td>{props.result.date.substring(0,10)}</td>
-    <td>{score}</td>
+    <td>
+      {score}
+    </td>
   </tr>)
 }
 
@@ -62,8 +87,8 @@ export default class ResultsList extends Component {
       return <Result result={currentresult} key={currentresult._id}/>
     })
   }
-
-  
+    
+    
   render() {
     if (this.state.results === null) {
       return(
@@ -101,7 +126,6 @@ export default class ResultsList extends Component {
                   </tr>
               </thead>
               <tbody>
-                
                   {this.resultsList()}
               </tbody>
           </Table>

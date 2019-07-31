@@ -70,7 +70,6 @@ export default class CreateResult extends Component {
 		e.preventDefault();
 		const {game, scores} = this.state;
 		const result = { game, scores };
-		console.log(result);
 		fetch(' /results/add', {
 				method: 'POST',
 				body: JSON.stringify(result),
@@ -128,7 +127,6 @@ export default class CreateResult extends Component {
 										const newScores = scores.map(
 											s => s === score ? updatedScore : s
 										);
-										console.log(newScores)
 										this.setState({ scores: newScores });
 									}}
 								/>

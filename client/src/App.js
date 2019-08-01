@@ -7,6 +7,7 @@ import CreateGame from './components/CreateGame';
 import CreateResult from './components/CreateResult';
 import ResultsList from './components/ResultsList';
 import Navbar from './components/Navbar';
+import GameStatistics from './components/GameStatistics';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/user" exact component={CreateUser} />
         <Route path="/game" exact component={CreateGame} />
         <Route path="/result" exact component={CreateResult} />
+        <Route path="/gamestats" exact component={GameStatistics} />
       </div>
     </Router>
   );

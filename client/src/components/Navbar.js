@@ -25,6 +25,11 @@ export default class Navbar extends Component {
                 Create game
               </Link>
             </li>
+            <li className="navbar-item">
+              <Link to="/gamestats" className="nav-link">
+                Games
+              </Link>
+            </li>
           </ul>
         </div>
       </nav>

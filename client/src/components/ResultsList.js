@@ -79,10 +79,11 @@ export default class ResultsList extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.location.key !== this.props.location.key) {
-      this.loadGames();
+      this.loadAllResults();
     }
   }
-  loadGames() {
+
+  loadAllResults() {
     fetch('/results/')
       .then(response => response.json())
       .then(data => {
@@ -91,11 +92,7 @@ export default class ResultsList extends Component {
   }
 
   componentDidMount() {
-    fetch('/results/')
-      .then(response => response.json())
-      .then(data => {
-        this.setState({ results: data });
-      });
+    this.loadAllResults();
 
     fetch('/games/')
       .then(response => response.json())

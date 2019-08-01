@@ -28,7 +28,6 @@ export default class CreateResult extends Component {
           this.setState({
             game: games[0]
           });
-          // this.initializeScores(games[0].minPlayers);
         }
       });
 
@@ -80,6 +79,19 @@ export default class CreateResult extends Component {
     }).then(() => {
       this.props.history.push('/');
     });
+  }
+
+  isValid() {
+    for (const score of this.state.scores) {
+      if (
+        score.user === null ||
+        score.points === null ||
+        score.user === '' ||
+        score.points === ''
+      )
+        return false;
+    }
+    return true;
   }
 
   render() {
@@ -143,7 +155,11 @@ export default class CreateResult extends Component {
               </tbody>
             </table>
           </Form.Group>
-          <Button type="submit" variant="primary">
+          <Button
+            type="submit"
+            disabled={!game || !this.state.numberOfPlayers || !this.isValid()}
+            variant="primary"
+          >
             {' '}
             Create Result{' '}
           </Button>

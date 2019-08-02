@@ -1,23 +1,26 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Alert,
   Spinner,
   Card,
   Button,
   CardColumns,
-  CardGroup,
-  CardDeck
+  Table,
+  ButtonGroup
 } from 'react-bootstrap';
 import CountUp from 'react-countup';
+
+import { numberOfGames, winnerList } from '../logic/game-statistics';
 
 export default class GameStatistics extends Component {
   constructor(props) {
     super(props);
-    this.numberOfGames = this.numberOfGames.bind(this);
     this.state = {
       games: null,
       results: [],
-      id: null
+      id: null,
+      showButtons: false
     };
   }
 
@@ -34,44 +37,6 @@ export default class GameStatistics extends Component {
         const results = data;
         this.setState({ results });
       });
-  }
-
-  numberOfGames(game) {
-    let count = 0;
-    for (let result of this.state.results)
-      if (result.game._id === game._id) count++;
-    return count;
-  }
-  setWinners(result) {
-    const { scores } = result;
-    const sortedScores = scores.slice().sort((a, b) => b.points - a.points);
-    const winner = [sortedScores[0].user.username];
-    for (let i = 1; i < sortedScores.length; i++) {
-      if (sortedScores[i].points === sortedScores[0].points) {
-        winner[i] = sortedScores[i].user.username;
-      }
-    }
-    return winner;
-  }
-  winnerList(game) {
-    const listOfWinners = [{ name: null, numberOfWins: null }];
-    for (let result of this.state.results) {
-      if (result.game._id === game._id) {
-        const winners = this.setWinners(result);
-        for (let winner of winners) {
-          const indexOfWinner = listOfWinners.findIndex(
-            win => win.name === winner
-          );
-          console.log(indexOfWinner);
-          if (indexOfWinner === -1) {
-            listOfWinners.push({ name: winner, numberOfWins: 1 });
-          } else listOfWinners[indexOfWinner].numberOfWins++;
-        }
-      }
-    }
-    return listOfWinners
-      .slice()
-      .sort((a, b) => b.numberOfWins - a.numberOfWins);
   }
 
   render() {
@@ -96,19 +61,78 @@ export default class GameStatistics extends Component {
                     <Card.Title as="h3">{game.name}</Card.Title>
                     <Card.Text as="h5">
                       Games Played:{' '}
-                      <CountUp end={this.numberOfGames(game)} duration={2} />
+                      <CountUp
+                        end={numberOfGames(game, this.state.results)}
+                        duration={2}
+                      />
                     </Card.Text>
-                    <Card.Text as="h6">
-                      Winners:
-                      {this.winnerList(game).map(winner => {
-                        return (
-                          <div key={winner.name}>
-                            {winner.name} {winner.numberOfWins}
-                          </div>
-                        );
-                      })}
-                    </Card.Text>
-                    <Button variant="primary">Create results</Button>
+                    <Table hover striped bordered variant="dark">
+                      <thead>
+                        <tr>
+                          <td>Name</td>
+                          <td>Wins</td>
+                          <td>Games</td>
+                          <td>%</td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {winnerList(game, this.state.results).map(winner => {
+                          return (
+                            <tr key={winner.name}>
+                              <td>{winner.name}</td>
+                              <td>{winner.numberOfWins}</td>
+                              <td>{winner.numberOfGames}</td>
+                              <td>
+                                {Math.floor(
+                                  (winner.numberOfWins / winner.numberOfGames) *
+                                    100
+                                )}
+                                %
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </Table>
+                    <div className="d-flex flex-column">
+                      <Button
+                        onClick={() =>
+                          this.setState({
+                            showButtons:
+                              this.state.showButtons === game._id
+                                ? null
+                                : game._id
+                          })
+                        }
+                        variant="primary"
+                      >
+                        Create result
+                      </Button>
+                      {this.state.showButtons === game._id && (
+                        <ButtonGroup size="lg">
+                          {Array.from(
+                            {
+                              length: game.maxPlayers - game.minPlayers + 1
+                            },
+                            (_, index) => (
+                              <Button
+                                key={index}
+                                as={Link}
+                                to={{
+                                  pathname: '/result',
+                                  state: {
+                                    gameId: game._id,
+                                    numberOfPlayers: game.minPlayers + index
+                                  }
+                                }}
+                              >
+                                {game.minPlayers + index}
+                              </Button>
+                            )
+                          )}
+                        </ButtonGroup>
+                      )}
+                    </div>
                   </Card.Body>
                 </Card>
               );

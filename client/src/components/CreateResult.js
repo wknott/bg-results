@@ -16,6 +16,14 @@ export default class CreateResult extends Component {
       games: null,
       users: []
     };
+    const {
+      location: { state }
+    } = props;
+    if (state) {
+      this.state.game = state.gameId;
+      this.state.numberOfPlayers = state.numberOfPlayers;
+      this.state.scores = this.initializeScores(state.numberOfPlayers);
+    }
   }
 
   componentDidMount() {
@@ -24,11 +32,6 @@ export default class CreateResult extends Component {
       .then(data => {
         const games = data;
         this.setState({ games });
-        if (games.length > 0) {
-          this.setState({
-            game: games[0]
-          });
-        }
       });
 
     fetch(' /users/')
@@ -56,7 +59,7 @@ export default class CreateResult extends Component {
       points: null
     }));
     const scores = this.state.scores.concat(emptyScores).slice(0, length);
-    this.setState({ scores });
+    return scores;
   }
 
   onChangeNumberOfPlayers(e) {
@@ -64,8 +67,8 @@ export default class CreateResult extends Component {
     const game = this.state.games.find(game => game._id === this.state.game);
     const { minPlayers, maxPlayers } = game;
     if (numberOfPlayers > maxPlayers || numberOfPlayers < minPlayers) return;
-    this.setState({ numberOfPlayers });
-    this.initializeScores(numberOfPlayers);
+    const scores = this.initializeScores(numberOfPlayers);
+    this.setState({ numberOfPlayers, scores });
   }
 
   onSubmit(e) {
@@ -82,16 +85,9 @@ export default class CreateResult extends Component {
   }
 
   isValid() {
-    for (const score of this.state.scores) {
-      if (
-        score.user === null ||
-        score.points === null ||
-        score.user === '' ||
-        score.points === ''
-      )
-        return false;
-    }
-    return true;
+    return this.state.scores.every(
+      score => score.user && Number.isInteger(score.points)
+    );
   }
 
   render() {

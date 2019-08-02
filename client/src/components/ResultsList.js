@@ -8,6 +8,8 @@ import {
   Accordion
 } from 'react-bootstrap';
 
+import { formatDateString } from '../logic/utils';
+
 const Result = props => {
   const { game, scores } = props.result;
   const sortedScores = scores.slice().sort((a, b) => b.points - a.points);
@@ -32,9 +34,9 @@ const Result = props => {
   return (
     <tr>
       <td>{game.name}</td>
-      <td>{props.result.date.substring(0, 10)}</td>
+      <td>{formatDateString(props.result.date)}</td>
       <td>
-        <Accordion>
+        <Accordion defaultActiveKey={props.showScores ? '0' : null}>
           <Accordion.Toggle
             as={Button}
             size="sm"
@@ -73,7 +75,8 @@ export default class ResultsList extends Component {
     this.state = {
       games: [],
       results: null,
-      id: null
+      id: null,
+      showScores: false
     };
   }
 
@@ -125,11 +128,18 @@ export default class ResultsList extends Component {
       .slice(0)
       .reverse()
       .map(currentresult => {
-        return <Result result={currentresult} key={currentresult._id} />;
+        return (
+          <Result
+            result={currentresult}
+            showScores={this.state.showScores}
+            key={currentresult._id}
+          />
+        );
       });
   }
 
   render() {
+    console.log(this.state.showScores);
     const gameSelect = (
       <Form>
         <Form.Group>
@@ -169,7 +179,17 @@ export default class ResultsList extends Component {
               <tr>
                 <th>Game</th>
                 <th>Date</th>
-                <th>Scores</th>
+                <th>
+                  Scores{' '}
+                  <Button
+                    onClick={() =>
+                      this.setState({ showScores: !this.state.showScores })
+                    }
+                    size="sm"
+                  >
+                    Show
+                  </Button>
+                </th>
                 <th>Winner</th>
               </tr>
             </thead>

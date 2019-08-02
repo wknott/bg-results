@@ -56,7 +56,7 @@ export default class CreateResult extends Component {
   initializeScores(length) {
     const emptyScores = Array.from({ length }, () => ({
       user: null,
-      points: null
+      points: 0
     }));
     const scores = this.state.scores.concat(emptyScores).slice(0, length);
     return scores;

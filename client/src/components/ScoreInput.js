@@ -14,7 +14,7 @@ export default class ScoreInput extends Component {
 
   onChangePoints(e) {
     const { score, onChange } = this.props;
-    const points = e.target.value;
+    const points = parseInt(e.target.value, 10) || 0;
     onChange({ ...score, points });
   }
 
@@ -41,7 +41,7 @@ export default class ScoreInput extends Component {
           <input
             placeholder="Points"
             className="form-control"
-            value={score.points || ''}
+            value={score.points}
             onChange={this.onChangePoints}
             type="number"
           />

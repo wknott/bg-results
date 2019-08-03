@@ -56,7 +56,7 @@ export default class CreateResult extends Component {
   initializeScores(length) {
     const emptyScores = Array.from({ length }, () => ({
       user: null,
-      points: 0
+      points: ''
     }));
     const scores = this.state.scores.concat(emptyScores).slice(0, length);
     return scores;
@@ -86,7 +86,7 @@ export default class CreateResult extends Component {
 
   isValid() {
     return this.state.scores.every(
-      score => score.user && Number.isInteger(score.points)
+      score => score.user && score.points && score.points !== ''
     );
   }
 

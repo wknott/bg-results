@@ -14,7 +14,7 @@ export default class ScoreInput extends Component {
 
   onChangePoints(e) {
     const { score, onChange } = this.props;
-    const points = parseInt(e.target.value, 10) || 0;
+    const points = e.target.value;
     onChange({ ...score, points });
   }
 

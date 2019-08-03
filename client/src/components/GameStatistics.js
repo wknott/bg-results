@@ -70,9 +70,10 @@ export default class GameStatistics extends Component {
                       <thead>
                         <tr>
                           <td>Name</td>
-                          <td>Wins</td>
-                          <td>Games</td>
+                          <td>W</td>
+                          <td>G</td>
                           <td>%</td>
+                          <td>P</td>
                         </tr>
                       </thead>
                       <tbody>
@@ -83,11 +84,16 @@ export default class GameStatistics extends Component {
                               <td>{winner.numberOfWins}</td>
                               <td>{winner.numberOfGames}</td>
                               <td>
-                                {Math.floor(
+                                {Math.round(
                                   (winner.numberOfWins / winner.numberOfGames) *
                                     100
                                 )}
                                 %
+                              </td>
+                              <td>
+                                {Math.round(
+                                  (winner.points / winner.numberOfGames) * 10
+                                ) / 10}
                               </td>
                             </tr>
                           );

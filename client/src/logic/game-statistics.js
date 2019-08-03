@@ -3,7 +3,7 @@ export const numberOfGames = (game, results) => {
 };
 
 const getPlayers = result => {
-  return result.scores.map(score => score.user.username);
+  return result.scores.map(score => score);
 };
 
 const getWinners = result => {
@@ -17,20 +17,24 @@ export const winnerList = (game, results) => {
   const gameResults = results.filter(result => result.game._id === game._id);
   const winsByPlayer = {};
   const gamesByPlayer = {};
-  //const pointsByPlayer = {};
+  const pointsByPlayer = {};
   gameResults.forEach(result => {
     getWinners(result).forEach(winner => {
       winsByPlayer[winner] = (winsByPlayer[winner] || 0) + 1;
     });
     getPlayers(result).forEach(player => {
-      gamesByPlayer[player] = (gamesByPlayer[player] || 0) + 1;
+      pointsByPlayer[player.user.username] =
+        (pointsByPlayer[player.user.username] || 0) + player.points;
+      gamesByPlayer[player.user.username] =
+        (gamesByPlayer[player.user.username] || 0) + 1;
     });
-    //getPoints(result)
   });
+  console.log(pointsByPlayer);
   const listOfWinners = Object.keys(gamesByPlayer).map(player => ({
     name: player,
     numberOfGames: gamesByPlayer[player],
-    numberOfWins: winsByPlayer[player] || 0
+    numberOfWins: winsByPlayer[player] || 0,
+    points: pointsByPlayer[player]
   }));
   return listOfWinners.sort((a, b) => b.numberOfWins - a.numberOfWins);
 };

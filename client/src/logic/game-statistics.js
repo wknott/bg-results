@@ -29,7 +29,6 @@ export const winnerList = (game, results) => {
         (gamesByPlayer[player.user.username] || 0) + 1;
     });
   });
-  console.log(pointsByPlayer);
   const listOfWinners = Object.keys(gamesByPlayer).map(player => ({
     name: player,
     numberOfGames: gamesByPlayer[player],

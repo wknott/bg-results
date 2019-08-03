@@ -17,6 +17,7 @@ export const winnerList = (game, results) => {
   const gameResults = results.filter(result => result.game._id === game._id);
   const winsByPlayer = {};
   const gamesByPlayer = {};
+  //const pointsByPlayer = {};
   gameResults.forEach(result => {
     getWinners(result).forEach(winner => {
       winsByPlayer[winner] = (winsByPlayer[winner] || 0) + 1;
@@ -24,6 +25,7 @@ export const winnerList = (game, results) => {
     getPlayers(result).forEach(player => {
       gamesByPlayer[player] = (gamesByPlayer[player] || 0) + 1;
     });
+    //getPoints(result)
   });
   const listOfWinners = Object.keys(gamesByPlayer).map(player => ({
     name: player,

@@ -1,18 +1,16 @@
-import React, { Component } from 'react';
-import {
-  Button,
-  Alert,
-  Spinner,
-  Table,
-  Form,
-  Accordion
-} from 'react-bootstrap';
+import React, { Component, useState, useEffect } from 'react';
+import { Button, Alert, Spinner, Table, Form, Collapse } from 'react-bootstrap';
 
 import { formatDateString } from '../logic/utils';
 
 const Result = props => {
   const { game, scores } = props.result;
+  const showScores = props.showScores;
+  const [open, setOpen] = useState(false);
   const sortedScores = scores.slice().sort((a, b) => b.points - a.points);
+  useEffect(() => {
+    setOpen(showScores);
+  }, [showScores]);
   const places = [1];
   const winner = [sortedScores[0].user.username];
   for (let i = 1; i < sortedScores.length; i++) {
@@ -22,6 +20,7 @@ const Result = props => {
         winner[i] = sortedScores[i].user.username;
     } else places[i] = i + 1;
   }
+
   const score = sortedScores.map((score, index) => {
     return (
       <tr key={index}>
@@ -36,18 +35,19 @@ const Result = props => {
       <td>{game.name}</td>
       <td>{formatDateString(props.result.date)}</td>
       <td>
-        <Accordion defaultActiveKey={props.showScores ? '0' : null}>
-          <Accordion.Toggle
-            as={Button}
+        <>
+          <Button
+            variant="primary"
             size="sm"
             block
-            variant="primary"
-            eventKey="0"
+            onClick={() => setOpen(!open)}
+            aria-controls="example-collapse-text"
+            aria-expanded={open}
           >
-            All scores
-          </Accordion.Toggle>
-          <Accordion.Collapse eventKey="0">
-            <div>
+            {!open ? 'Show ' : 'Hide '} scores
+          </Button>
+          <Collapse in={open}>
+            <div id="example-collapse-text">
               <br />
               <Table variant="dark" id="scoreTable">
                 <thead>
@@ -60,8 +60,8 @@ const Result = props => {
                 <tbody>{score}</tbody>
               </Table>
             </div>
-          </Accordion.Collapse>
-        </Accordion>
+          </Collapse>
+        </>
       </td>
       <td>{winner.join(', ')}</td>
     </tr>
@@ -139,7 +139,6 @@ export default class ResultsList extends Component {
   }
 
   render() {
-    console.log(this.state.showScores);
     const gameSelect = (
       <Form>
         <Form.Group>
@@ -180,14 +179,14 @@ export default class ResultsList extends Component {
                 <th>Game</th>
                 <th>Date</th>
                 <th>
-                  Scores{' '}
+                  Scores {'  '}
                   <Button
                     onClick={() =>
                       this.setState({ showScores: !this.state.showScores })
                     }
                     size="sm"
                   >
-                    Show
+                    {this.state.showScores === false ? 'Show ' : 'Hide '}all
                   </Button>
                 </th>
                 <th>Winner</th>

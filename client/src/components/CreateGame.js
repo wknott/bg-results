@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Container } from 'react-bootstrap';
 
 export default class CreateGame extends Component {
   constructor(props) {
@@ -41,38 +41,40 @@ export default class CreateGame extends Component {
 
   render() {
     return (
-      <Form onSubmit={this.onSubmit}>
-        <Form.Group>
-          <Form.Control
-            placeholder="Name"
-            type="text"
-            required
-            value={this.state.name}
-            onChange={this.onChangeName}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Control
-            placeholder="Min number of players"
-            type="number"
-            required
-            value={this.state.minPlayers}
-            onChange={this.onChangeMinPlayers}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Control
-            placeholder="Max number of players"
-            type="number"
-            required
-            value={this.state.maxPlayers}
-            onChange={this.onChangeMaxPlayers}
-          />
-        </Form.Group>
-        <Button variant="primary" type="submit">
-          Create Game
-        </Button>
-      </Form>
+      <Container>
+        <Form onSubmit={this.onSubmit}>
+          <Form.Group>
+            <Form.Control
+              placeholder="Name"
+              type="text"
+              required
+              value={this.state.name}
+              onChange={this.onChangeName}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Control
+              placeholder="Min number of players"
+              type="number"
+              required
+              value={this.state.minPlayers}
+              onChange={this.onChangeMinPlayers}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Control
+              placeholder="Max number of players"
+              type="number"
+              required
+              value={this.state.maxPlayers}
+              onChange={this.onChangeMaxPlayers}
+            />
+          </Form.Group>
+          <Button variant="primary" type="submit">
+            Create Game
+          </Button>
+        </Form>
+      </Container>
     );
   }
 }

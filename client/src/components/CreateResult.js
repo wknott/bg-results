@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ScoreInput from './ScoreInput';
-import { Alert, Form, Spinner, Button } from 'react-bootstrap';
+import { Alert, Form, Spinner, Button, Container } from 'react-bootstrap';
 
 export default class CreateResult extends Component {
   constructor(props) {
@@ -96,70 +96,74 @@ export default class CreateResult extends Component {
       return <Spinner animation="border" variant="light" />;
     } else if (games.length === 0) {
       return (
-        <Alert key="index" variant="primary">
-          <Alert.Link href="/game"> Create game </Alert.Link>
-          before you add the result!
-        </Alert>
+        <Container>
+          <Alert key="index" variant="primary">
+            <Alert.Link href="/game"> Create game </Alert.Link>
+            before you add the result!
+          </Alert>
+        </Container>
       );
     } else {
       const game = games.find(game => game._id === this.state.game);
       return (
-        <Form onSubmit={this.onSubmit}>
-          <Form.Group>
-            <Form.Control
-              as="select"
-              value={this.state.game || ''}
-              onChange={this.onChangeGame}
-            >
-              <option value="">Select game</option>
-              {this.state.games.map(game => (
-                <option key={game._id} value={game._id}>
-                  {game.name}
-                </option>
-              ))}
+        <Container>
+          <Form onSubmit={this.onSubmit}>
+            <Form.Group>
+              <Form.Control
+                as="select"
+                value={this.state.game || ''}
+                onChange={this.onChangeGame}
               >
-            </Form.Control>
-          </Form.Group>
-          <Form.Group>
-            <Form.Control
-              placeholder="Number of Players"
-              value={this.state.numberOfPlayers}
-              onChange={this.onChangeNumberOfPlayers}
-              disabled={!game}
-              type="number"
-              min={game && game.minPlayers}
-              max={game && game.maxPlayers}
-            />
-          </Form.Group>
-          <Form.Group>
-            <table>
-              <thead className="thead-dark" />
-              <tbody>
-                {scores.map((score, index) => (
-                  <ScoreInput
-                    key={index}
-                    score={score}
-                    users={this.state.users}
-                    onChange={updatedScore => {
-                      const newScores = scores.map(s =>
-                        s === score ? updatedScore : s
-                      );
-                      this.setState({ scores: newScores });
-                    }}
-                  />
+                <option value="">Select game</option>
+                {this.state.games.map(game => (
+                  <option key={game._id} value={game._id}>
+                    {game.name}
+                  </option>
                 ))}
-              </tbody>
-            </table>
-          </Form.Group>
-          <Button
-            type="submit"
-            disabled={!game || !this.state.numberOfPlayers || !this.isValid()}
-            variant="primary"
-          >
-            {' '}
-            Create Result{' '}
-          </Button>
-        </Form>
+                >
+              </Form.Control>
+            </Form.Group>
+            <Form.Group>
+              <Form.Control
+                placeholder="Number of Players"
+                value={this.state.numberOfPlayers}
+                onChange={this.onChangeNumberOfPlayers}
+                disabled={!game}
+                type="number"
+                min={game && game.minPlayers}
+                max={game && game.maxPlayers}
+              />
+            </Form.Group>
+            <Form.Group>
+              <table>
+                <thead className="thead-dark" />
+                <tbody>
+                  {scores.map((score, index) => (
+                    <ScoreInput
+                      key={index}
+                      score={score}
+                      users={this.state.users}
+                      onChange={updatedScore => {
+                        const newScores = scores.map(s =>
+                          s === score ? updatedScore : s
+                        );
+                        this.setState({ scores: newScores });
+                      }}
+                    />
+                  ))}
+                </tbody>
+              </table>
+            </Form.Group>
+            <Button
+              type="submit"
+              disabled={!game || !this.state.numberOfPlayers || !this.isValid()}
+              variant="primary"
+            >
+              {' '}
+              Create Result{' '}
+            </Button>
+          </Form>
+        </Container>
       );
     }
   }

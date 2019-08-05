@@ -9,7 +9,8 @@ import {
   Table,
   ButtonGroup,
   OverlayTrigger,
-  Tooltip
+  Tooltip,
+  Container
 } from 'react-bootstrap';
 import CountUp from 'react-countup';
 
@@ -55,15 +56,15 @@ export default class GameStatistics extends Component {
       return <Spinner animation="border" variant="light" />;
     } else if (this.state.games.length === 0) {
       return (
-        <div>
+        <Container>
           <Alert key="index" variant="primary">
             <Alert.Link href="/result"> Create result </Alert.Link>of this game!
           </Alert>
-        </div>
+        </Container>
       );
     } else {
       return (
-        <div>
+        <Container>
           <CardColumns>
             {this.state.games
               .sort((a, b) => a.name.localeCompare(b.name))
@@ -76,7 +77,7 @@ export default class GameStatistics extends Component {
                         Games Played:{' '}
                         <CountUp
                           end={numberOfGames(game, this.state.results)}
-                          duration={2}
+                          duration={5}
                         />
                       </Card.Text>
                       <Table hover striped bordered variant="dark">
@@ -212,7 +213,7 @@ export default class GameStatistics extends Component {
                 );
               })}
           </CardColumns>
-        </div>
+        </Container>
       );
     }
   }

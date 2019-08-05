@@ -1,5 +1,13 @@
 import React, { Component, useState, useEffect } from 'react';
-import { Button, Alert, Spinner, Table, Form, Collapse } from 'react-bootstrap';
+import {
+  Button,
+  Alert,
+  Spinner,
+  Table,
+  Form,
+  Collapse,
+  Container
+} from 'react-bootstrap';
 
 import { formatDateString } from '../logic/utils';
 
@@ -162,16 +170,16 @@ export default class ResultsList extends Component {
       return <Spinner animation="border" variant="light" />;
     } else if (this.state.results.length === 0) {
       return (
-        <div>
+        <Container>
           {gameSelect}
           <Alert key="index" variant="primary">
             <Alert.Link href="/result"> Create result </Alert.Link>of this game!
           </Alert>
-        </div>
+        </Container>
       );
     } else {
       return (
-        <div>
+        <Container>
           {gameSelect}
           <Table striped bordered variant="dark">
             <thead>
@@ -194,7 +202,7 @@ export default class ResultsList extends Component {
             </thead>
             <tbody>{this.resultsList()}</tbody>
           </Table>
-        </div>
+        </Container>
       );
     }
   }

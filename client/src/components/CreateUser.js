@@ -80,7 +80,7 @@ export default class CreateUser extends Component {
       </Form>
     );
     if (this.state.users === null || this.state.users === [])
-      return <div>{addUser}</div>;
+      return <Container>{addUser}</Container>;
     else {
       return (
         <Container>

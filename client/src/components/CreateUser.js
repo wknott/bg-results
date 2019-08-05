@@ -1,14 +1,45 @@
 import React, { Component } from 'react';
-import { Form, Button } from 'react-bootstrap';
-
+import { Form, Button, Table, Container, Row, Col } from 'react-bootstrap';
+import { getWinners } from '../logic/game-statistics';
 export default class CreateUser extends Component {
   constructor(props) {
     super(props);
     this.onChangeUsername = this.onChangeUsername.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.state = { username: '' };
+    this.state = {
+      users: null,
+      results: null,
+      username: ''
+    };
   }
 
+  componentDidMount() {
+    const resultsPromise = fetch('/results/').then(response => response.json());
+    const usersPromise = fetch('users/').then(response => response.json());
+    Promise.all([resultsPromise, usersPromise]).then(([results, users]) => {
+      users = this.addGamesAndWinns(results, users);
+      this.setState({ users });
+    });
+  }
+
+  addGamesAndWinns(results, users) {
+    users.map(user => {
+      results.map(result => {
+        result.scores.map(score => {
+          if (score.user.username === user.username)
+            user.games = (user.games || 0) + 1;
+          return user;
+        });
+        getWinners(result).map(winner => {
+          if (user.username === winner) user.wins = (user.wins || 0) + 1;
+          return user;
+        });
+        return user;
+      });
+      return user;
+    });
+    return users;
+  }
   onChangeUsername(e) {
     this.setState({ username: e.target.value });
   }
@@ -23,10 +54,16 @@ export default class CreateUser extends Component {
       headers: { 'Content-type': 'application/json' }
     });
     this.setState({ username: '' });
+    fetch('/users/')
+      .then(response => response.json())
+      .then(data => {
+        const users = data;
+        this.setState({ users });
+      });
   }
 
   render() {
-    return (
+    const addUser = (
       <Form onSubmit={this.onSubmit}>
         <Form.Group>
           <Form.Control
@@ -42,5 +79,45 @@ export default class CreateUser extends Component {
         </Button>
       </Form>
     );
+    if (this.state.users === null || this.state.users === [])
+      return <div>{addUser}</div>;
+    else {
+      return (
+        <Container>
+          <Row>
+            <Col>{addUser}</Col>
+          </Row>
+          <Row>
+            <Col md="6">
+              <br />{' '}
+              <Table size="sm" striped bordered hover variant="dark">
+                <thead>
+                  <tr>
+                    <td>#</td>
+                    <td>Name</td>
+                    <td>Wins</td>
+                    <td>Games</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.users
+                    .sort((a, b) => b.games - a.games)
+                    .map((user, index) => {
+                      return (
+                        <tr key={index}>
+                          <td>{index + 1}</td>
+                          <td>{user.username}</td>
+                          <td>{user.wins}</td>
+                          <td>{user.games}</td>
+                        </tr>
+                      );
+                    })}
+                </tbody>
+              </Table>
+            </Col>
+          </Row>
+        </Container>
+      );
+    }
   }
 }

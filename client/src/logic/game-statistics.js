@@ -6,7 +6,7 @@ const getPlayers = result => {
   return result.scores.map(score => score);
 };
 
-const getWinners = result => {
+export const getWinners = result => {
   const winnerPoints = Math.max(...result.scores.map(score => score.points));
   return result.scores
     .filter(score => score.points === winnerPoints)

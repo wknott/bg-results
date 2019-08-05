@@ -41,6 +41,15 @@ export default class GameStatistics extends Component {
       });
   }
 
+  setNumberOfGames() {
+    this.setState({
+      games: this.state.games.map(game => {
+        game.numberOfGames = numberOfGames(game, this.state.results);
+        return game;
+      })
+    });
+    console.log(this.state.games);
+  }
   render() {
     if (this.state.games === null) {
       return <Spinner animation="border" variant="light" />;

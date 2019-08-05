@@ -18,24 +18,55 @@ export const winnerList = (game, results) => {
   const winsByPlayer = {};
   const gamesByPlayer = {};
   const pointsByPlayer = {};
-  gameResults.forEach(result => {
-    getWinners(result).forEach(winner => {
-      winsByPlayer[winner] = (winsByPlayer[winner] || 0) + 1;
+  if (game.name === '7 Cudów Świata Pojedynek') {
+    const gamesByPlayerWithoutPoints = {};
+    gameResults.forEach(result => {
+      getWinners(result).forEach(winner => {
+        winsByPlayer[winner] = (winsByPlayer[winner] || 0) + 1;
+      });
+      getPlayers(result).forEach(player => {
+        if (player.points < 3) {
+          gamesByPlayerWithoutPoints[player.user.username] =
+            (gamesByPlayerWithoutPoints[player.user.username] || 0) + 1;
+          gamesByPlayer[player.user.username] =
+            (gamesByPlayer[player.user.username] || 0) + 1;
+        } else {
+          pointsByPlayer[player.user.username] =
+            (pointsByPlayer[player.user.username] || 0) + player.points;
+          gamesByPlayer[player.user.username] =
+            (gamesByPlayer[player.user.username] || 0) + 1;
+        }
+      });
     });
-    getPlayers(result).forEach(player => {
-      pointsByPlayer[player.user.username] =
-        (pointsByPlayer[player.user.username] || 0) + player.points;
-      gamesByPlayer[player.user.username] =
-        (gamesByPlayer[player.user.username] || 0) + 1;
+    const listOfWinners = Object.keys(gamesByPlayer).map(player => ({
+      name: player,
+      numberOfGames: gamesByPlayer[player],
+      numberOfWins: winsByPlayer[player] || 0,
+      points:
+        (pointsByPlayer[player] * gamesByPlayer[player]) /
+        (gamesByPlayer[player] - gamesByPlayerWithoutPoints[player])
+    }));
+    return listOfWinners.sort((a, b) => b.numberOfWins - a.numberOfWins);
+  } else {
+    gameResults.forEach(result => {
+      getWinners(result).forEach(winner => {
+        winsByPlayer[winner] = (winsByPlayer[winner] || 0) + 1;
+      });
+      getPlayers(result).forEach(player => {
+        pointsByPlayer[player.user.username] =
+          (pointsByPlayer[player.user.username] || 0) + player.points;
+        gamesByPlayer[player.user.username] =
+          (gamesByPlayer[player.user.username] || 0) + 1;
+      });
     });
-  });
-  const listOfWinners = Object.keys(gamesByPlayer).map(player => ({
-    name: player,
-    numberOfGames: gamesByPlayer[player],
-    numberOfWins: winsByPlayer[player] || 0,
-    points: pointsByPlayer[player]
-  }));
-  return listOfWinners.sort((a, b) => b.numberOfWins - a.numberOfWins);
+    const listOfWinners = Object.keys(gamesByPlayer).map(player => ({
+      name: player,
+      numberOfGames: gamesByPlayer[player],
+      numberOfWins: winsByPlayer[player] || 0,
+      points: pointsByPlayer[player]
+    }));
+    return listOfWinners.sort((a, b) => b.numberOfWins - a.numberOfWins);
+  }
 };
 
 // winnerList(game) {

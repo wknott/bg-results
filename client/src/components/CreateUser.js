@@ -97,6 +97,7 @@ export default class CreateUser extends Component {
                     <td>Name</td>
                     <td>Wins</td>
                     <td>Games</td>
+                    <td>%</td>
                   </tr>
                 </thead>
                 <tbody>
@@ -109,6 +110,9 @@ export default class CreateUser extends Component {
                           <td>{user.username}</td>
                           <td>{user.wins}</td>
                           <td>{user.games}</td>
+                          <td>
+                            {((user.wins / user.games) * 100).toFixed(0)}%
+                          </td>
                         </tr>
                       );
                     })}

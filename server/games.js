@@ -2,6 +2,7 @@ const router = require('express').Router();
 let Game = require('./models/game');
 router.route('/').get((req,res) => {
     Game.find()
+    .sort('name')
     .then(games => res.json(games))
     .catch(err => res.status(400).json("Error: " + err));
 });

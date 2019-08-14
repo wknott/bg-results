@@ -9,6 +9,8 @@ import ResultsList from './components/ResultsList';
 import Navbar from './components/Navbar';
 import GameStatistics from './components/GameStatistics';
 
+import './App.css';
+
 function App() {
   return (
     <Router>

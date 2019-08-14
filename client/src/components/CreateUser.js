@@ -90,7 +90,7 @@ export default class CreateUser extends Component {
           <Row>
             <Col md="6">
               <br />{' '}
-              <Table size="sm" striped bordered hover variant="dark">
+              <Table responsive size="sm" striped bordered hover variant="dark">
                 <thead>
                   <tr>
                     <td>#</td>

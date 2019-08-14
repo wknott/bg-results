@@ -41,7 +41,7 @@ const Result = props => {
   return (
     <tr>
       <td>{game.name}</td>
-      <td>{formatDateString(props.result.date)}</td>
+      <td className="hidden-xs">{formatDateString(props.result.date)}</td>
       <td>
         <>
           <Button
@@ -57,7 +57,7 @@ const Result = props => {
           <Collapse in={open}>
             <div id="example-collapse-text">
               <br />
-              <Table variant="dark" id="scoreTable">
+              <Table responsive variant="dark" id="scoreTable">
                 <thead>
                   <tr>
                     <td>#</td>
@@ -181,20 +181,19 @@ export default class ResultsList extends Component {
       return (
         <Container>
           {gameSelect}
-          <Table striped bordered variant="dark">
+          <Table striped bordered variant="dark" responsive>
             <thead>
               <tr>
                 <th>Game</th>
-                <th>Date</th>
+                <th className="hidden-xs">Date</th>
                 <th>
-                  Scores {'  '}
                   <Button
                     onClick={() =>
                       this.setState({ showScores: !this.state.showScores })
                     }
                     size="sm"
                   >
-                    {this.state.showScores === false ? 'Show ' : 'Hide '}all
+                    {this.state.showScores === false ? 'Show ' : 'Hide '} scores
                   </Button>
                 </th>
                 <th>Winner</th>

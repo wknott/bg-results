@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import ScoreInput from './ScoreInput';
-import { Alert, Form, Spinner, Button, Container } from 'react-bootstrap';
+import {
+  Alert,
+  Form,
+  Spinner,
+  Button,
+  Container,
+  Table
+} from 'react-bootstrap';
 
 export default class CreateResult extends Component {
   constructor(props) {
@@ -135,7 +142,7 @@ export default class CreateResult extends Component {
               />
             </Form.Group>
             <Form.Group>
-              <table>
+              <Table responsive>
                 <thead className="thead-dark" />
                 <tbody>
                   {scores.map((score, index) => (
@@ -152,7 +159,7 @@ export default class CreateResult extends Component {
                     />
                   ))}
                 </tbody>
-              </table>
+              </Table>
             </Form.Group>
             <Button
               type="submit"

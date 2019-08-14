@@ -80,7 +80,7 @@ export default class GameStatistics extends Component {
                           duration={5}
                         />
                       </Card.Text>
-                      <Table hover striped bordered variant="dark">
+                      <Table responsive hover striped bordered variant="dark">
                         <thead>
                           <tr>
                             <td>

@@ -2,4 +2,13 @@
   .hidden-xs {
     display: none;
   }
+  .scores {
+    white-space: nowrap;
+  }
+}
+
+@media (min-width: 575.98px) {
+  .hidden-lg {
+    display: none;
+  }
 }

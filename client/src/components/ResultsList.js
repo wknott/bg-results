@@ -8,8 +8,9 @@ import {
   Collapse,
   Container
 } from 'react-bootstrap';
+import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 
-import { formatDateString } from '../logic/utils';
+import { formatDateString, formatDateStringShort } from '../logic/utils';
 
 const Result = props => {
   const { game, scores } = props.result;
@@ -42,6 +43,7 @@ const Result = props => {
     <tr>
       <td>{game.name}</td>
       <td className="hidden-xs">{formatDateString(props.result.date)}</td>
+      <td className="hidden-lg">{formatDateStringShort(props.result.date)}</td>
       <td>
         <>
           <Button
@@ -186,15 +188,21 @@ export default class ResultsList extends Component {
               <tr>
                 <th>Game</th>
                 <th className="hidden-xs">Date</th>
-                <th>
-                  <Button
+                <th className="hidden-lg">Date</th>
+                <th className="scores">
+                  Scores{' '}
+                  <span
                     onClick={() =>
                       this.setState({ showScores: !this.state.showScores })
                     }
                     size="sm"
                   >
-                    {this.state.showScores === false ? 'Show ' : 'Hide '} scores
-                  </Button>
+                    {this.state.showScores === false ? (
+                      <IoIosArrowDown />
+                    ) : (
+                      <IoIosArrowUp />
+                    )}
+                  </span>
                 </th>
                 <th>Winner</th>
               </tr>

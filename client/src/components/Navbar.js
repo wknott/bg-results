@@ -1,39 +1,29 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Navbar } from 'react-bootstrap';
+import { Navbar, Nav } from 'react-bootstrap';
 export default class NavbarBGR extends Component {
   render() {
     return (
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-        <Navbar.Brand href="/">Board Game Results</Navbar.Brand>
+      <Navbar collapseOnSelect expand="lg" variant="dark">
+        <Navbar.Brand as={Link} to="/">
+          Board Game Results
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
-            <div className="mr-auto">
-              <ul className="navbar-nav mr-auto">
-                <li className="navbar-item">
-                  <Link to="/result" className="nav-link">
-                    Create result
-                  </Link>
-                </li>
-                <li className="navbar-item">
-                  <Link to="/user" className="nav-link">
-                    Create user
-                  </Link>
-                </li>
-                <li className="navbar-item">
-                  <Link to="/game" className="nav-link">
-                    Create game
-                  </Link>
-                </li>
-                <li className="navbar-item">
-                  <Link to="/gamestats" className="nav-link">
-                    Games
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </nav>
+          <Nav className="mr-auto">
+            <Nav.Link as={Link} to="/result">
+              Create result
+            </Nav.Link>
+            <Nav.Link as={Link} to="/user">
+              Create user
+            </Nav.Link>
+            <Nav.Link as={Link} to="/game">
+              Create game
+            </Nav.Link>
+            <Nav.Link as={Link} to="/gamestats">
+              Games
+            </Nav.Link>
+          </Nav>
         </Navbar.Collapse>
       </Navbar>
     );

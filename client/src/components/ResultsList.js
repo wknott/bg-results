@@ -1,82 +1,46 @@
-import React, { Component, useState, useEffect } from 'react';
-import {
-  Button,
-  Alert,
-  Spinner,
-  Table,
-  Form,
-  Collapse,
-  Container
-} from 'react-bootstrap';
-import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
+import React, { Component } from 'react';
+import { Alert, Spinner, Table, Form, Container, Modal } from 'react-bootstrap';
 
 import { formatDateString, formatDateStringShort } from '../logic/utils';
 
-const Result = props => {
-  const { game, scores } = props.result;
-  const showScores = props.showScores;
-  const [open, setOpen] = useState(false);
-  const sortedScores = scores.slice().sort((a, b) => b.points - a.points);
-  useEffect(() => {
-    setOpen(showScores);
-  }, [showScores]);
-  const places = [1];
-  const winner = [sortedScores[0].user.username];
-  for (let i = 1; i < sortedScores.length; i++) {
-    if (sortedScores[i].points === sortedScores[i - 1].points) {
-      places[i] = places[i - 1];
-      if (sortedScores[i].points === sortedScores[0].points)
-        winner[i] = sortedScores[i].user.username;
-    } else places[i] = i + 1;
-  }
+class Result extends Component {
+  render() {
+    const { scores } = this.props.result;
+    const sortedScores = scores.slice().sort((a, b) => b.points - a.points);
+    const places = [1];
+    const winner = [sortedScores[0].user.username];
+    for (let i = 1; i < sortedScores.length; i++) {
+      if (sortedScores[i].points === sortedScores[i - 1].points) {
+        places[i] = places[i - 1];
+        if (sortedScores[i].points === sortedScores[0].points)
+          winner[i] = sortedScores[i].user.username;
+      } else places[i] = i + 1;
+    }
 
-  const score = sortedScores.map((score, index) => {
+    const score = sortedScores.map((score, index) => {
+      return (
+        <tr key={index}>
+          <td>{places[index]}</td>
+          <td>{score.user.username}</td>
+          <td>{score.points}</td>
+        </tr>
+      );
+    });
+
     return (
-      <tr key={index}>
-        <td>{places[index]}</td>
-        <td>{score.user.username}</td>
-        <td>{score.points}</td>
-      </tr>
+      <Table hover striped bordered variant="dark" responsive>
+        <thead>
+          <tr>
+            <td>#</td>
+            <td>Name</td>
+            <td>Points</td>
+          </tr>
+        </thead>
+        <tbody>{score}</tbody>
+      </Table>
     );
-  });
-  return (
-    <tr>
-      <td>{game.name}</td>
-      <td className="hidden-xs">{formatDateString(props.result.date)}</td>
-      <td className="hidden-lg">{formatDateStringShort(props.result.date)}</td>
-      <td>
-        <>
-          <Button
-            variant="primary"
-            size="sm"
-            block
-            onClick={() => setOpen(!open)}
-            aria-controls="example-collapse-text"
-            aria-expanded={open}
-          >
-            {!open ? 'Show ' : 'Hide '} scores
-          </Button>
-          <Collapse in={open}>
-            <div id="example-collapse-text">
-              <br />
-              <Table responsive variant="dark" id="scoreTable">
-                <thead>
-                  <tr>
-                    <td>#</td>
-                    <td>Name</td>
-                    <td />
-                  </tr>
-                </thead>
-                <tbody>{score}</tbody>
-              </Table>
-            </div>
-          </Collapse>
-        </>
-      </td>
-      <td>{winner.join(', ')}</td>
-    </tr>
-  );
-};
+  }
+}
 
 export default class ResultsList extends Component {
   constructor(props) {
@@ -85,8 +49,10 @@ export default class ResultsList extends Component {
     this.state = {
       games: [],
       results: null,
+      result: [],
       id: null,
-      showScores: false
+      showScores: false,
+      show: false
     };
   }
 
@@ -103,7 +69,12 @@ export default class ResultsList extends Component {
         this.setState({ results: data });
       });
   }
-
+  handleClose = () => {
+    this.setState({ show: false });
+  };
+  handleOpen = result => {
+    this.setState({ show: true, result });
+  };
   componentDidMount() {
     this.loadAllResults();
 
@@ -137,18 +108,35 @@ export default class ResultsList extends Component {
     return this.state.results
       .slice(0)
       .reverse()
-      .map(currentresult => {
+      .map(currentResult => {
+        const { game, scores, date } = currentResult;
+        const sortedScores = scores.slice().sort((a, b) => b.points - a.points);
+        const places = [1];
+        const winner = [sortedScores[0].user.username];
+        for (let i = 1; i < sortedScores.length; i++) {
+          if (sortedScores[i].points === sortedScores[i - 1].points) {
+            places[i] = places[i - 1];
+            if (sortedScores[i].points === sortedScores[0].points)
+              winner[i] = sortedScores[i].user.username;
+          } else places[i] = i + 1;
+        }
         return (
-          <Result
-            result={currentresult}
-            showScores={this.state.showScores}
-            key={currentresult._id}
-          />
+          <tr
+            style={{ cursor: 'pointer' }}
+            onClick={() => this.handleOpen(currentResult)}
+            key={date}
+          >
+            <td>{game.name}</td>
+            <td className="hidden-lg">{formatDateStringShort(date)}</td>
+            <td className="hidden-xs">{formatDateString(date)}</td>
+            <td>{winner.join(', ')}</td>
+          </tr>
         );
       });
   }
 
   render() {
+    const { result } = this.state;
     const gameSelect = (
       <Form>
         <Form.Group>
@@ -183,32 +171,36 @@ export default class ResultsList extends Component {
       return (
         <Container>
           {gameSelect}
-          <Table striped bordered variant="dark" responsive>
+          <Table hover striped bordered variant="dark" responsive>
             <thead>
               <tr>
                 <th>Game</th>
-                <th className="hidden-xs">Date</th>
-                <th className="hidden-lg">Date</th>
-                <th className="scores">
-                  Scores{' '}
-                  <span
-                    onClick={() =>
-                      this.setState({ showScores: !this.state.showScores })
-                    }
-                    size="sm"
-                  >
-                    {this.state.showScores === false ? (
-                      <IoIosArrowDown />
-                    ) : (
-                      <IoIosArrowUp />
-                    )}
-                  </span>
-                </th>
+                <th>Date</th>
                 <th>Winner</th>
               </tr>
             </thead>
             <tbody>{this.resultsList()}</tbody>
           </Table>
+          <Modal
+            className="dark-modal"
+            centered
+            show={this.state.show !== false}
+            onHide={this.handleClose}
+          >
+            <Modal.Header closeButton className="hidden-xs">
+              {result.game ? result.game.name : ''}
+              {', '}
+              {formatDateString(result.date)}
+            </Modal.Header>
+            <Modal.Header closeButton className="hidden-lg">
+              {result.game ? result.game.name : ''}
+              {', '}
+              {formatDateStringShort(result.date)}
+            </Modal.Header>
+            <Modal.Body>
+              <Result result={result} />
+            </Modal.Body>
+          </Modal>
         </Container>
       );
     }

@@ -14,7 +14,8 @@ export default class CreateResult extends Component {
       scores: [],
       numberOfPlayers: '',
       games: null,
-      users: []
+      users: [],
+      loading: false
     };
     const {
       location: { state }
@@ -74,12 +75,14 @@ export default class CreateResult extends Component {
   onSubmit(e) {
     e.preventDefault();
     const { game, scores } = this.state;
+    this.setState({ loading: true });
     const result = { game, scores };
     fetch(' /results/add', {
       method: 'POST',
       body: JSON.stringify(result),
       headers: { 'Content-Type': 'application/json' }
     }).then(() => {
+      this.setState({ loading: false });
       this.props.history.push('/');
     });
   }

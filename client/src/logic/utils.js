@@ -11,8 +11,8 @@ export const formatDateStringShort = dateString => {
   const date = new Date(dateString);
   return date.toLocaleDateString('pl-pl', {
     //weekday: 'short',
-    day: 'numeric',
-    month: 'numeric'
-    //year: 'numeric'
+    day: '2-digit',
+    month: '2-digit',
+    year: '2-digit'
   });
 };

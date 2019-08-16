@@ -12,3 +12,14 @@
     display: none;
   }
 }
+
+.modal-body,
+.modal-header,
+.modal-content {
+  background-color: #343a40;
+  color: #fff;
+}
+.close {
+  color: #fff;
+  text-shadow: none;
+}

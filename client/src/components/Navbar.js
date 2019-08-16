@@ -5,22 +5,22 @@ export default class NavbarBGR extends Component {
   render() {
     return (
       <Navbar collapseOnSelect expand="lg" variant="dark">
-        <Navbar.Brand as={Link} to="/">
+        <Navbar.Brand as={Link} to="/" href="#">
           Board Game Results
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link as={Link} to="/result">
+            <Nav.Link as={Link} to="/result" href="#">
               Create result
             </Nav.Link>
-            <Nav.Link as={Link} to="/user">
+            <Nav.Link as={Link} to="/user" href="#">
               Create user
             </Nav.Link>
-            <Nav.Link as={Link} to="/game">
+            <Nav.Link as={Link} to="/game" href="#">
               Create game
             </Nav.Link>
-            <Nav.Link as={Link} to="/gamestats">
+            <Nav.Link as={Link} to="/gamestats" href="#">
               Games
             </Nav.Link>
           </Nav>

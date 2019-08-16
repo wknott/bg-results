@@ -9,7 +9,8 @@ export default class CreateUser extends Component {
     this.state = {
       users: null,
       results: null,
-      username: ''
+      username: '',
+      loading: false
     };
   }
 
@@ -47,13 +48,15 @@ export default class CreateUser extends Component {
   onSubmit(e) {
     e.preventDefault();
     const user = { username: this.state.username };
+    this.setState = { loading: true };
     console.log(user);
     fetch(' /users/add', {
       method: 'POST',
       body: JSON.stringify(user),
       headers: { 'Content-type': 'application/json' }
+    }).then(() => {
+      this.setState({ username: '', loading: false });
     });
-    this.setState({ username: '' });
     fetch('/users/')
       .then(response => response.json())
       .then(data => {
@@ -74,7 +77,11 @@ export default class CreateUser extends Component {
             onChange={this.onChangeUsername}
           />
         </Form.Group>
-        <Button type="submit" variant="primary">
+        <Button
+          disabled={this.state.loading || !this.state.username}
+          type="submit"
+          variant="primary"
+        >
           Create User
         </Button>
       </Form>

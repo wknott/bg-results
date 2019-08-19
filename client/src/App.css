@@ -23,3 +23,13 @@
   color: #fff;
   text-shadow: none;
 }
+
+.imgGame {
+  padding: 15px; /* Some padding */
+  width: 100%; /* Set a small width */
+}
+
+.imgGameList {
+  height: 100px;
+  width: 100px; /* Set a small width */
+}

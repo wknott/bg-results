@@ -16,7 +16,7 @@ export default class CreateUser extends Component {
 
   componentDidMount() {
     const resultsPromise = fetch('/results/').then(response => response.json());
-    const usersPromise = fetch('users/').then(response => response.json());
+    const usersPromise = fetch('/users/').then(response => response.json());
     Promise.all([resultsPromise, usersPromise]).then(([results, users]) => {
       const newUsers = this.addGamesAndWinns(results, users);
       this.setState({ users: newUsers });

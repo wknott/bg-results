@@ -51,7 +51,6 @@ export default class ResultsList extends Component {
       results: null,
       result: [],
       id: null,
-      showScores: false,
       show: false
     };
   }

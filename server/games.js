@@ -17,12 +17,13 @@ router.route('/add').post((req,res) => {
     const name = req.body.name;
     const minPlayers = Number(req.body.minPlayers);
     const maxPlayers = Number(req.body.maxPlayers);
-
+    const imgUrl = req.body.imgUrl;
     if(minPlayers <= maxPlayers){
         const newGame = new Game({
             name,
             minPlayers,
             maxPlayers,
+            imgUrl
         });
 
         newGame.save()
@@ -39,6 +40,7 @@ router.route('/update/:id').post((req,res) => {
         game.name = req.body.name;
         game.minPlayers = req.body.minPlayers;
         game.maxPlayers = req.body.maxPlayers;
+        game.imgUrl = req.body.imgUrl;
         if(game.minPlayers <= game.maxPlayers){
             game.save()
             .then(() => res.json('Game updated!'))

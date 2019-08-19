@@ -13,6 +13,7 @@ import {
   Container
 } from 'react-bootstrap';
 import CountUp from 'react-countup';
+import '../App.css';
 
 import { numberOfGames, winnerList } from '../logic/game-statistics';
 
@@ -73,6 +74,7 @@ export default class GameStatistics extends Component {
                   <Card border="primary" bg="dark" text="white" key={game._id}>
                     <Card.Body>
                       <Card.Title as="h3">{game.name}</Card.Title>
+                      <Card.Img className="imgGame" src={game.imgUrl} />
                       <Card.Text as="h5">
                         Games Played:{' '}
                         <CountUp

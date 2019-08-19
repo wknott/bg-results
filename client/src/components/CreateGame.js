@@ -82,7 +82,8 @@ export default class CreateGame extends Component {
           minPlayers: '',
           maxPlayers: '',
           imgUrl: '',
-          games
+          games,
+          show: false
         });
       });
   };

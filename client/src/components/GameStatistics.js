@@ -10,7 +10,10 @@ import {
   ButtonGroup,
   OverlayTrigger,
   Tooltip,
-  Container
+  Container,
+  Col,
+  Row,
+  Image
 } from 'react-bootstrap';
 import CountUp from 'react-countup';
 import '../App.css';
@@ -73,15 +76,24 @@ export default class GameStatistics extends Component {
                 return (
                   <Card border="primary" bg="dark" text="white" key={game._id}>
                     <Card.Body>
-                      <Card.Title as="h3">{game.name}</Card.Title>
-                      <Card.Img className="imgGame" src={game.imgUrl} />
-                      <Card.Text as="h5">
-                        Games Played:{' '}
-                        <CountUp
-                          end={numberOfGames(game, this.state.results)}
-                          duration={5}
-                        />
-                      </Card.Text>
+                      <Container>
+                        <Row>
+                          <Col className="game-col">
+                            <Image className="imgGame" src={game.imgUrl} />
+                          </Col>
+                          <Col className="game-col">
+                            <h4>{game.name}</h4>
+                            <Card.Text>
+                              Games Played:{' '}
+                              <CountUp
+                                end={numberOfGames(game, this.state.results)}
+                                duration={5}
+                              />
+                            </Card.Text>
+                          </Col>
+                        </Row>
+                      </Container>
+
                       <Table responsive hover striped bordered variant="dark">
                         <thead>
                           <tr>

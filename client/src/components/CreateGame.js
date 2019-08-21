@@ -168,9 +168,9 @@ export default class CreateGame extends Component {
             <Col>{addGame}</Col>
           </Row>
           <Row>
-            <Col md="4">
+            <Col>
               <br />{' '}
-              <Table responsive size="sm" striped bordered hover variant="dark">
+              <Table responsive striped bordered hover variant="dark">
                 <thead>
                   <tr>
                     <td>Image</td>

@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { Form, Button, Table, Container, Row, Col } from 'react-bootstrap';
+import {
+  Form,
+  Button,
+  Table,
+  Container,
+  Row,
+  Col,
+  Image
+} from 'react-bootstrap';
 import { getWinners } from '../logic/game-statistics';
 export default class CreateUser extends Component {
   constructor(props) {
@@ -95,7 +103,7 @@ export default class CreateUser extends Component {
             <Col>{addUser}</Col>
           </Row>
           <Row>
-            <Col md="6">
+            <Col md="5">
               <br />{' '}
               <Table responsive size="sm" striped bordered hover variant="dark">
                 <thead>
@@ -113,7 +121,13 @@ export default class CreateUser extends Component {
                     .map((user, index) => {
                       return (
                         <tr key={index}>
-                          <td>{index + 1}</td>
+                          <td>
+                            <Image
+                              roundedCircle
+                              className="imgGame"
+                              src={'https://i.imgur.com/7ZeE7Ww.jpg'}
+                            />
+                          </td>
                           <td>{user.username}</td>
                           <td>{user.wins}</td>
                           <td>{user.games}</td>

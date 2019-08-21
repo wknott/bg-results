@@ -102,8 +102,8 @@ export default class CreateUser extends Component {
           <Row>
             <Col>{addUser}</Col>
           </Row>
-          <Row>
-            <Col md="5">
+          <Row className="hidden-lg">
+            <Col>
               <br />{' '}
               <Table responsive size="sm" striped bordered hover variant="dark">
                 <thead>
@@ -124,7 +124,89 @@ export default class CreateUser extends Component {
                           <td>
                             <Image
                               roundedCircle
-                              className="imgGame"
+                              className="imgGameList"
+                              src={'https://i.imgur.com/7ZeE7Ww.jpg'}
+                            />
+                          </td>
+                          <td>{user.username}</td>
+                          <td>{user.wins}</td>
+                          <td>{user.games}</td>
+                          <td>
+                            {((user.wins / user.games) * 100).toFixed(0)}%
+                          </td>
+                        </tr>
+                      );
+                    })}
+                </tbody>
+              </Table>
+            </Col>
+          </Row>
+          <Row className="hidden-xs">
+            <Col>
+              <br />{' '}
+              <Table responsive size="sm" striped bordered hover variant="dark">
+                <thead>
+                  <tr>
+                    <td>#</td>
+                    <td>Name</td>
+                    <td>Wins</td>
+                    <td>Games</td>
+                    <td>%</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.users
+                    .sort((a, b) => b.games - a.games)
+                    .filter(
+                      (game, index) => index < this.state.users.length / 2
+                    )
+                    .map((user, index) => {
+                      return (
+                        <tr key={index}>
+                          <td>
+                            <Image
+                              roundedCircle
+                              className="imgGameList"
+                              src={'https://i.imgur.com/7ZeE7Ww.jpg'}
+                            />
+                          </td>
+                          <td>{user.username}</td>
+                          <td>{user.wins}</td>
+                          <td>{user.games}</td>
+                          <td>
+                            {((user.wins / user.games) * 100).toFixed(0)}%
+                          </td>
+                        </tr>
+                      );
+                    })}
+                </tbody>
+              </Table>
+            </Col>
+            <Col>
+              <br />{' '}
+              <Table responsive size="sm" striped bordered hover variant="dark">
+                <thead>
+                  <tr>
+                    <td>#</td>
+                    <td>Name</td>
+                    <td>Wins</td>
+                    <td>Games</td>
+                    <td>%</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.users
+                    .sort((a, b) => b.games - a.games)
+                    .filter(
+                      (game, index) => index >= this.state.users.length / 2
+                    )
+                    .map((user, index) => {
+                      return (
+                        <tr key={index}>
+                          <td>
+                            <Image
+                              roundedCircle
+                              className="imgGameList"
                               src={'https://i.imgur.com/7ZeE7Ww.jpg'}
                             />
                           </td>

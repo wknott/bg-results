@@ -5,6 +5,10 @@
   .scores {
     white-space: nowrap;
   }
+  .table td,
+  .table th {
+    padding: 0.3rem;
+  }
 }
 
 @media (min-width: 575.98px) {
@@ -38,4 +42,12 @@
 .game-col {
   padding-right: 0px;
   padding-left: 0px;
+}
+
+.game-img td,
+.game-img th {
+  padding-top: 5px;
+  padding-right: 5px;
+  padding-bottom: 5px;
+  padding-left: 5px;
 }

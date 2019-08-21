@@ -167,7 +167,88 @@ export default class CreateGame extends Component {
           <Row>
             <Col>{addGame}</Col>
           </Row>
-          <Row>
+          <Row className="hidden-xs">
+            <Col>
+              <br />{' '}
+              <Table responsive striped bordered hover variant="dark">
+                <thead>
+                  <tr>
+                    <td>Image</td>
+                    <td>Name</td>
+                    <td>Min</td>
+                    <td>Max</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.games
+                    .sort((a, b) => b.name - a.name)
+                    .filter(
+                      (game, index) => index < this.state.games.length / 2
+                    )
+                    .map((game, index) => {
+                      return (
+                        <tr key={index}>
+                          <td
+                            className="game-img"
+                            style={{ cursor: 'pointer' }}
+                            onClick={() => this.handleImageChange(game)}
+                          >
+                            <Image
+                              className="imgGameList"
+                              src={game.imgUrl}
+                              rounded
+                            />
+                          </td>
+                          <td>{game.name}</td>
+                          <td>{game.minPlayers}</td>
+                          <td>{game.maxPlayers}</td>
+                        </tr>
+                      );
+                    })}
+                </tbody>
+              </Table>
+            </Col>
+            <Col>
+              <br />{' '}
+              <Table responsive striped bordered hover variant="dark">
+                <thead>
+                  <tr>
+                    <td>Image</td>
+                    <td>Name</td>
+                    <td>Min</td>
+                    <td>Max</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.games
+                    .sort((a, b) => b.name - a.name)
+                    .filter(
+                      (game, index) => index >= this.state.games.length / 2
+                    )
+                    .map((game, index) => {
+                      return (
+                        <tr key={index}>
+                          <td
+                            style={{ cursor: 'pointer' }}
+                            onClick={() => this.handleImageChange(game)}
+                          >
+                            <Image
+                              className="imgGameList"
+                              src={game.imgUrl}
+                              rounded
+                            />
+                          </td>
+                          <td>{game.name}</td>
+                          <td>{game.minPlayers}</td>
+                          <td>{game.maxPlayers}</td>
+                        </tr>
+                      );
+                    })}
+                </tbody>
+              </Table>
+            </Col>
+          </Row>
+          <Row className="hidden-lg">
             <Col>
               <br />{' '}
               <Table responsive striped bordered hover variant="dark">
@@ -186,6 +267,7 @@ export default class CreateGame extends Component {
                       return (
                         <tr key={index}>
                           <td
+                            className="game-img"
                             style={{ cursor: 'pointer' }}
                             onClick={() => this.handleImageChange(game)}
                           >

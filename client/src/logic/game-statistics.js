@@ -13,6 +13,25 @@ export const getWinners = result => {
     .map(score => score.user.username);
 };
 
+export const addGamesAndWinns = (results, users) => {
+  users.map(user => {
+    results.map(result => {
+      result.scores.map(score => {
+        if (score.user.username === user.username)
+          user.games = (user.games || 0) + 1;
+        return user;
+      });
+      getWinners(result).map(winner => {
+        if (user.username === winner) user.wins = (user.wins || 0) + 1;
+        return user;
+      });
+      return user;
+    });
+    return user;
+  });
+  return users;
+};
+
 export const winnerList = (game, results) => {
   const gameResults = results.filter(result => result.game._id === game._id);
   const winsByPlayer = {};

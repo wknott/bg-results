@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ScoreInput from './ScoreInput';
 import { Alert, Form, Spinner, Button, Container } from 'react-bootstrap';
+import { addGamesAndWinns } from '../logic/game-statistics';
 
 export default class CreateResult extends Component {
   constructor(props) {
@@ -35,15 +36,12 @@ export default class CreateResult extends Component {
         this.setState({ games });
       });
 
-    fetch(' /users/')
-      .then(response => response.json())
-      .then(data => {
-        if (data.length > 0) {
-          this.setState({
-            users: data
-          });
-        }
-      });
+    const resultsPromise = fetch('/results/').then(response => response.json());
+    const usersPromise = fetch('/users/').then(response => response.json());
+    Promise.all([resultsPromise, usersPromise]).then(([results, users]) => {
+      const newUsers = addGamesAndWinns(results, users);
+      this.setState({ users: newUsers.sort((a, b) => b.games - a.games) });
+    });
   }
 
   onChangeGame(e) {

@@ -8,7 +8,7 @@ import {
   Col,
   Image
 } from 'react-bootstrap';
-import { getWinners } from '../logic/game-statistics';
+import { addGamesAndWinns } from '../logic/game-statistics';
 export default class CreateUser extends Component {
   constructor(props) {
     super(props);
@@ -26,29 +26,11 @@ export default class CreateUser extends Component {
     const resultsPromise = fetch('/results/').then(response => response.json());
     const usersPromise = fetch('/users/').then(response => response.json());
     Promise.all([resultsPromise, usersPromise]).then(([results, users]) => {
-      const newUsers = this.addGamesAndWinns(results, users);
+      const newUsers = addGamesAndWinns(results, users);
       this.setState({ users: newUsers });
     });
   }
 
-  addGamesAndWinns(results, users) {
-    users.map(user => {
-      results.map(result => {
-        result.scores.map(score => {
-          if (score.user.username === user.username)
-            user.games = (user.games || 0) + 1;
-          return user;
-        });
-        getWinners(result).map(winner => {
-          if (user.username === winner) user.wins = (user.wins || 0) + 1;
-          return user;
-        });
-        return user;
-      });
-      return user;
-    });
-    return users;
-  }
   onChangeUsername(e) {
     this.setState({ username: e.target.value });
   }
@@ -58,7 +40,7 @@ export default class CreateUser extends Component {
     const user = { username: this.state.username };
     this.setState = { loading: true };
     console.log(user);
-    fetch(' /users/add', {
+    fetch('/users/add', {
       method: 'POST',
       body: JSON.stringify(user),
       headers: { 'Content-type': 'application/json' }

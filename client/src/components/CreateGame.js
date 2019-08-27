@@ -101,7 +101,7 @@ export default class CreateGame extends Component {
       body: JSON.stringify(game),
       headers: { 'Content-type': 'application/json' }
     });
-    fetch(' /games/')
+    fetch('/games/')
       .then(response => response.json())
       .then(data => {
         const games = data;

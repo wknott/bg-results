@@ -15,6 +15,8 @@ export const getWinners = result => {
 
 export const addGamesAndWinns = (results, users) => {
   users.map(user => {
+    user.games = 0;
+    user.wins = 0;
     results.map(result => {
       result.scores.map(score => {
         if (score.user.username === user.username)

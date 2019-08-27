@@ -86,13 +86,17 @@ export default class CreateResult extends Component {
   }
 
   isValid() {
-    return this.state.scores.every(
-      score => score.user && score.points && score.points !== ''
+    const players = this.state.scores.map(score => score.user);
+    return (
+      JSON.stringify(players) === JSON.stringify([...new Set(players)]) &&
+      this.state.scores.every(
+        score => score.user && score.points && score.points !== ''
+      )
     );
   }
 
   render() {
-    const { games, scores } = this.state;
+    const { games, scores, users } = this.state;
     if (games === null) {
       return <Spinner animation="border" variant="light" />;
     } else if (games.length === 0) {
@@ -143,7 +147,7 @@ export default class CreateResult extends Component {
                     <ScoreInput
                       key={index}
                       score={score}
-                      users={this.state.users}
+                      users={users}
                       onChange={updatedScore => {
                         const newScores = scores.map(s =>
                           s === score ? updatedScore : s

@@ -112,7 +112,6 @@ export default class CreateUser extends Component {
           <Form.Control
             placeholder="User image URL"
             type="text"
-            required
             value={this.state.imgUrl}
             onChange={this.onChangeImgUrl}
           />
@@ -161,7 +160,8 @@ export default class CreateUser extends Component {
                               roundedCircle
                               className="imgGameList"
                               src={
-                                user.imgUrl || 'https://i.imgur.com/7ZeE7Ww.jpg'
+                                user.imgUrl ||
+                                'https://x.boardgamearena.net/data/avatar/0/85/85115/85115684_184.jpg?h=000000'
                               }
                             />
                           </td>
@@ -208,7 +208,8 @@ export default class CreateUser extends Component {
                               roundedCircle
                               className="imgGameList"
                               src={
-                                user.imgUrl || 'https://i.imgur.com/7ZeE7Ww.jpg'
+                                user.imgUrl ||
+                                'https://x.boardgamearena.net/data/avatar/0/85/85115/85115684_184.jpg?h=000000'
                               }
                             />
                           </td>
@@ -253,7 +254,8 @@ export default class CreateUser extends Component {
                               roundedCircle
                               className="imgGameList"
                               src={
-                                user.imgUrl || 'https://i.imgur.com/7ZeE7Ww.jpg'
+                                user.imgUrl ||
+                                'https://x.boardgamearena.net/data/avatar/0/85/85115/85115684_184.jpg?h=000000'
                               }
                             />
                           </td>

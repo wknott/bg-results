@@ -10,7 +10,7 @@ if(process.env.NODE_ENV === 'production') {
   });
 }
 const port = process.env.PORT || 5000;
-const dbUrl = process.env.MONGO_URL || 'mongodb://localhost:27017/bgresults';
+const dbUrl = process.env.MONGO_URL || 'mongodb://localhost:27017/bgresults-example';
 app.use(cors());
 app.use(express.json());
 

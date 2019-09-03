@@ -1,29 +1,34 @@
 import React, { Component } from 'react';
 import ScoreInput from './ScoreInput';
-import { Alert, Form, Spinner, Button, Container } from 'react-bootstrap';
+import {
+  Alert,
+  Form,
+  Spinner,
+  Button,
+  Container,
+  ButtonGroup
+} from 'react-bootstrap';
 import { addGamesAndWinns } from '../logic/game-statistics';
 
 export default class CreateResult extends Component {
   constructor(props) {
     super(props);
     this.onChangeGame = this.onChangeGame.bind(this);
-    this.onChangeNumberOfPlayers = this.onChangeNumberOfPlayers.bind(this);
     this.onChangeScores = this.onChangeScores.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.state = {
-      game: null,
+      gameId: null,
       scores: [],
-      numberOfPlayers: '',
       games: null,
       users: [],
-      loading: false
+      loading: false,
+      showButtons: false
     };
     const {
       location: { state }
     } = props;
     if (state) {
-      this.state.game = state.gameId;
-      this.state.numberOfPlayers = state.numberOfPlayers;
+      this.state.gameId = state.gameId;
       this.state.scores = this.initializeScores(state.numberOfPlayers);
     }
   }
@@ -45,36 +50,28 @@ export default class CreateResult extends Component {
   }
 
   onChangeGame(e) {
-    this.setState({ game: e.target.value });
+    this.setState({ game: e.target.value, showButtons: true });
   }
 
   onChangeScores(e) {
     this.setState({ scores: e.target.value });
   }
 
-  initializeScores(length) {
+  initializeScores = length => {
     const emptyScores = Array.from({ length }, () => ({
       user: null,
       points: ''
     }));
     const scores = this.state.scores.concat(emptyScores).slice(0, length);
+    this.setState({ scores });
     return scores;
-  }
-
-  onChangeNumberOfPlayers(e) {
-    const numberOfPlayers = e.target.value;
-    const game = this.state.games.find(game => game._id === this.state.game);
-    const { minPlayers, maxPlayers } = game;
-    if (numberOfPlayers > maxPlayers || numberOfPlayers < minPlayers) return;
-    const scores = this.initializeScores(numberOfPlayers);
-    this.setState({ numberOfPlayers, scores });
-  }
+  };
 
   onSubmit(e) {
     e.preventDefault();
-    const { game, scores } = this.state;
+    const { gameId, scores } = this.state;
     this.setState({ loading: true });
-    const result = { game, scores };
+    const result = { game: gameId, scores };
     fetch(' /results/add', {
       method: 'POST',
       body: JSON.stringify(result),
@@ -116,7 +113,7 @@ export default class CreateResult extends Component {
             <Form.Group>
               <Form.Control
                 as="select"
-                value={this.state.game || ''}
+                value={this.state.gameId || ''}
                 onChange={this.onChangeGame}
               >
                 <option value="">Select game</option>
@@ -129,15 +126,32 @@ export default class CreateResult extends Component {
               </Form.Control>
             </Form.Group>
             <Form.Group>
-              <Form.Control
-                placeholder="Number of Players"
-                value={this.state.numberOfPlayers}
-                onChange={this.onChangeNumberOfPlayers}
-                disabled={!game}
-                type="number"
-                min={game && game.minPlayers}
-                max={game && game.maxPlayers}
-              />
+              {this.state.showButtons ? (
+                <div>
+                  <strong style={{}}>Choose number of players:</strong>
+                  <div>
+                    <ButtonGroup>
+                      {Array.from(
+                        {
+                          length: game.maxPlayers - game.minPlayers + 1
+                        },
+                        (_, index) => (
+                          <Button
+                            key={index}
+                            onClick={() =>
+                              this.initializeScores(game.minPlayers + index)
+                            }
+                          >
+                            {game.minPlayers + index}
+                          </Button>
+                        )
+                      )}
+                    </ButtonGroup>
+                  </div>
+                </div>
+              ) : (
+                <></>
+              )}
             </Form.Group>
             <Form.Group>
               <table>
@@ -161,7 +175,7 @@ export default class CreateResult extends Component {
             </Form.Group>
             <Button
               type="submit"
-              disabled={!game || !this.state.numberOfPlayers || !this.isValid()}
+              disabled={!game || !this.isValid()}
               variant="primary"
             >
               {' '}

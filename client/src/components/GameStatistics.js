@@ -197,7 +197,7 @@ export default class GameStatistics extends Component {
                         {this.state.showButtons === game._id && (
                           <>
                             <strong>Choose number of players:</strong>
-                            <ButtonGroup block size="lg">
+                            <ButtonGroup size="lg">
                               {Array.from(
                                 {
                                   length: game.maxPlayers - game.minPlayers + 1

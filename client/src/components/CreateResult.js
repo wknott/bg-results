@@ -30,6 +30,7 @@ export default class CreateResult extends Component {
     if (state) {
       this.state.gameId = state.gameId;
       this.state.scores = this.initializeScores(state.numberOfPlayers);
+      this.state.showButtons = true;
     }
   }
 
@@ -50,12 +51,21 @@ export default class CreateResult extends Component {
   }
 
   onChangeGame(e) {
-    this.setState({ game: e.target.value, showButtons: true });
+    this.setState({ gameId: e.target.value, showButtons: true });
   }
 
   onChangeScores(e) {
     this.setState({ scores: e.target.value });
   }
+
+  onChangeNumberOfPlayers = length => {
+    const emptyScores = Array.from({ length }, () => ({
+      user: null,
+      points: ''
+    }));
+    const scores = this.state.scores.concat(emptyScores).slice(0, length);
+    this.setState({ scores });
+  };
 
   initializeScores = length => {
     const emptyScores = Array.from({ length }, () => ({
@@ -63,7 +73,6 @@ export default class CreateResult extends Component {
       points: ''
     }));
     const scores = this.state.scores.concat(emptyScores).slice(0, length);
-    this.setState({ scores });
     return scores;
   };
 
@@ -72,6 +81,7 @@ export default class CreateResult extends Component {
     const { gameId, scores } = this.state;
     this.setState({ loading: true });
     const result = { game: gameId, scores };
+    console.log(result);
     fetch(' /results/add', {
       method: 'POST',
       body: JSON.stringify(result),
@@ -106,7 +116,7 @@ export default class CreateResult extends Component {
         </Container>
       );
     } else {
-      const game = games.find(game => game._id === this.state.game);
+      const game = games.find(game => game._id === this.state.gameId);
       return (
         <Container>
           <Form onSubmit={this.onSubmit}>
@@ -130,7 +140,7 @@ export default class CreateResult extends Component {
                 <div>
                   <strong style={{}}>Choose number of players:</strong>
                   <div>
-                    <ButtonGroup>
+                    <ButtonGroup size="lg">
                       {Array.from(
                         {
                           length: game.maxPlayers - game.minPlayers + 1
@@ -139,7 +149,9 @@ export default class CreateResult extends Component {
                           <Button
                             key={index}
                             onClick={() =>
-                              this.initializeScores(game.minPlayers + index)
+                              this.onChangeNumberOfPlayers(
+                                game.minPlayers + index
+                              )
                             }
                           >
                             {game.minPlayers + index}

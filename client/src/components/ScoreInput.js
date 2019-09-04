@@ -1,22 +1,16 @@
 import React, { Component } from 'react';
 export default class ScoreInput extends Component {
-  constructor(props) {
-    super(props);
-    this.onChangeUser = this.onChangeUser.bind(this);
-    this.onChangePoints = this.onChangePoints.bind(this);
-  }
-
-  onChangeUser(e) {
+  onChangeUser = e => {
     const { score, onChange } = this.props;
     const user = e.target.value;
     onChange({ ...score, user });
-  }
+  };
 
-  onChangePoints(e) {
+  onChangePoints = e => {
     const { score, onChange } = this.props;
     const points = e.target.value;
     onChange({ ...score, points });
-  }
+  };
 
   render() {
     const { score, users } = this.props;

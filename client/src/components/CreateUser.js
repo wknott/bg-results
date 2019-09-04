@@ -6,10 +6,10 @@ import {
   Container,
   Row,
   Col,
-  Image,
   Modal
 } from 'react-bootstrap';
 import { addGamesAndWinns } from '../logic/game-statistics';
+import UserInput from './UserInput';
 export default class CreateUser extends Component {
   constructor(props) {
     super(props);
@@ -46,30 +46,6 @@ export default class CreateUser extends Component {
 
   handleClose = () => {
     this.setState({ show: false });
-  };
-
-  createUserTable = (user, index) => {
-    return (
-      <tr key={index}>
-        <td
-          style={{ cursor: 'pointer' }}
-          onClick={() => this.handleImageChange(user)}
-        >
-          <Image
-            roundedCircle
-            className="imgGameList"
-            src={
-              user.imgUrl ||
-              'https://x.boardgamearena.net/data/avatar/0/85/85115/85115684_184.jpg?h=000000'
-            }
-          />
-        </td>
-        <td>{user.username}</td>
-        <td>{user.wins}</td>
-        <td>{user.games}</td>
-        <td>{((user.wins / user.games) * 100).toFixed(0)}%</td>
-      </tr>
-    );
   };
 
   onSubmitUpdate = e => {
@@ -176,9 +152,9 @@ export default class CreateUser extends Component {
                 <tbody>
                   {this.state.users
                     .sort((a, b) => b.games - a.games)
-                    .map((user, index) => {
-                      return this.createUserTable(user, index);
-                    })}
+                    .map((user, index) => (
+                      <UserInput key={index} user={user} />
+                    ))}
                 </tbody>
               </Table>
             </Col>
@@ -194,9 +170,9 @@ export default class CreateUser extends Component {
                     .filter(
                       (game, index) => index < this.state.users.length / 2
                     )
-                    .map((user, index) => {
-                      return this.createUserTable(user, index);
-                    })}
+                    .map((user, index) => (
+                      <UserInput key={index} user={user} />
+                    ))}
                 </tbody>
               </Table>
             </Col>
@@ -210,9 +186,9 @@ export default class CreateUser extends Component {
                     .filter(
                       (game, index) => index >= this.state.users.length / 2
                     )
-                    .map((user, index) => {
-                      return this.createUserTable(user, index);
-                    })}
+                    .map((user, index) => (
+                      <UserInput key={index} user={user} />
+                    ))}
                 </tbody>
               </Table>
             </Col>

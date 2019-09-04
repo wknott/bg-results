@@ -138,28 +138,26 @@ export default class CreateResult extends Component {
             <Form.Group>
               {this.state.showButtons ? (
                 <div>
-                  <strong style={{}}>Choose number of players:</strong>
-                  <div>
-                    <ButtonGroup size="lg">
-                      {Array.from(
-                        {
-                          length: game.maxPlayers - game.minPlayers + 1
-                        },
-                        (_, index) => (
-                          <Button
-                            key={index}
-                            onClick={() =>
-                              this.onChangeNumberOfPlayers(
-                                game.minPlayers + index
-                              )
-                            }
-                          >
-                            {game.minPlayers + index}
-                          </Button>
-                        )
-                      )}
-                    </ButtonGroup>
-                  </div>
+                  <h4 className="white-text">Choose number of players:</h4>
+                  <ButtonGroup size="lg">
+                    {Array.from(
+                      {
+                        length: game.maxPlayers - game.minPlayers + 1
+                      },
+                      (_, index) => (
+                        <Button
+                          key={index}
+                          onClick={() =>
+                            this.onChangeNumberOfPlayers(
+                              game.minPlayers + index
+                            )
+                          }
+                        >
+                          {game.minPlayers + index}
+                        </Button>
+                      )
+                    )}
+                  </ButtonGroup>
                 </div>
               ) : (
                 <></>

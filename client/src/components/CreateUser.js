@@ -48,6 +48,30 @@ export default class CreateUser extends Component {
     this.setState({ show: false });
   };
 
+  createUserTable = (user, index) => {
+    return (
+      <tr key={index}>
+        <td
+          style={{ cursor: 'pointer' }}
+          onClick={() => this.handleImageChange(user)}
+        >
+          <Image
+            roundedCircle
+            className="imgGameList"
+            src={
+              user.imgUrl ||
+              'https://x.boardgamearena.net/data/avatar/0/85/85115/85115684_184.jpg?h=000000'
+            }
+          />
+        </td>
+        <td>{user.username}</td>
+        <td>{user.wins}</td>
+        <td>{user.games}</td>
+        <td>{((user.wins / user.games) * 100).toFixed(0)}%</td>
+      </tr>
+    );
+  };
+
   onSubmitUpdate = e => {
     e.preventDefault();
     const user = {
@@ -128,6 +152,17 @@ export default class CreateUser extends Component {
     if (this.state.users === null || this.state.users === [])
       return <Container>{addUser}</Container>;
     else {
+      const tableThead = (
+        <thead>
+          <tr>
+            <td>#</td>
+            <td>Name</td>
+            <td>W</td>
+            <td>G</td>
+            <td>%</td>
+          </tr>
+        </thead>
+      );
       return (
         <Container>
           <Row>
@@ -137,42 +172,12 @@ export default class CreateUser extends Component {
             <Col>
               <br />{' '}
               <Table responsive size="sm" striped bordered hover variant="dark">
-                <thead>
-                  <tr>
-                    <td>#</td>
-                    <td>Name</td>
-                    <td>Wins</td>
-                    <td>Games</td>
-                    <td>%</td>
-                  </tr>
-                </thead>
+                {tableThead}
                 <tbody>
                   {this.state.users
                     .sort((a, b) => b.games - a.games)
                     .map((user, index) => {
-                      return (
-                        <tr key={index}>
-                          <td
-                            style={{ cursor: 'pointer' }}
-                            onClick={() => this.handleImageChange(user)}
-                          >
-                            <Image
-                              roundedCircle
-                              className="imgGameList"
-                              src={
-                                user.imgUrl ||
-                                'https://x.boardgamearena.net/data/avatar/0/85/85115/85115684_184.jpg?h=000000'
-                              }
-                            />
-                          </td>
-                          <td>{user.username}</td>
-                          <td>{user.wins}</td>
-                          <td>{user.games}</td>
-                          <td>
-                            {((user.wins / user.games) * 100).toFixed(0)}%
-                          </td>
-                        </tr>
-                      );
+                      return this.createUserTable(user, index);
                     })}
                 </tbody>
               </Table>
@@ -182,15 +187,7 @@ export default class CreateUser extends Component {
             <Col>
               <br />{' '}
               <Table responsive size="sm" striped bordered hover variant="dark">
-                <thead>
-                  <tr>
-                    <td>#</td>
-                    <td>Name</td>
-                    <td>Wins</td>
-                    <td>Games</td>
-                    <td>%</td>
-                  </tr>
-                </thead>
+                {tableThead}
                 <tbody>
                   {this.state.users
                     .sort((a, b) => b.games - a.games)
@@ -198,29 +195,7 @@ export default class CreateUser extends Component {
                       (game, index) => index < this.state.users.length / 2
                     )
                     .map((user, index) => {
-                      return (
-                        <tr key={index}>
-                          <td
-                            style={{ cursor: 'pointer' }}
-                            onClick={() => this.handleImageChange(user)}
-                          >
-                            <Image
-                              roundedCircle
-                              className="imgGameList"
-                              src={
-                                user.imgUrl ||
-                                'https://x.boardgamearena.net/data/avatar/0/85/85115/85115684_184.jpg?h=000000'
-                              }
-                            />
-                          </td>
-                          <td>{user.username}</td>
-                          <td>{user.wins}</td>
-                          <td>{user.games}</td>
-                          <td>
-                            {((user.wins / user.games) * 100).toFixed(0)}%
-                          </td>
-                        </tr>
-                      );
+                      return this.createUserTable(user, index);
                     })}
                 </tbody>
               </Table>
@@ -228,15 +203,7 @@ export default class CreateUser extends Component {
             <Col>
               <br />{' '}
               <Table responsive size="sm" striped bordered hover variant="dark">
-                <thead>
-                  <tr>
-                    <td>#</td>
-                    <td>Name</td>
-                    <td>Wins</td>
-                    <td>Games</td>
-                    <td>%</td>
-                  </tr>
-                </thead>
+                {tableThead}
                 <tbody>
                   {this.state.users
                     .sort((a, b) => b.games - a.games)
@@ -244,29 +211,7 @@ export default class CreateUser extends Component {
                       (game, index) => index >= this.state.users.length / 2
                     )
                     .map((user, index) => {
-                      return (
-                        <tr key={index}>
-                          <td
-                            style={{ cursor: 'pointer' }}
-                            onClick={() => this.handleImageChange(user)}
-                          >
-                            <Image
-                              roundedCircle
-                              className="imgGameList"
-                              src={
-                                user.imgUrl ||
-                                'https://x.boardgamearena.net/data/avatar/0/85/85115/85115684_184.jpg?h=000000'
-                              }
-                            />
-                          </td>
-                          <td>{user.username}</td>
-                          <td>{user.wins}</td>
-                          <td>{user.games}</td>
-                          <td>
-                            {((user.wins / user.games) * 100).toFixed(0)}%
-                          </td>
-                        </tr>
-                      );
+                      return this.createUserTable(user, index);
                     })}
                 </tbody>
               </Table>

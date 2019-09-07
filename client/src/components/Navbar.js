@@ -14,8 +14,8 @@ export default class NavbarBGR extends Component {
             <Nav.Link as={Link} to="/result" href="#">
               Create result
             </Nav.Link>
-            <Nav.Link as={Link} to="/user" href="#">
-              Create user
+            <Nav.Link as={Link} to="/users" href="#">
+              Users
             </Nav.Link>
             <Nav.Link as={Link} to="/game" href="#">
               Create game

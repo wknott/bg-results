@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Image } from 'react-bootstrap';
-export default class UserInput extends Component {
+export default class UserRow extends Component {
   render() {
-    const { user } = this.props;
+    const { user, handleImageChange } = this.props;
     return (
       <tr>
         <td
           style={{ cursor: 'pointer' }}
-          onClick={() => this.handleImageChange(user)}
+          onClick={() => handleImageChange(user)}
         >
           <Image
             roundedCircle
@@ -21,7 +21,7 @@ export default class UserInput extends Component {
         <td>{user.username}</td>
         <td>{user.wins}</td>
         <td>{user.games}</td>
-        <td>{((user.wins / user.games) * 100).toFixed(0)}%</td>
+        <td>{user.wins>0?((user.wins / user.games) * 100).toFixed(0):0}%</td>
       </tr>
     );
   }

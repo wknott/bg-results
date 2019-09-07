@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import CreateUser from './components/CreateUser';
+import Users from './components/Users';
 import CreateGame from './components/CreateGame';
 import CreateResult from './components/CreateResult';
 import ResultsList from './components/ResultsList';
@@ -17,7 +17,7 @@ function App() {
       <div className="container">
         <NavbarBGR />
         <Route path="/" exact component={ResultsList} />
-        <Route path="/user" exact component={CreateUser} />
+        <Route path="/users" exact component={Users} />
         <Route path="/game" exact component={CreateGame} />
         <Route path="/result" exact component={CreateResult} />
         <Route path="/gamestats" exact component={GameStatistics} />

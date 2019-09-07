@@ -9,6 +9,7 @@ import {
   Image,
   Modal
 } from 'react-bootstrap';
+import gameIcon from '../favicon.png';
 
 export default class CreateGame extends Component {
   constructor(props) {
@@ -149,7 +150,6 @@ export default class CreateGame extends Component {
           <Form.Control
             placeholder="Game image URL"
             type="text"
-            required
             value={this.state.imgUrl}
             onChange={this.onChangeImgUrl}
           />
@@ -195,7 +195,7 @@ export default class CreateGame extends Component {
                           >
                             <Image
                               className="imgGameList"
-                              src={game.imgUrl}
+                              src={game.imgUrl || gameIcon}
                               rounded
                             />
                           </td>
@@ -234,7 +234,7 @@ export default class CreateGame extends Component {
                           >
                             <Image
                               className="imgGameList"
-                              src={game.imgUrl}
+                              src={game.imgUrl || gameIcon}
                               rounded
                             />
                           </td>
@@ -273,7 +273,7 @@ export default class CreateGame extends Component {
                           >
                             <Image
                               className="imgGameList"
-                              src={game.imgUrl}
+                              src={game.imgUrl || gameIcon}
                               rounded
                             />
                           </td>

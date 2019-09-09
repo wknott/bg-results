@@ -3,12 +3,16 @@ import {
   Container,
   Row,
   Col,
+  Image,
   ButtonGroup,
   Button,
   Spinner,
   Alert
 } from 'react-bootstrap';
 import LabeledRange from './LabeledRange';
+import coinImg from '../coin.png';
+import wonderImg from '../wonder.png';
+import placeholder from '../placeholder.png';
 export default class Result7Wonders extends Component {
   constructor(props) {
     super(props);
@@ -72,6 +76,7 @@ export default class Result7Wonders extends Component {
                   },
                   (_, index) => (
                     <Button
+                      className="raise"
                       key={index}
                       onClick={() => this.onChangeNumberOfPlayers(2 + index)}
                     >
@@ -89,54 +94,49 @@ export default class Result7Wonders extends Component {
                   variant="danger"
                   onClick={() => this.setState({ windowState: 'military' })}
                 >
-                  {' '}
-                  M{' '}
+                  <Image src={placeholder} width="20" height="20" alt="" />
                 </Button>
                 <Button
-                  variant="secondary"
+                  variant="light"
                   onClick={() => this.setState({ windowState: 'coin' })}
                 >
-                  {' '}
-                  C{' '}
+                  <Image src={coinImg} width="20" height="20" alt="C" />
                 </Button>
                 <Button
-                  variant="secondary"
+                  variant="light"
                   onClick={() => this.setState({ windowState: 'wonder' })}
                 >
-                  {' '}
-                  W{' '}
+                  <Image src={wonderImg} width="20" height="20" alt="W" />
                 </Button>
                 <Button
                   variant="primary"
                   onClick={() => this.setState({ windowState: 'civilian' })}
                 >
-                  {' '}
-                  C{' '}
+                  <Image src={placeholder} width="20" height="20" alt="" />
                 </Button>
                 <Button
                   variant="warning"
                   onClick={() => this.setState({ windowState: 'commerce' })}
                 >
-                  {' '}
-                  C{' '}
+                  <Image src={placeholder} width="20" height="20" alt="" />
                 </Button>
                 <Button
                   className="purple-button"
                   onClick={() => this.setState({ windowState: 'guild' })}
                 >
-                  {' '}
-                  G{' '}
+                  <Image src={placeholder} width="20" height="20" alt="" />
                 </Button>
                 <Button
                   variant="success"
                   onClick={() => this.setState({ windowState: 'science' })}
                 >
-                  {' '}
-                  S{' '}
+                  <Image src={placeholder} width="20" height="20" alt="" />
                 </Button>
-                <Button onClick={() => this.setState({ windowState: 'sum' })}>
-                  {' '}
-                  S{' '}
+                <Button
+                  variant="secondary"
+                  onClick={() => this.setState({ windowState: 'sum' })}
+                >
+                  Σ
                 </Button>
               </ButtonGroup>
             </Col>

@@ -5,7 +5,6 @@ import UserInput from './UserRow';
 export default class UsersTable extends Component {
   render() {
     const { users, handleImageChange } = this.props;
-    console.log(users);
     return (
       <Table responsive size="sm" striped bordered hover variant="dark">
         <thead>

@@ -8,7 +8,7 @@ import CreateResult from './components/CreateResult';
 import ResultsList from './components/ResultsList';
 import NavbarBGR from './components/Navbar';
 import GameStatistics from './components/GameStatistics';
-
+import Result7Wonders from './components/Result7Wonders';
 import './App.css';
 
 function App() {
@@ -21,6 +21,7 @@ function App() {
         <Route path="/game" exact component={CreateGame} />
         <Route path="/result" exact component={CreateResult} />
         <Route path="/gamestats" exact component={GameStatistics} />
+        <Route path="/7wonders" exact component={Result7Wonders} />
       </div>
     </Router>
   );

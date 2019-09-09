@@ -56,3 +56,14 @@
   color: #fff;
   margin-bottom: 0.5rem;
 }
+
+.hidden {
+  display: none;
+}
+.purple-button {
+  background-color: purple;
+  border-color: purple;
+}
+.purple-button:hover {
+  background-color: pink;
+}

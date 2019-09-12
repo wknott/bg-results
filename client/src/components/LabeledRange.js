@@ -10,6 +10,7 @@ class Labeled extends React.Component {
     return (
       <div
         style={{
+          marginTop: '3px',
           display: 'flex',
           justifyContent: 'center',
           flexWrap: 'wrap'
@@ -59,8 +60,6 @@ class Labeled extends React.Component {
               {...props}
               style={{
                 ...props.style,
-                height: '42px',
-                width: '42px',
                 borderRadius: '4px',
                 backgroundColor: '#FFF',
                 display: 'flex',
@@ -72,14 +71,16 @@ class Labeled extends React.Component {
               <div
                 style={{
                   position: 'absolute',
-                  //top: '-28px',
+                  height: '42px',
+                  width: '42px',
                   color: '#fff',
                   fontWeight: 'bold',
                   fontSize: '20px',
                   fontFamily: 'Arial,Helvetica Neue,Helvetica,sans-serif',
                   padding: '4px',
                   borderRadius: '4px',
-                  backgroundColor: '#548BF4'
+                  backgroundColor: '#548BF4',
+                  textAlign: 'center'
                 }}
               >
                 {this.state.values[0]}

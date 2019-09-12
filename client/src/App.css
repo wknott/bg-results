@@ -79,3 +79,9 @@
   box-shadow: 0 0 0 0.2rem rgb(66, 33, 99, 0.5);
   border-color: rgb(66, 33, 99);
 }
+.without-padding {
+  padding: 0;
+}
+.margin-bottom {
+  margin-bottom: 1rem;
+}

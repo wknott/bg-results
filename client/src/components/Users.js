@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Button, Container, Row, Col, Modal } from 'react-bootstrap';
 import { addGamesAndWinns } from '../logic/game-statistics';
-import UserAddForm from './NewUserForm';
+import NewUserForm from './NewUserForm';
 import UsersTable from './UsersTable';
 export default class Users extends Component {
   constructor(props) {
@@ -52,7 +52,6 @@ export default class Users extends Component {
     }).then(() => {
       this.loadUsers();
       this.setState({
-        loading: false,
         show: false,
         imgUrl: ''
       });
@@ -63,7 +62,7 @@ export default class Users extends Component {
     if (this.state.users === null || this.state.users === [])
       return (
         <Container>
-          <UserAddForm />
+          <NewUserForm onCreated={this.loadUsers} />
         </Container>
       );
     else {
@@ -72,7 +71,7 @@ export default class Users extends Component {
         <Container>
           <Row>
             <Col>
-              <UserAddForm onCreated={this.loadUsers} />
+              <NewUserForm onCreated={this.loadUsers} />
             </Col>
           </Row>
           <Row className="hidden-lg">

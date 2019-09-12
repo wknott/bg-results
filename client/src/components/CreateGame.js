@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { Form, Button, Container, Row, Col, Modal } from 'react-bootstrap';
 import GamesTable from './GamesTable';
+import NewGameForm from './NewGameForm';
 export default class CreateGame extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      minPlayers: '',
-      maxPlayers: '',
       imgUrl: '',
       games: [],
       show: false,
@@ -15,26 +13,17 @@ export default class CreateGame extends Component {
     };
   }
 
-  componentDidMount() {
-    fetch(' /games/')
+  loadGames() {
+    fetch('/games/')
       .then(response => response.json())
       .then(data => {
         const games = data;
         this.setState({ games });
       });
   }
-
-  onChangeName = e => {
-    this.setState({ name: e.target.value });
-  };
-
-  onChangeMinPlayers = e => {
-    this.setState({ minPlayers: e.target.value });
-  };
-
-  onChangeMaxPlayers = e => {
-    this.setState({ maxPlayers: e.target.value });
-  };
+  componentDidMount() {
+    this.loadGames();
+  }
 
   onChangeImgUrl = e => {
     this.setState({ imgUrl: e.target.value });
@@ -46,9 +35,6 @@ export default class CreateGame extends Component {
 
   handleClose = () => {
     this.setState({ show: false });
-  };
-  handleOpen = result => {
-    this.setState({ show: true, result });
   };
 
   onSubmitUpdate = e => {
@@ -63,100 +49,34 @@ export default class CreateGame extends Component {
       method: 'POST',
       body: JSON.stringify(game),
       headers: { 'Content-type': 'application/json' }
-    });
-    fetch(' /games/')
-      .then(response => response.json())
-      .then(data => {
-        const games = data;
-        this.setState({
-          name: '',
-          minPlayers: '',
-          maxPlayers: '',
-          imgUrl: '',
-          games,
-          show: false
-        });
+    }).then(() => {
+      this.loadGames();
+      this.setState({
+        imgUrl: '',
+        show: false
       });
-  };
-
-  onSubmit = e => {
-    e.preventDefault();
-    const game = {
-      name: this.state.name,
-      minPlayers: this.state.minPlayers,
-      maxPlayers: this.state.maxPlayers,
-      imgUrl: this.state.imgUrl
-    };
-    fetch('/games/add', {
-      method: 'POST',
-      body: JSON.stringify(game),
-      headers: { 'Content-type': 'application/json' }
     });
-    fetch('/games/')
-      .then(response => response.json())
-      .then(data => {
-        const games = data;
-        this.setState({
-          name: '',
-          minPlayers: '',
-          maxPlayers: '',
-          imgUrl: '',
-          games
-        });
-      });
   };
 
   render() {
     const { games } = this.state;
-    const addGame = (
-      <Form onSubmit={this.onSubmit}>
-        <Form.Group>
-          <Form.Control
-            placeholder="Name"
-            type="text"
-            required
-            value={this.state.name}
-            onChange={this.onChangeName}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Control
-            placeholder="Min number of players"
-            type="number"
-            required
-            value={this.state.minPlayers}
-            onChange={this.onChangeMinPlayers}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Control
-            placeholder="Max number of players"
-            type="number"
-            required
-            value={this.state.maxPlayers}
-            onChange={this.onChangeMaxPlayers}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Control
-            placeholder="Game image URL"
-            type="text"
-            value={this.state.imgUrl}
-            onChange={this.onChangeImgUrl}
-          />
-        </Form.Group>
-        <Button variant="primary" type="submit">
-          Create Game
-        </Button>
-      </Form>
-    );
     if (this.state.games === null || this.state.users === [])
-      return <Container>{addGame}</Container>;
+      return (
+        <Container>
+          <Row>
+            <Col>
+              <NewGameForm onCreated={this.loadGames} />
+            </Col>
+          </Row>
+        </Container>
+      );
     else {
       return (
         <Container>
           <Row style={{ marginBottom: '1rem' }}>
-            <Col>{addGame}</Col>
+            <Col>
+              <NewGameForm onCreated={this.loadGames} />
+            </Col>
           </Row>
           <Row className="hidden-lg">
             <Col>

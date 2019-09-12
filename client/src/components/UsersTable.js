@@ -17,15 +17,13 @@ export default class UsersTable extends Component {
           </tr>
         </thead>
         <tbody>
-          {users
-            .sort((a, b) => b.games - a.games)
-            .map((user, index) => (
-              <UserInput
-                handleImageChange={handleImageChange}
-                key={index}
-                user={user}
-              />
-            ))}
+          {users.map((user, index) => (
+            <UserInput
+              handleImageChange={handleImageChange}
+              key={index}
+              user={user}
+            />
+          ))}
         </tbody>
       </Table>
     );

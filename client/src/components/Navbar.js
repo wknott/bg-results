@@ -17,8 +17,11 @@ export default class NavbarBGR extends Component {
             <Nav.Link as={Link} to="/users" href="#">
               Users
             </Nav.Link>
-            <Nav.Link as={Link} to="/game" href="#">
+            <Nav.Link as={Link} to="/games" href="#">
               Games
+            </Nav.Link>
+            <Nav.Link as={Link} to="/" href="#">
+              Results
             </Nav.Link>
             <Nav.Link as={Link} to="/gamestats" href="#">
               Game stats

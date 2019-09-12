@@ -18,7 +18,7 @@ function App() {
         <NavbarBGR />
         <Route path="/" exact component={ResultsList} />
         <Route path="/users" exact component={Users} />
-        <Route path="/game" exact component={CreateGame} />
+        <Route path="/games" exact component={CreateGame} />
         <Route path="/result" exact component={CreateResult} />
         <Route path="/gamestats" exact component={GameStatistics} />
         <Route path="/7wonders" exact component={Result7Wonders} />

@@ -80,7 +80,7 @@ export default class Users extends Component {
               <br />{' '}
               <UsersTable
                 handleImageChange={this.handleImageChange}
-                users={users}
+                users={users.sort((a, b) => b.games - a.games)}
               />
             </Col>
           </Row>
@@ -89,18 +89,20 @@ export default class Users extends Component {
               <br />{' '}
               <UsersTable
                 handleImageChange={this.handleImageChange}
-                users={users.filter(
-                  (game, index) => index < this.state.users.length / 2
-                )}
+                users={users
+                  .sort((a, b) => b.games - a.games)
+                  .filter((game, index) => index < this.state.users.length / 2)}
               />
             </Col>
             <Col>
               <br />{' '}
               <UsersTable
                 handleImageChange={this.handleImageChange}
-                users={users.filter(
-                  (game, index) => index >= this.state.users.length / 2
-                )}
+                users={users
+                  .sort((a, b) => b.games - a.games)
+                  .filter(
+                    (game, index) => index >= this.state.users.length / 2
+                  )}
               />
             </Col>
           </Row>

@@ -1,16 +1,6 @@
 import React, { Component } from 'react';
-import {
-  Form,
-  Button,
-  Container,
-  Row,
-  Col,
-  Table,
-  Image,
-  Modal
-} from 'react-bootstrap';
-import gameIcon from '../favicon.png';
-
+import { Form, Button, Container, Row, Col, Modal } from 'react-bootstrap';
+import GamesTable from './GamesTable';
 export default class CreateGame extends Component {
   constructor(props) {
     super(props);
@@ -117,6 +107,7 @@ export default class CreateGame extends Component {
   };
 
   render() {
+    const { games } = this.state;
     const addGame = (
       <Form onSubmit={this.onSubmit}>
         <Form.Group>
@@ -164,127 +155,33 @@ export default class CreateGame extends Component {
     else {
       return (
         <Container>
-          <Row>
+          <Row style={{ marginBottom: '1rem' }}>
             <Col>{addGame}</Col>
-          </Row>
-          <Row className="hidden-xs">
-            <Col>
-              <br />{' '}
-              <Table responsive striped bordered hover variant="dark">
-                <thead>
-                  <tr>
-                    <td>Image</td>
-                    <td>Name</td>
-                    <td>Min</td>
-                    <td>Max</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.state.games
-                    .sort((a, b) => b.name - a.name)
-                    .filter(
-                      (game, index) => index < this.state.games.length / 2
-                    )
-                    .map((game, index) => {
-                      return (
-                        <tr key={index}>
-                          <td
-                            className="game-img"
-                            style={{ cursor: 'pointer' }}
-                            onClick={() => this.handleImageChange(game)}
-                          >
-                            <Image
-                              className="imgGameList"
-                              src={game.imgUrl || gameIcon}
-                              rounded
-                            />
-                          </td>
-                          <td>{game.name}</td>
-                          <td>{game.minPlayers}</td>
-                          <td>{game.maxPlayers}</td>
-                        </tr>
-                      );
-                    })}
-                </tbody>
-              </Table>
-            </Col>
-            <Col>
-              <br />{' '}
-              <Table responsive striped bordered hover variant="dark">
-                <thead>
-                  <tr>
-                    <td>Image</td>
-                    <td>Name</td>
-                    <td>Min</td>
-                    <td>Max</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.state.games
-                    .sort((a, b) => b.name - a.name)
-                    .filter(
-                      (game, index) => index >= this.state.games.length / 2
-                    )
-                    .map((game, index) => {
-                      return (
-                        <tr key={index}>
-                          <td
-                            style={{ cursor: 'pointer' }}
-                            onClick={() => this.handleImageChange(game)}
-                          >
-                            <Image
-                              className="imgGameList"
-                              src={game.imgUrl || gameIcon}
-                              rounded
-                            />
-                          </td>
-                          <td>{game.name}</td>
-                          <td>{game.minPlayers}</td>
-                          <td>{game.maxPlayers}</td>
-                        </tr>
-                      );
-                    })}
-                </tbody>
-              </Table>
-            </Col>
           </Row>
           <Row className="hidden-lg">
             <Col>
-              <br />{' '}
-              <Table responsive striped bordered hover variant="dark">
-                <thead>
-                  <tr>
-                    <td>Image</td>
-                    <td>Name</td>
-                    <td>Min</td>
-                    <td>Max</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.state.games
-                    .sort((a, b) => b.name - a.name)
-                    .map((game, index) => {
-                      return (
-                        <tr key={index}>
-                          <td
-                            className="game-img"
-                            style={{ cursor: 'pointer' }}
-                            onClick={() => this.handleImageChange(game)}
-                          >
-                            <Image
-                              className="imgGameList"
-                              src={game.imgUrl || gameIcon}
-                              rounded
-                            />
-                          </td>
-                          <td>{game.name}</td>
-                          <td>{game.minPlayers}</td>
-                          <td>{game.maxPlayers}</td>
-                        </tr>
-                      );
-                    })}
-                </tbody>
-              </Table>
+              <GamesTable
+                handleImageChange={this.handleImageChange}
+                games={games.sort((a, b) => b.name - a.name)}
+              />
+            </Col>
+          </Row>
+          <Row className="hidden-xs">
+            <Col>
+              <GamesTable
+                handleImageChange={this.handleImageChange}
+                games={games
+                  .filter((game, index) => index < this.state.games.length / 2)
+                  .sort((a, b) => b.name - a.name)}
+              />
+            </Col>
+            <Col>
+              <GamesTable
+                handleImageChange={this.handleImageChange}
+                games={games
+                  .filter((game, index) => index >= this.state.games.length / 2)
+                  .sort((a, b) => b.name - a.name)}
+              />
             </Col>
           </Row>
           <Modal

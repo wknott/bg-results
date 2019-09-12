@@ -185,6 +185,7 @@ export default class CreateResult extends Component {
               </table>
             </Form.Group>
             <Button
+              className={this.state.scores.length !== 0 ? '' : 'hidden'}
               type="submit"
               disabled={!game || !this.isValid()}
               variant="primary"

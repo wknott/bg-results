@@ -13,9 +13,6 @@ import { addGamesAndWinns } from '../logic/game-statistics';
 export default class CreateResult extends Component {
   constructor(props) {
     super(props);
-    this.onChangeGame = this.onChangeGame.bind(this);
-    this.onChangeScores = this.onChangeScores.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
     this.state = {
       gameId: null,
       scores: [],
@@ -50,14 +47,23 @@ export default class CreateResult extends Component {
     });
   }
 
-  onChangeGame(e) {
+  onChangeGame = e => {
+    const gameId = e.target.value;
+    const { minPlayers, maxPlayers } = this.state.games.find(
+      game => game._id === gameId
+    );
     if (e.target.value.length > 0)
-      this.setState({ gameId: e.target.value, showButtons: true });
-  }
+      if (minPlayers !== maxPlayers)
+        this.setState({ gameId: e.target.value, showButtons: true });
+      else {
+        this.onChangeNumberOfPlayers(minPlayers);
+        this.setState({ gameId: e.target.value });
+      }
+  };
 
-  onChangeScores(e) {
+  onChangeScores = e => {
     this.setState({ scores: e.target.value });
-  }
+  };
 
   onChangeNumberOfPlayers = length => {
     const emptyScores = Array.from({ length }, () => ({
@@ -77,7 +83,7 @@ export default class CreateResult extends Component {
     return scores;
   };
 
-  onSubmit(e) {
+  onSubmit = e => {
     e.preventDefault();
     const { gameId, scores } = this.state;
     this.setState({ loading: true });
@@ -91,7 +97,7 @@ export default class CreateResult extends Component {
       this.setState({ loading: false });
       this.props.history.push('/');
     });
-  }
+  };
 
   isValid() {
     const players = this.state.scores.map(score => score.user);

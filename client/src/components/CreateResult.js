@@ -6,10 +6,10 @@ import {
   Spinner,
   Button,
   Container,
-  ButtonGroup
+  Table
 } from 'react-bootstrap';
 import { addGamesAndWinns } from '../logic/game-statistics';
-
+import NumberOfPlayersButtonGroup from './NumberOfPlayersButtonGroup';
 export default class CreateResult extends Component {
   constructor(props) {
     super(props);
@@ -49,16 +49,17 @@ export default class CreateResult extends Component {
 
   onChangeGame = e => {
     const gameId = e.target.value;
-    const { minPlayers, maxPlayers } = this.state.games.find(
-      game => game._id === gameId
-    );
-    if (e.target.value.length > 0)
+    if (gameId) {
+      const { minPlayers, maxPlayers } = this.state.games.find(
+        game => game._id === gameId
+      );
       if (minPlayers !== maxPlayers)
         this.setState({ gameId: e.target.value, showButtons: true });
       else {
         this.onChangeNumberOfPlayers(minPlayers);
-        this.setState({ gameId: e.target.value });
+        this.setState({ gameId: e.target.value, showButtons: false });
       }
+    }
   };
 
   onChangeScores = e => {
@@ -123,7 +124,11 @@ export default class CreateResult extends Component {
         </Container>
       );
     } else {
-      const game = games.find(game => game._id === this.state.gameId);
+      const game = games.find(game => game._id === this.state.gameId) || {
+        name: '',
+        minPlayers: 0,
+        maxPlayers: 0
+      };
       return (
         <Container>
           <Form onSubmit={this.onSubmit}>
@@ -143,35 +148,14 @@ export default class CreateResult extends Component {
               </Form.Control>
             </Form.Group>
             <Form.Group>
-              {this.state.showButtons ? (
-                <div>
-                  <h4 className="white-text">Choose number of players:</h4>
-                  <ButtonGroup size="lg">
-                    {Array.from(
-                      {
-                        length: game.maxPlayers - game.minPlayers + 1
-                      },
-                      (_, index) => (
-                        <Button
-                          key={index}
-                          onClick={() =>
-                            this.onChangeNumberOfPlayers(
-                              game.minPlayers + index
-                            )
-                          }
-                        >
-                          {game.minPlayers + index}
-                        </Button>
-                      )
-                    )}
-                  </ButtonGroup>
-                </div>
-              ) : (
-                <></>
-              )}
+              <NumberOfPlayersButtonGroup
+                game={game}
+                onChange={this.onChangeNumberOfPlayers}
+                showButtons={this.state.showButtons}
+              />
             </Form.Group>
             <Form.Group>
-              <table>
+              <Table responsive striped bordered hover variant="dark">
                 <thead className="thead-dark" />
                 <tbody>
                   {scores.map((score, index) => (
@@ -188,7 +172,7 @@ export default class CreateResult extends Component {
                     />
                   ))}
                 </tbody>
-              </table>
+              </Table>
             </Form.Group>
             <Button
               className={this.state.scores.length !== 0 ? '' : 'hidden'}

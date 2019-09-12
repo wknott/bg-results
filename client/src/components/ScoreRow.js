@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-export default class ScoreInput extends Component {
+export default class ScoreRow extends Component {
   onChangeUser = e => {
     const { score, onChange } = this.props;
     const user = e.target.value;

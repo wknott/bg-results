@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ScoreInput from './ScoreInput';
+import ScoreRow from './ScoreRow';
 import {
   Alert,
   Form,
@@ -175,7 +175,7 @@ export default class CreateResult extends Component {
                 <thead className="thead-dark" />
                 <tbody>
                   {scores.map((score, index) => (
-                    <ScoreInput
+                    <ScoreRow
                       key={index}
                       score={score}
                       users={users}

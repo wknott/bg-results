@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Form, Button, Container, Row, Col, Modal } from 'react-bootstrap';
+import { Container, Row, Col} from 'react-bootstrap';
 import GamesTable from './GamesTable';
 import NewGameForm from './NewGameForm';
+import ImageUpdateModal from "./ImageUpdateModal";
 export default class CreateGame extends Component {
   constructor(props) {
     super(props);
@@ -104,31 +105,13 @@ export default class CreateGame extends Component {
               />
             </Col>
           </Row>
-          <Modal
-            className="dark-modal"
-            centered
-            show={this.state.show !== false}
-            onHide={this.handleClose}
-          >
-            <Modal.Header closeButton></Modal.Header>
-            <Modal.Body>
-              Add Game image URL:
-              <Form onSubmit={this.onSubmitUpdate}>
-                <Form.Group>
-                  <Form.Control
-                    placeholder="Game image URL"
-                    type="text"
-                    required
-                    value={this.state.imgUrl}
-                    onChange={this.onChangeImgUrl}
-                  />
-                </Form.Group>
-                <Button variant="primary" type="submit">
-                  Update Game
-                </Button>
-              </Form>
-            </Modal.Body>
-          </Modal>
+          <ImageUpdateModal
+            show={this.state.show}
+            handleClose={this.handleClose}
+            onSubmit={this.onSubmitUpdate}
+            imgUrl={this.state.imgUrl}
+            onChange={this.onChangeImgUrl}
+          />
         </Container>
       );
     }

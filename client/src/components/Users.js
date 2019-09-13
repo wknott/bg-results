@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Form, Button, Container, Row, Col, Modal } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import { addGamesAndWinns } from '../logic/game-statistics';
 import NewUserForm from './NewUserForm';
 import UsersTable from './UsersTable';
+import ImageUpdateModal from './ImageUpdateModal';
 export default class Users extends Component {
   constructor(props) {
     super(props);
@@ -105,31 +106,13 @@ export default class Users extends Component {
               />
             </Col>
           </Row>
-          <Modal
-            className="dark-modal"
-            centered
-            show={this.state.show !== false}
-            onHide={this.handleClose}
-          >
-            <Modal.Header closeButton></Modal.Header>
-            <Modal.Body>
-              Add User image URL:
-              <Form onSubmit={this.onSubmitUpdate}>
-                <Form.Group>
-                  <Form.Control
-                    placeholder="User image URL"
-                    type="text"
-                    required
-                    value={this.state.imgUrl}
-                    onChange={this.onChangeImgUrl}
-                  />
-                </Form.Group>
-                <Button variant="primary" type="submit">
-                  Update User
-                </Button>
-              </Form>
-            </Modal.Body>
-          </Modal>
+          <ImageUpdateModal
+            show={this.state.show}
+            handleClose={this.handleClose}
+            onSubmit={this.onSubmitUpdate}
+            imgUrl={this.state.imgUrl}
+            onChange={this.onChangeImgUrl}
+          />
         </Container>
       );
     }

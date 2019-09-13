@@ -10,12 +10,12 @@ import {
   Alert,
   Badge
 } from 'react-bootstrap';
-import LabeledRange from './LabeledRange';
 import coinImg from '../coin.png';
 import wonderImg from '../wonder.png';
 import placeholder from '../placeholder.png';
 import museum from '../museum.png';
 import sigma from '../sigma.png';
+import Range7Wonders from './Range7Wonders';
 export default class Result7Wonders extends Component {
   constructor(props) {
     super(props);
@@ -38,13 +38,15 @@ export default class Result7Wonders extends Component {
     const emptyScores = Array.from({ length }, () => ({
       user: null,
       nameOfWonder: '',
-      militaryPoints: 0,
-      coinPoints: 0,
-      wonderPoints: 0,
-      civilianPoints: 0,
-      commercePoints: 0,
-      guildPoints: 0,
-      sciencePoints: 0
+      points: {
+        military: 0,
+        coin: 0,
+        wonder: 0,
+        civilian: 0,
+        commerce: 0,
+        guild: 0,
+        science: 0
+      }
     }));
     const scores = this.state.scores.concat(emptyScores).slice(0, length);
     this.setState({ scores });
@@ -61,6 +63,9 @@ export default class Result7Wonders extends Component {
     const nameOfWonder = e.target.value;
     const updatedScore = { ...score, nameOfWonder };
     const newScores = scores.map(s => (s === score ? updatedScore : s));
+    this.setState({ scores: newScores });
+  };
+  onScoresChange = newScores => {
     this.setState({ scores: newScores });
   };
   render() {
@@ -171,6 +176,7 @@ export default class Result7Wonders extends Component {
         </Button>
       </>
     );
+
     return (
       <Container>
         <Row>
@@ -207,86 +213,22 @@ export default class Result7Wonders extends Component {
             </ButtonGroup>
           </Col>
         </Row>
-        <Row
-          style={{
-            textShadow: '-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black'
-          }}
-        >
-          <Col
-            style={{ marginBottom: '0.1rem' }}
-            className={this.state.windowState === 'players' ? '' : 'hidden'}
-          >
-            <h3 style={{ color: '#007bff', textAlign: 'center' }}>Username</h3>
-          </Col>
-          <Col
-            style={{ marginBottom: '0.1rem' }}
-            className={this.state.windowState === 'players' ? '' : 'hidden'}
-          >
-            <h3 style={{ color: '#6c757d', textAlign: 'center' }}>Wonder</h3>
-          </Col>
-          <Col
-            style={{ marginBottom: '0.1rem' }}
-            className={this.state.windowState === 'military' ? '' : 'hidden'}
-          >
-            <h2 style={{ color: '#dc3545', textAlign: 'center' }}>
-              Military points
-            </h2>
-          </Col>
-          <Col
-            style={{ marginBottom: '0.1rem' }}
-            className={this.state.windowState === 'coin' ? '' : 'hidden'}
-          >
-            <h2 style={{ color: 'yellow', textAlign: 'center' }}>
-              Coin points
-            </h2>
-          </Col>
-          <Col
-            style={{ marginBottom: '0.1rem' }}
-            className={this.state.windowState === 'wonder' ? '' : 'hidden'}
-          >
-            <h2 style={{ color: 'orange', textAlign: 'center' }}>
-              Wonder points
-            </h2>
-          </Col>
-          <Col
-            style={{ marginBottom: '0.1rem' }}
-            className={this.state.windowState === 'civilian' ? '' : 'hidden'}
-          >
-            <h2 style={{ color: '#007bff', textAlign: 'center' }}>
-              Civilian points
-            </h2>
-          </Col>
-          <Col
-            style={{ marginBottom: '0.1rem' }}
-            className={this.state.windowState === 'commerce' ? '' : 'hidden'}
-          >
-            <h4 style={{ color: '#ffc107', textAlign: 'center' }}>
-              Commerce points
-            </h4>
-          </Col>
-          <Col
-            style={{ marginBottom: '0.1rem' }}
-            className={this.state.windowState === 'guild' ? '' : 'hidden'}
-          >
-            <h2 style={{ color: 'indigo', textAlign: 'center' }}>
-              Guild points
-            </h2>
-          </Col>
-          <Col
-            style={{ marginBottom: '0.1rem' }}
-            className={this.state.windowState === 'science' ? '' : 'hidden'}
-          >
-            <h2 style={{ color: '#28a745', textAlign: 'center' }}>
-              Science points
-            </h2>
-          </Col>
-          <Col
-            style={{ marginBottom: '0.1rem' }}
-            className={this.state.windowState === 'players' ? 'hidden' : ''}
-            xs="3"
-          >
-            <Image src={sigma} style={{ marginLeft: '3px' }} />
-          </Col>
+        <Row>
+          {this.state.windowState === 'players' ? (
+            <Col
+              style={{ marginBottom: '0.1rem' }}
+              className={this.state.windowState === 'players' ? 'hidden' : ''}
+              xs="3"
+            >
+              <Image src={sigma} style={{ marginLeft: '3px' }} />
+            </Col>
+          ) : (
+            <Range7Wonders
+              type={this.state.windowState}
+              scores={this.state.scores}
+              onScoresChange={this.onScoresChange}
+            />
+          )}
         </Row>
         {this.state.scores.map((score, index) => {
           return (
@@ -322,136 +264,12 @@ export default class Result7Wonders extends Component {
                 </select>
               </Col>
               <Col
-                className={
-                  this.state.windowState === 'military' ? '' : 'hidden'
-                }
-              >
-                <LabeledRange
-                  MIN={-9}
-                  MAX={18}
-                  onChange={value => {
-                    const militaryPoints = value[0];
-                    const updatedScore = { ...score, militaryPoints };
-                    const newScores = this.state.scores.map(s =>
-                      s === score ? updatedScore : s
-                    );
-                    this.setState({ scores: newScores });
-                  }}
-                />
-              </Col>
-              <Col
-                className={this.state.windowState === 'coin' ? '' : 'hidden'}
-              >
-                <LabeledRange
-                  MIN={0}
-                  MAX={30}
-                  onChange={value => {
-                    const coinPoints = value[0];
-                    const updatedScore = { ...score, coinPoints };
-                    const newScores = this.state.scores.map(s =>
-                      s === score ? updatedScore : s
-                    );
-                    this.setState({ scores: newScores });
-                  }}
-                />
-              </Col>
-              <Col
-                className={this.state.windowState === 'wonder' ? '' : 'hidden'}
-              >
-                <LabeledRange
-                  MIN={0}
-                  MAX={25}
-                  onChange={value => {
-                    const wonderPoints = value[0];
-                    const updatedScore = { ...score, wonderPoints };
-                    const newScores = this.state.scores.map(s =>
-                      s === score ? updatedScore : s
-                    );
-                    this.setState({ scores: newScores });
-                  }}
-                />
-              </Col>
-              <Col
-                className={
-                  this.state.windowState === 'civilian' ? '' : 'hidden'
-                }
-              >
-                <LabeledRange
-                  MIN={0}
-                  MAX={30}
-                  onChange={value => {
-                    const civilianPoints = value[0];
-                    const updatedScore = { ...score, civilianPoints };
-                    const newScores = this.state.scores.map(s =>
-                      s === score ? updatedScore : s
-                    );
-                    this.setState({ scores: newScores });
-                  }}
-                />
-              </Col>
-              <Col
-                className={
-                  this.state.windowState === 'commerce' ? '' : 'hidden'
-                }
-              >
-                <LabeledRange
-                  MIN={0}
-                  MAX={10}
-                  onChange={value => {
-                    const commercePoints = value[0];
-                    const updatedScore = { ...score, commercePoints };
-                    const newScores = this.state.scores.map(s =>
-                      s === score ? updatedScore : s
-                    );
-                    this.setState({ scores: newScores });
-                  }}
-                />
-              </Col>
-              <Col
-                className={this.state.windowState === 'guild' ? '' : 'hidden'}
-              >
-                <LabeledRange
-                  MIN={0}
-                  MAX={30}
-                  onChange={value => {
-                    const guildPoints = value[0];
-                    const updatedScore = { ...score, guildPoints };
-                    const newScores = this.state.scores.map(s =>
-                      s === score ? updatedScore : s
-                    );
-                    this.setState({ scores: newScores });
-                  }}
-                />
-              </Col>
-              <Col
-                className={this.state.windowState === 'science' ? '' : 'hidden'}
-              >
-                <LabeledRange
-                  MIN={0}
-                  MAX={50}
-                  onChange={value => {
-                    const sciencePoints = value[0];
-                    const updatedScore = { ...score, sciencePoints };
-                    const newScores = this.state.scores.map(s =>
-                      s === score ? updatedScore : s
-                    );
-                    this.setState({ scores: newScores });
-                  }}
-                />
-              </Col>
-              <Col
                 xs="3"
                 className={this.state.windowState === 'players' ? 'hidden' : ''}
               >
                 <h2>
                   <Badge pill variant="primary">
-                    {score.militaryPoints +
-                      score.commercePoints +
-                      score.coinPoints +
-                      score.guildPoints +
-                      score.civilianPoints +
-                      score.sciencePoints +
-                      score.wonderPoints}
+                    {Object.values(score.points).reduce((x, y) => x + y, 0)}
                   </Badge>
                 </h2>
               </Col>

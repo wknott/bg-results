@@ -139,16 +139,6 @@ export default class ResultsList extends Component {
     if (this.state.results === null) {
       return <Spinner animation="border" variant="light" />;
     }
-    if (this.state.results.length === 0) {
-      return (
-        <Container>
-          {gameSelect}
-          <Alert key="index" variant="primary">
-            <Alert.Link href="/result"> Create result </Alert.Link>of this game!
-          </Alert>
-        </Container>
-      );
-    }
     const gameSelect = (
       <Form>
         <Form.Group>
@@ -168,6 +158,16 @@ export default class ResultsList extends Component {
         </Form.Group>
       </Form>
     );
+    if (this.state.results.length === 0) {
+      return (
+        <Container>
+          {gameSelect}
+          <Alert key="index" variant="primary">
+            <Alert.Link href="/result"> Create result </Alert.Link>of this game!
+          </Alert>
+        </Container>
+      );
+    }
     return (
       <Container>
         {gameSelect}

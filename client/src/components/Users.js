@@ -66,55 +66,52 @@ export default class Users extends Component {
           <NewUserForm onCreated={this.loadUsers} />
         </Container>
       );
-    else {
-      const { users } = this.state;
-      return (
-        <Container>
-          <Row>
-            <Col>
-              <NewUserForm onCreated={this.loadUsers} />
-            </Col>
-          </Row>
-          <Row className="hidden-lg">
-            <Col>
-              <br />{' '}
-              <UsersTable
-                handleImageChange={this.handleImageChange}
-                users={users.sort((a, b) => b.games - a.games)}
-              />
-            </Col>
-          </Row>
-          <Row className="hidden-xs">
-            <Col>
-              <br />{' '}
-              <UsersTable
-                handleImageChange={this.handleImageChange}
-                users={users
-                  .sort((a, b) => b.games - a.games)
-                  .filter((game, index) => index < this.state.users.length / 2)}
-              />
-            </Col>
-            <Col>
-              <br />{' '}
-              <UsersTable
-                handleImageChange={this.handleImageChange}
-                users={users
-                  .sort((a, b) => b.games - a.games)
-                  .filter(
-                    (game, index) => index >= this.state.users.length / 2
-                  )}
-              />
-            </Col>
-          </Row>
-          <ImageUpdateModal
-            show={this.state.show}
-            handleClose={this.handleClose}
-            onSubmit={this.onSubmitUpdate}
-            imgUrl={this.state.imgUrl}
-            onChange={this.onChangeImgUrl}
-          />
-        </Container>
-      );
-    }
+
+    const { users } = this.state;
+    return (
+      <Container>
+        <Row>
+          <Col>
+            <NewUserForm onCreated={this.loadUsers} />
+          </Col>
+        </Row>
+        <Row className="hidden-lg">
+          <Col>
+            <br />{' '}
+            <UsersTable
+              handleImageChange={this.handleImageChange}
+              users={users.sort((a, b) => b.games - a.games)}
+            />
+          </Col>
+        </Row>
+        <Row className="hidden-xs">
+          <Col>
+            <br />{' '}
+            <UsersTable
+              handleImageChange={this.handleImageChange}
+              users={users
+                .sort((a, b) => b.games - a.games)
+                .filter((game, index) => index < this.state.users.length / 2)}
+            />
+          </Col>
+          <Col>
+            <br />{' '}
+            <UsersTable
+              handleImageChange={this.handleImageChange}
+              users={users
+                .sort((a, b) => b.games - a.games)
+                .filter((game, index) => index >= this.state.users.length / 2)}
+            />
+          </Col>
+        </Row>
+        <ImageUpdateModal
+          show={this.state.show}
+          handleClose={this.handleClose}
+          onSubmit={this.onSubmitUpdate}
+          imgUrl={this.state.imgUrl}
+          onChange={this.onChangeImgUrl}
+        />
+      </Container>
+    );
   }
 }

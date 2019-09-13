@@ -174,15 +174,18 @@ export default class CreateResult extends Component {
                 </tbody>
               </Table>
             </Form.Group>
-            <Button
-              className={this.state.scores.length !== 0 ? '' : 'hidden'}
-              type="submit"
-              disabled={!game || !this.isValid()}
-              variant="primary"
-            >
-              {' '}
-              Create Result{' '}
-            </Button>
+            {this.state.scores.length !== 0 ? (
+              <Button
+                type="submit"
+                disabled={!game || !this.isValid()}
+                variant="primary"
+              >
+                {' '}
+                Create Result{' '}
+              </Button>
+            ) : (
+              {}
+            )}
           </Form>
         </Container>
       );

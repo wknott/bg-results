@@ -136,6 +136,19 @@ export default class ResultsList extends Component {
 
   render() {
     const { result } = this.state;
+    if (this.state.results === null) {
+      return <Spinner animation="border" variant="light" />;
+    }
+    if (this.state.results.length === 0) {
+      return (
+        <Container>
+          {gameSelect}
+          <Alert key="index" variant="primary">
+            <Alert.Link href="/result"> Create result </Alert.Link>of this game!
+          </Alert>
+        </Container>
+      );
+    }
     const gameSelect = (
       <Form>
         <Form.Group>
@@ -155,53 +168,40 @@ export default class ResultsList extends Component {
         </Form.Group>
       </Form>
     );
-    if (this.state.results === null) {
-      return <Spinner animation="border" variant="light" />;
-    } else if (this.state.results.length === 0) {
-      return (
-        <Container>
-          {gameSelect}
-          <Alert key="index" variant="primary">
-            <Alert.Link href="/result"> Create result </Alert.Link>of this game!
-          </Alert>
-        </Container>
-      );
-    } else {
-      return (
-        <Container>
-          {gameSelect}
-          <Table hover striped bordered variant="dark" responsive>
-            <thead>
-              <tr>
-                <th>Game</th>
-                <th>Date</th>
-                <th>Winner</th>
-              </tr>
-            </thead>
-            <tbody>{this.resultsList()}</tbody>
-          </Table>
-          <Modal
-            className="dark-modal"
-            centered
-            show={this.state.show !== false}
-            onHide={this.handleClose}
-          >
-            <Modal.Header closeButton className="hidden-xs">
-              {result.game ? result.game.name : ''}
-              {', '}
-              {formatDateString(result.date)}
-            </Modal.Header>
-            <Modal.Header closeButton className="hidden-lg">
-              {result.game ? result.game.name : ''}
-              {', '}
-              {formatDateStringShort(result.date)}
-            </Modal.Header>
-            <Modal.Body>
-              <Result result={result} />
-            </Modal.Body>
-          </Modal>
-        </Container>
-      );
-    }
+    return (
+      <Container>
+        {gameSelect}
+        <Table hover striped bordered variant="dark" responsive>
+          <thead>
+            <tr>
+              <th>Game</th>
+              <th>Date</th>
+              <th>Winner</th>
+            </tr>
+          </thead>
+          <tbody>{this.resultsList()}</tbody>
+        </Table>
+        <Modal
+          className="dark-modal"
+          centered
+          show={this.state.show !== false}
+          onHide={this.handleClose}
+        >
+          <Modal.Header closeButton className="hidden-xs">
+            {result.game ? result.game.name : ''}
+            {', '}
+            {formatDateString(result.date)}
+          </Modal.Header>
+          <Modal.Header closeButton className="hidden-lg">
+            {result.game ? result.game.name : ''}
+            {', '}
+            {formatDateStringShort(result.date)}
+          </Modal.Header>
+          <Modal.Body>
+            <Result result={result} />
+          </Modal.Body>
+        </Modal>
+      </Container>
+    );
   }
 }

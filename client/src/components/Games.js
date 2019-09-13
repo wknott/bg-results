@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Container, Row, Col} from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import GamesTable from './GamesTable';
 import NewGameForm from './NewGameForm';
-import ImageUpdateModal from "./ImageUpdateModal";
+import ImageUpdateModal from './ImageUpdateModal';
 export default class CreateGame extends Component {
   constructor(props) {
     super(props);
@@ -71,49 +71,47 @@ export default class CreateGame extends Component {
           </Row>
         </Container>
       );
-    else {
-      return (
-        <Container>
-          <Row style={{ marginBottom: '1rem' }}>
-            <Col>
-              <NewGameForm onCreated={this.loadGames} />
-            </Col>
-          </Row>
-          <Row className="hidden-lg">
-            <Col>
-              <GamesTable
-                handleImageChange={this.handleImageChange}
-                games={games.sort((a, b) => b.name - a.name)}
-              />
-            </Col>
-          </Row>
-          <Row className="hidden-xs">
-            <Col>
-              <GamesTable
-                handleImageChange={this.handleImageChange}
-                games={games
-                  .filter((game, index) => index < this.state.games.length / 2)
-                  .sort((a, b) => b.name - a.name)}
-              />
-            </Col>
-            <Col>
-              <GamesTable
-                handleImageChange={this.handleImageChange}
-                games={games
-                  .filter((game, index) => index >= this.state.games.length / 2)
-                  .sort((a, b) => b.name - a.name)}
-              />
-            </Col>
-          </Row>
-          <ImageUpdateModal
-            show={this.state.show}
-            handleClose={this.handleClose}
-            onSubmit={this.onSubmitUpdate}
-            imgUrl={this.state.imgUrl}
-            onChange={this.onChangeImgUrl}
-          />
-        </Container>
-      );
-    }
+    return (
+      <Container>
+        <Row style={{ marginBottom: '1rem' }}>
+          <Col>
+            <NewGameForm onCreated={this.loadGames} />
+          </Col>
+        </Row>
+        <Row className="hidden-lg">
+          <Col>
+            <GamesTable
+              handleImageChange={this.handleImageChange}
+              games={games.sort((a, b) => b.name - a.name)}
+            />
+          </Col>
+        </Row>
+        <Row className="hidden-xs">
+          <Col>
+            <GamesTable
+              handleImageChange={this.handleImageChange}
+              games={games
+                .filter((game, index) => index < this.state.games.length / 2)
+                .sort((a, b) => b.name - a.name)}
+            />
+          </Col>
+          <Col>
+            <GamesTable
+              handleImageChange={this.handleImageChange}
+              games={games
+                .filter((game, index) => index >= this.state.games.length / 2)
+                .sort((a, b) => b.name - a.name)}
+            />
+          </Col>
+        </Row>
+        <ImageUpdateModal
+          show={this.state.show}
+          handleClose={this.handleClose}
+          onSubmit={this.onSubmitUpdate}
+          imgUrl={this.state.imgUrl}
+          onChange={this.onChangeImgUrl}
+        />
+      </Container>
+    );
   }
 }

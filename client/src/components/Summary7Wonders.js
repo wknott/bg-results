@@ -1,15 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Badge } from 'react-bootstrap';
-
-// const propsByState = [
-//   military: { title: "Military points", min: -9, max: 18, color: "#dc3545" },
-//   coin: { title: "Coin points", min: 0, max: 10, color: "yellow" },
-//   wonder: { title: "Wonder points", min: 0, max: 25, color: "orange" },
-//   civilian: { title: "Civilian points", min: 0, max: 30, color: "#007bff" },
-//   commerce: { title: "Commerce points", min: 0, max: 10, color: "#ffc107" },
-//   guild: { title: "Guild points", min: 0, max: 20, color: "indigo" },
-//   science: { title: "Science points", min: 0, max: 50, color: "#28a745" }
-// ];
+import { Table } from 'react-bootstrap';
 
 export default class Range7Wonders extends Component {
   render() {
@@ -26,7 +16,9 @@ export default class Range7Wonders extends Component {
             <td style={{ backgroundColor: '#ffc107' }}>C</td>
             <td style={{ backgroundColor: 'indigo' }}>G</td>
             <td style={{ backgroundColor: '#28a745' }}>S</td>
-            <td>Sum</td>
+            <td>
+              <strong>Σ</strong>
+            </td>
           </tr>
         </thead>
         <tbody>
@@ -39,9 +31,10 @@ export default class Range7Wonders extends Component {
                   <td key={index}>{points}</td>
                 ))}
                 <td>
-                  <Badge variant="primary">
+                  <strong>
+                    {' '}
                     {Object.values(score.points).reduce((x, y) => x + y, 0)}
-                  </Badge>
+                  </strong>
                 </td>
               </tr>
             );

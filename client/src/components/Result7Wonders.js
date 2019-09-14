@@ -91,6 +91,37 @@ export default class Result7Wonders extends Component {
   onScoresChange = newScores => {
     this.setState({ scores: newScores });
   };
+  isValid() {
+    const players = this.state.scores.map(score => score.user);
+    return (
+      JSON.stringify(players) === JSON.stringify([...new Set(players)]) &&
+      this.state.scores.every(score => score.user)
+    );
+  }
+  onSubmit = () => {
+    fetch(' /games/')
+      .then(response => response.json())
+      .then(data => {
+        const { scores } = this.state;
+        const gameId = data.find(game => game.name === '7 Cudów Świata')._id;
+
+        this.setState({ loading: true });
+        const newScores = scores.map(({ user, points }) => ({
+          user,
+          points: Object.values(points).reduce((x, y) => x + y, 0)
+        }));
+        const result = { game: gameId, scores: newScores };
+        console.log(result);
+        fetch(' /results/add', {
+          method: 'POST',
+          body: JSON.stringify(result),
+          headers: { 'Content-Type': 'application/json' }
+        }).then(() => {
+          this.setState({ loading: false });
+          this.props.history.push('/');
+        });
+      });
+  };
   render() {
     const { users } = this.state;
     if (users === null) {
@@ -287,7 +318,7 @@ export default class Result7Wonders extends Component {
                 scores={this.state.scores}
                 users={this.state.users}
               />
-              <Button onClick={() => console.log(this.state.scores)}>
+              <Button disabled={!this.isValid()} onClick={this.onSubmit}>
                 Submit
               </Button>
             </Col>

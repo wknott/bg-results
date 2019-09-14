@@ -184,7 +184,7 @@ export default class CreateResult extends Component {
                 Create Result{' '}
               </Button>
             ) : (
-              {}
+              <></>
             )}
           </Form>
         </Container>

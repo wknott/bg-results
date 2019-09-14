@@ -2,11 +2,8 @@ import * as React from 'react';
 import { Range, getTrackBackground } from 'react-range';
 
 class Labeled extends React.Component {
-  state = {
-    values: [0]
-  };
   render() {
-    const { MIN, MAX } = this.props;
+    const { MIN, MAX, value, onChange } = this.props;
     return (
       <div
         style={{
@@ -17,13 +14,12 @@ class Labeled extends React.Component {
         }}
       >
         <Range
-          values={this.state.values}
+          values={[value]}
           step={1}
           min={MIN}
           max={MAX}
           onChange={values => {
-            this.props.onChange(values);
-            this.setState({ values });
+            onChange(values[0]);
           }}
           renderTrack={({ props, children }) => (
             <div
@@ -43,7 +39,7 @@ class Labeled extends React.Component {
                   width: '100%',
                   borderRadius: '4px',
                   background: getTrackBackground({
-                    values: this.state.values,
+                    values: [value],
                     colors: ['#548BF4', '#ccc'],
                     min: MIN,
                     max: MAX
@@ -83,7 +79,7 @@ class Labeled extends React.Component {
                   textAlign: 'center'
                 }}
               >
-                {this.state.values[0]}
+                {value}
               </div>
               <div
                 style={{

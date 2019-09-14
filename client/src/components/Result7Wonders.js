@@ -7,8 +7,7 @@ import {
   ButtonGroup,
   Button,
   Spinner,
-  Alert,
-  Badge
+  Alert
 } from 'react-bootstrap';
 import coinImg from '../coin.png';
 import wonderImg from '../wonder.png';
@@ -16,12 +15,36 @@ import placeholder from '../placeholder.png';
 import museum from '../museum.png';
 import sigma from '../sigma.png';
 import Range7Wonders from './Range7Wonders';
+import Summary7Wonders from './Summary7Wonders';
+const nameOfWonders = [
+  'Alexandria',
+  'Antiocheia',
+  'Atlantis',
+  'Babylon',
+  'Capua',
+  'Caylus',
+  'Chichen Itza',
+  'Colliture',
+  'Ephesos',
+  'Giza',
+  'Halikarnassos',
+  'Helvetia',
+  'Kings Landing',
+  'Lhasa',
+  'Machu Picchu',
+  'Olympia',
+  'Rhodos',
+  'Rlyeh',
+  'Roll Through the ages',
+  'Tartaros'
+];
+
 export default class Result7Wonders extends Component {
   constructor(props) {
     super(props);
     this.state = {
       users: null,
-      windowState: 'players',
+      windowState: 'summary',
       scores: []
     };
   }
@@ -82,28 +105,7 @@ export default class Result7Wonders extends Component {
         </Container>
       );
     }
-    const nameOfWonders = [
-      'Alexandria',
-      'Antiocheia',
-      'Atlantis',
-      'Babylon',
-      'Capua',
-      'Caylus',
-      'Chichen Itza',
-      'Colliture',
-      'Ephesos',
-      'Giza',
-      'Halikarnassos',
-      'Helvetia',
-      'Kings Landing',
-      'Lhasa',
-      'Machu Picchu',
-      'Olympia',
-      'Rhodos',
-      'Rlyeh',
-      'Roll Through the ages',
-      'Tartaros'
-    ];
+
     const ButtonGroup1 = (
       <>
         <Button
@@ -135,6 +137,11 @@ export default class Result7Wonders extends Component {
         >
           <Image src={coinImg} width="40" height="40" alt="C" />
         </Button>
+      </>
+    );
+
+    const ButtonGroup2 = (
+      <>
         <Button
           className="without-padding"
           variant="light"
@@ -142,11 +149,6 @@ export default class Result7Wonders extends Component {
         >
           <Image src={wonderImg} width="40" height="40" alt="W" />
         </Button>
-      </>
-    );
-
-    const ButtonGroup2 = (
-      <>
         <Button
           className="without-padding"
           variant="primary"
@@ -161,6 +163,10 @@ export default class Result7Wonders extends Component {
         >
           <Image src={placeholder} width="40" height="40" alt="" />
         </Button>
+      </>
+    );
+    const ButtonGroup3 = (
+      <>
         <Button
           className="without-padding purple-button"
           onClick={() => this.setState({ windowState: 'guild' })}
@@ -174,9 +180,21 @@ export default class Result7Wonders extends Component {
         >
           <Image src={placeholder} width="40" height="40" alt="" />
         </Button>
+        <Button
+          className="without-padding"
+          variant="secondary"
+          onClick={() => this.setState({ windowState: 'summary' })}
+        >
+          <Image
+            src={sigma}
+            width="32"
+            height="32"
+            alt=""
+            style={{ margin: '4px' }}
+          />
+        </Button>
       </>
     );
-
     return (
       <Container>
         <Row>
@@ -206,83 +224,77 @@ export default class Result7Wonders extends Component {
             <ButtonGroup className="hidden-xs margin-bottom">
               {ButtonGroup1}
               {ButtonGroup2}
+              {ButtonGroup3}
             </ButtonGroup>
             <ButtonGroup className="hidden-lg">{ButtonGroup1}</ButtonGroup>
+            <ButtonGroup className="hidden-lg">{ButtonGroup2}</ButtonGroup>
             <ButtonGroup className="hidden-lg margin-bottom">
-              {ButtonGroup2}
+              {ButtonGroup3}
             </ButtonGroup>
           </Col>
         </Row>
-        <Row>
-          {this.state.windowState === 'players' ? (
-            <Col
-              style={{ marginBottom: '0.1rem' }}
-              className={this.state.windowState === 'players' ? 'hidden' : ''}
-              xs="3"
-            >
-              <Image src={sigma} style={{ marginLeft: '3px' }} />
+        {this.state.windowState === 'players' ? (
+          <>
+            {this.state.scores.map((score, index) => (
+              <Row key={index}>
+                <Col>
+                  <select
+                    className="form-control"
+                    onChange={e => this.onChangeUser(e, score)}
+                  >
+                    <option value="">Player</option>
+                    {users.map(user => (
+                      <option key={user._id} value={user._id}>
+                        {user.username}
+                      </option>
+                    ))}
+                  </select>
+                </Col>
+                <Col>
+                  <select
+                    className="form-control"
+                    onChange={e => this.onChangeNameOfWonder(e, score)}
+                  >
+                    <option value="">Name of wonder</option>
+                    {nameOfWonders.map(name => (
+                      <option key={name} value={name}>
+                        {name}
+                      </option>
+                    ))}
+                  </select>
+                </Col>
+              </Row>
+            ))}{' '}
+          </>
+        ) : (
+          <></>
+        )}
+        {this.state.windowState !== 'players' &&
+        this.state.windowState !== 'summary' ? (
+          <Range7Wonders
+            type={this.state.windowState}
+            scores={this.state.scores}
+            onScoresChange={this.onScoresChange}
+            users={this.state.users}
+          />
+        ) : (
+          <></>
+        )}
+        {this.state.windowState === 'summary' ? (
+          <Row>
+            <Col>
+              <Summary7Wonders
+                scores={this.state.scores}
+                users={this.state.users}
+              />
+              <Button onClick={() => console.log(this.state.scores)}>
+                Submit
+              </Button>
             </Col>
-          ) : (
-            <Range7Wonders
-              type={this.state.windowState}
-              scores={this.state.scores}
-              onScoresChange={this.onScoresChange}
-            />
-          )}
-        </Row>
-        {this.state.scores.map((score, index) => {
-          return (
-            <Row key={index}>
-              <Col
-                className={this.state.windowState === 'players' ? '' : 'hidden'}
-              >
-                <select
-                  className="form-control"
-                  onChange={e => this.onChangeUser(e, score)}
-                >
-                  <option value="">Player</option>
-                  {users.map(user => (
-                    <option key={user._id} value={user._id}>
-                      {user.username}
-                    </option>
-                  ))}
-                </select>
-              </Col>
-              <Col
-                className={this.state.windowState === 'players' ? '' : 'hidden'}
-              >
-                <select
-                  className="form-control"
-                  onChange={e => this.onChangeNameOfWonder(e, score)}
-                >
-                  <option value="">Name of wonder</option>
-                  {nameOfWonders.map(name => (
-                    <option key={name} value={name}>
-                      {name}
-                    </option>
-                  ))}
-                </select>
-              </Col>
-              <Col
-                xs="3"
-                className={this.state.windowState === 'players' ? 'hidden' : ''}
-              >
-                <h2>
-                  <Badge pill variant="primary">
-                    {Object.values(score.points).reduce((x, y) => x + y, 0)}
-                  </Badge>
-                </h2>
-              </Col>
-            </Row>
-          );
-        })}
-        <Row>
-          <Col>
-            <Button onClick={() => console.log(this.state.scores)}>
-              Submit
-            </Button>
-          </Col>
-        </Row>
+          </Row>
+        ) : (
+          <></>
+        )}
       </Container>
     );
   }

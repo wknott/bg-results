@@ -17,6 +17,7 @@ import {
 } from 'react-bootstrap';
 import CountUp from 'react-countup';
 import '../App.css';
+import gameIcon from '../favicon.png';
 
 import { numberOfGames, winnerList } from '../logic/game-statistics';
 
@@ -80,7 +81,10 @@ export default class GameStatistics extends Component {
                     <Container>
                       <Row>
                         <Col className="game-col">
-                          <Image className="imgGame" src={game.imgUrl} />
+                          <Image
+                            className="imgGame"
+                            src={game.imgUrl || gameIcon}
+                          />
                         </Col>
                         <Col className="game-col">
                           <h4>{game.name}</h4>

@@ -10,6 +10,7 @@ import {
 } from 'react-bootstrap';
 import { addGamesAndWinns } from '../logic/game-statistics';
 import NumberOfPlayersButtonGroup from './NumberOfPlayersButtonGroup';
+import Table7WondersDuel from './Table7WondersDuel';
 export default class CreateResult extends Component {
   constructor(props) {
     super(props);
@@ -19,7 +20,8 @@ export default class CreateResult extends Component {
       games: null,
       users: [],
       loading: false,
-      showButtons: false
+      showButtons: false,
+      showTable: false
     };
     const {
       location: { state }
@@ -50,14 +52,29 @@ export default class CreateResult extends Component {
   onChangeGame = e => {
     const gameId = e.target.value;
     if (gameId) {
-      const { minPlayers, maxPlayers } = this.state.games.find(
+      const { name, minPlayers, maxPlayers } = this.state.games.find(
         game => game._id === gameId
       );
-      if (minPlayers !== maxPlayers)
-        this.setState({ gameId: e.target.value, showButtons: true });
+      if (name === '7 Cudów Świata Pojedynek')
+        this.setState({
+          gameId: e.target.value,
+          scores: [],
+          showTable: true,
+          showButtons: false
+        });
+      else if (minPlayers !== maxPlayers)
+        this.setState({
+          gameId: e.target.value,
+          showButtons: true,
+          showTable: false
+        });
       else {
         this.onChangeNumberOfPlayers(minPlayers);
-        this.setState({ gameId: e.target.value, showButtons: false });
+        this.setState({
+          gameId: e.target.value,
+          showButtons: false,
+          showTable: false
+        });
       }
     }
   };
@@ -187,6 +204,9 @@ export default class CreateResult extends Component {
               <></>
             )}
           </Form>
+          <div style={{ marginTop: '-2rem' }}>
+            {this.state.showTable ? <Table7WondersDuel /> : <></>}
+          </div>
         </Container>
       );
     }

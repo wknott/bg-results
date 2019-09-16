@@ -30,14 +30,14 @@ export default class Table7WondersDuel extends Component {
       scores: Array.from([1, 1], () => ({
         user: null,
         points: {
-          blue: '',
-          green: '',
-          yellow: '',
-          guild: '',
-          wonder: '',
-          token: '',
-          coin: '',
-          military: ''
+          blue: null,
+          green: null,
+          yellow: null,
+          guild: null,
+          wonder: null,
+          token: null,
+          coin: null,
+          military: null
         }
       }))
     };
@@ -57,22 +57,21 @@ export default class Table7WondersDuel extends Component {
     const newScores = scores.map(s => (s === score ? updatedScore : s));
     this.setState({ scores: newScores });
   };
-  onChangePointsFirst = (e, title) => {
+  onChangePoints = (e, title, index) => {
     const { scores } = this.state;
-    scores[0].points[title] = parseInt(e.target.value, 10);
-    this.setState({ scores });
-  };
-  onChangePointsSecond = (e, title) => {
-    const { scores } = this.state;
-    scores[1].points[title] = parseInt(e.target.value, 10);
-    this.setState({ scores });
-  };
-  isValid() {
-    const players = this.state.scores.map(score => score.user);
-    return (
-      JSON.stringify(players) === JSON.stringify([...new Set(players)]) &&
-      this.state.scores.every(score => score.user)
+    const newValue = parseInt(e.target.value, 10) || null;
+    const newScores = scores.map((score, i) =>
+      i === index
+        ? { ...score, points: { ...score.points, [title]: newValue } }
+        : score
     );
+    this.setState({ scores: newScores });
+  };
+
+  isValid() {
+    const { scores } = this.state;
+    if (scores.every(score => score.user))
+      return scores[0].user !== scores[1].user;
   }
   onSubmit = () => {
     fetch('/games/')
@@ -83,24 +82,23 @@ export default class Table7WondersDuel extends Component {
           game => game.name === '7 Cudów Świata Pojedynek'
         )._id;
 
-        this.setState({ loading: true });
         const newScores = scores.map(({ user, points }) => ({
           user,
           points: Object.values(points).reduce((x, y) => x + y, 0)
         }));
         const result = { game: gameId, scores: newScores };
-        console.log(result);
         fetch(' /results/add', {
           method: 'POST',
           body: JSON.stringify(result),
           headers: { 'Content-Type': 'application/json' }
         }).then(() => {
-          this.setState({ loading: false });
           this.props.history.push('/');
         });
       });
   };
   render() {
+    const [firstScore, secondScore] = this.state.scores;
+
     return (
       <div>
         <Table variant="dark" bordered>
@@ -158,8 +156,12 @@ export default class Table7WondersDuel extends Component {
                       }}
                       placeholder=""
                       className="form-control input-focus"
-                      value={this.state.scores[0].points[title]}
-                      onChange={e => this.onChangePointsFirst(e, title)}
+                      value={
+                        firstScore.points[title] === null
+                          ? ''
+                          : firstScore.points[title]
+                      }
+                      onChange={e => this.onChangePoints(e, title, 0)}
                       type="number"
                       min="0"
                       max="100"
@@ -174,8 +176,12 @@ export default class Table7WondersDuel extends Component {
                       }}
                       placeholder=""
                       className="form-control input-focus"
-                      value={this.state.scores[1].points[title]}
-                      onChange={e => this.onChangePointsSecond(e, title)}
+                      value={
+                        secondScore.points[title] === null
+                          ? ''
+                          : secondScore.points[title]
+                      }
+                      onChange={e => this.onChangePoints(e, title, 1)}
                       type="number"
                       min="0"
                       max="100"

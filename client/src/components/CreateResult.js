@@ -55,14 +55,15 @@ export default class CreateResult extends Component {
       const { name, minPlayers, maxPlayers } = this.state.games.find(
         game => game._id === gameId
       );
-      if (name === '7 Cudów Świata Pojedynek')
+      if (name === '7 Cudów Świata Pojedynek') {
+        console.log(this.props.history);
         this.setState({
           gameId: e.target.value,
           scores: [],
           showTable: true,
           showButtons: false
         });
-      else if (minPlayers !== maxPlayers)
+      } else if (minPlayers !== maxPlayers)
         this.setState({
           gameId: e.target.value,
           showButtons: true,
@@ -205,7 +206,11 @@ export default class CreateResult extends Component {
             )}
           </Form>
           <div style={{ marginTop: '-2rem' }}>
-            {this.state.showTable ? <Table7WondersDuel /> : <></>}
+            {this.state.showTable ? (
+              <Table7WondersDuel history={this.props.history} />
+            ) : (
+              <></>
+            )}
           </div>
         </Container>
       );

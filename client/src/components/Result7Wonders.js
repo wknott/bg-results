@@ -44,7 +44,7 @@ export default class Result7Wonders extends Component {
     super(props);
     this.state = {
       users: null,
-      windowState: 'summary',
+      windowState: 'players',
       scores: []
     };
   }

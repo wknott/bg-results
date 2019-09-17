@@ -19,13 +19,14 @@ export default class NewUserForm extends Component {
   onSubmit = e => {
     e.preventDefault();
     const user = { username: this.state.username, imgUrl: this.state.imgUrl };
+    this.setState({ loading: true });
     fetch('/users/add', {
       method: 'POST',
       body: JSON.stringify(user),
       headers: { 'Content-type': 'application/json' }
     }).then(() => {
       this.props.onCreated();
-      this.setState({ loading: true });
+      this.setState({ loading: false, username: '' });
     });
   };
   render() {

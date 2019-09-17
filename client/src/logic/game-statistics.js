@@ -86,46 +86,10 @@ export const winnerList = (game, results) => {
       numberOfWins: winsByPlayer[player] || 0,
       points: pointsByPlayer[player]
     }));
-    return listOfWinners.sort((a, b) => b.numberOfWins - a.numberOfWins);
+    return listOfWinners.sort((a, b) => {
+      if (b.numberOfWins !== a.numberOfWins)
+        return b.numberOfWins - a.numberOfWins;
+      else return b.points / b.numberOfGames - a.points / a.numberOfGames;
+    });
   }
 };
-
-// winnerList(game) {
-//   const listOfWinners = [
-//     { name: null, numberOfWins: null, numberOfGames: null }
-//   ];
-//   for (let result of this.state.results) {
-//     if (result.game._id === game._id) {
-//       const winners = this.getWinners(result);
-//       const players = this.getPlayers(result);
-//       for (let winner of winners) {
-//         const indexOfWinner = listOfWinners.findIndex(
-//           win => win.name === winner
-//         );
-//         if (indexOfWinner === -1) {
-//           listOfWinners.push({
-//             name: winner,
-//             numberOfWins: 1,
-//             numberOfGames: 0
-//           });
-//         } else listOfWinners[indexOfWinner].numberOfWins++;
-//       }
-//       for (let player of players) {
-//         const indexOfWinner = listOfWinners.findIndex(
-//           win => win.name === player
-//         );
-//         if (indexOfWinner === -1) {
-//           listOfWinners.push({
-//             name: player,
-//             numberOfWins: 0,
-//             numberOfGames: 1
-//           });
-//         } else listOfWinners[indexOfWinner].numberOfGames++;
-//       }
-//     }
-//   }
-//   listOfWinners.shift();
-//   return listOfWinners
-//     .slice()
-//     .sort((a, b) => b.numberOfWins - a.numberOfWins);
-// }

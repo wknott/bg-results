@@ -10,6 +10,7 @@ import tokenImg from '../token.svg';
 import coinImg from '../coin.svg';
 import militaryImg from '../military.svg';
 import sigma from '../sigma.png';
+import { addGamesAndWinns } from '../logic/game-statistics';
 
 const pointsProps = [
   { title: 'blue', img: blueCard, color: '#C7EAFA' },
@@ -43,12 +44,12 @@ export default class Table7WondersDuel extends Component {
     };
   }
   componentDidMount() {
-    fetch('/users/')
-      .then(response => response.json())
-      .then(data => {
-        const newUsers = data;
-        this.setState({ users: newUsers.sort((a, b) => b.games - a.games) });
-      });
+    const resultsPromise = fetch('/results/').then(response => response.json());
+    const usersPromise = fetch('/users/').then(response => response.json());
+    Promise.all([resultsPromise, usersPromise]).then(([results, users]) => {
+      const newUsers = addGamesAndWinns(results, users);
+      this.setState({ users: newUsers.sort((a, b) => b.games - a.games) });
+    });
   }
   onChangeUser = (e, score) => {
     const { scores } = this.state;

@@ -62,7 +62,7 @@ export default class ResultsList extends Component {
   }
 
   loadAllResults() {
-    fetch('/results/')
+    fetch('api/results/')
       .then(response => response.json())
       .then(data => {
         this.setState({ results: data });
@@ -77,7 +77,7 @@ export default class ResultsList extends Component {
   componentDidMount() {
     this.loadAllResults();
 
-    fetch('/games/')
+    fetch('api/games/')
       .then(response => response.json())
       .then(data => {
         const games = data;
@@ -88,14 +88,14 @@ export default class ResultsList extends Component {
   onChangeId(e) {
     if (e.target.value.length > 1) {
       this.setState({ id: e.target.value });
-      fetch('/results/game/' + e.target.value)
+      fetch('api/results/game/' + e.target.value)
         .then(response => response.json())
         .then(data => {
           this.setState({ results: data });
         });
     } else {
       this.setState({ id: '' });
-      fetch('/results/')
+      fetch('api/results/')
         .then(response => response.json())
         .then(data => {
           this.setState({ results: data });

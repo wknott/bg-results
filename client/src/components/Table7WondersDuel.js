@@ -44,8 +44,10 @@ export default class Table7WondersDuel extends Component {
     };
   }
   componentDidMount() {
-    const resultsPromise = fetch('/results/').then(response => response.json());
-    const usersPromise = fetch('/users/').then(response => response.json());
+    const resultsPromise = fetch('api/results/').then(response =>
+      response.json()
+    );
+    const usersPromise = fetch('api/users/').then(response => response.json());
     Promise.all([resultsPromise, usersPromise]).then(([results, users]) => {
       const newUsers = addGamesAndWinns(results, users);
       this.setState({ users: newUsers.sort((a, b) => b.games - a.games) });
@@ -75,7 +77,7 @@ export default class Table7WondersDuel extends Component {
       return scores[0].user !== scores[1].user;
   }
   onSubmit = () => {
-    fetch('/games/')
+    fetch('api/games/')
       .then(response => response.json())
       .then(data => {
         const { scores } = this.state;
@@ -88,7 +90,7 @@ export default class Table7WondersDuel extends Component {
           points: Object.values(points).reduce((x, y) => x + y, 0)
         }));
         const result = { game: gameId, scores: newScores };
-        fetch(' /results/add', {
+        fetch('api/results/add', {
           method: 'POST',
           body: JSON.stringify(result),
           headers: { 'Content-Type': 'application/json' }

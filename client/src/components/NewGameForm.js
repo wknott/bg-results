@@ -36,12 +36,12 @@ export default class NewGameForm extends Component {
       maxPlayers: this.state.maxPlayers,
       imgUrl: this.state.imgUrl
     };
-    fetch('/games/add', {
+    fetch('api/games/add', {
       method: 'POST',
       body: JSON.stringify(game),
       headers: { 'Content-type': 'application/json' }
     });
-    fetch('/games/')
+    fetch('api/games/')
       .then(response => response.json())
       .then(data => {
         const games = data;

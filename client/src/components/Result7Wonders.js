@@ -49,7 +49,7 @@ export default class Result7Wonders extends Component {
     };
   }
   componentDidMount() {
-    fetch('/users/')
+    fetch('api/users/')
       .then(response => response.json())
       .then(data => {
         const newUsers = data;
@@ -99,7 +99,7 @@ export default class Result7Wonders extends Component {
     );
   }
   onSubmit = () => {
-    fetch(' /games/')
+    fetch('api/games/')
       .then(response => response.json())
       .then(data => {
         const { scores } = this.state;
@@ -112,7 +112,7 @@ export default class Result7Wonders extends Component {
         }));
         const result = { game: gameId, scores: newScores };
         console.log(result);
-        fetch(' /results/add', {
+        fetch('api/results/add', {
           method: 'POST',
           body: JSON.stringify(result),
           headers: { 'Content-Type': 'application/json' }

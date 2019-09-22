@@ -20,7 +20,7 @@ export default class NewUserForm extends Component {
     e.preventDefault();
     const user = { username: this.state.username, imgUrl: this.state.imgUrl };
     this.setState({ loading: true });
-    fetch('/users/add', {
+    fetch('api/users/add', {
       method: 'POST',
       body: JSON.stringify(user),
       headers: { 'Content-type': 'application/json' }

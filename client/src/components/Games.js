@@ -15,7 +15,7 @@ export default class CreateGame extends Component {
   }
 
   loadGames() {
-    fetch('/games/')
+    fetch('api/games/')
       .then(response => response.json())
       .then(data => {
         const games = data;

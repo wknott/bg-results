@@ -34,15 +34,17 @@ export default class CreateResult extends Component {
   }
 
   componentDidMount() {
-    fetch(' /games/')
+    fetch('api/games/')
       .then(response => response.json())
       .then(data => {
         const games = data;
         this.setState({ games });
       });
 
-    const resultsPromise = fetch('/results/').then(response => response.json());
-    const usersPromise = fetch('/users/').then(response => response.json());
+    const resultsPromise = fetch('api/results/').then(response =>
+      response.json()
+    );
+    const usersPromise = fetch('api/users/').then(response => response.json());
     Promise.all([resultsPromise, usersPromise]).then(([results, users]) => {
       const newUsers = addGamesAndWinns(results, users);
       this.setState({ users: newUsers.sort((a, b) => b.games - a.games) });
@@ -108,7 +110,7 @@ export default class CreateResult extends Component {
     this.setState({ loading: true });
     const result = { game: gameId, scores };
     console.log(result);
-    fetch(' /results/add', {
+    fetch('api/results/add', {
       method: 'POST',
       body: JSON.stringify(result),
       headers: { 'Content-Type': 'application/json' }

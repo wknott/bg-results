@@ -33,13 +33,13 @@ export default class GameStatistics extends Component {
   }
 
   componentDidMount() {
-    fetch('/games/')
+    fetch('api/games/')
       .then(response => response.json())
       .then(data => {
         const games = data;
         this.setState({ games });
       });
-    fetch('/results/')
+    fetch('api/results/')
       .then(response => response.json())
       .then(data => {
         const results = data;

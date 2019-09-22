@@ -54,7 +54,6 @@ export default class GameStatistics extends Component {
         return game;
       })
     });
-    console.log(this.state.games);
   }
   render() {
     if (this.state.games === null) {

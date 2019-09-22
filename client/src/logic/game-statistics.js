@@ -59,14 +59,16 @@ export const winnerList = (game, results) => {
         }
       });
     });
+
     const listOfWinners = Object.keys(gamesByPlayer).map(player => ({
       name: player,
       numberOfGames: gamesByPlayer[player],
       numberOfWins: winsByPlayer[player] || 0,
       points:
         (pointsByPlayer[player] * gamesByPlayer[player]) /
-        (gamesByPlayer[player] - gamesByPlayerWithoutPoints[player])
+        (gamesByPlayer[player] - (gamesByPlayerWithoutPoints[player] || 0))
     }));
+
     return listOfWinners.sort((a, b) => b.numberOfWins - a.numberOfWins);
   } else {
     gameResults.forEach(result => {

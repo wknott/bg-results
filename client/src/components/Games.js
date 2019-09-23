@@ -46,7 +46,7 @@ export default class CreateGame extends Component {
       maxPlayers: this.state.game.maxPlayers,
       imgUrl: this.state.imgUrl
     };
-    fetch(`/games/update/${this.state.game._id}`, {
+    fetch(`api/games/update/${this.state.game._id}`, {
       method: 'POST',
       body: JSON.stringify(game),
       headers: { 'Content-type': 'application/json' }

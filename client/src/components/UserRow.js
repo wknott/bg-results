@@ -11,7 +11,7 @@ export default class UserRow extends Component {
         >
           <Image
             roundedCircle
-            className="imgGameList"
+            className="img-user"
             src={
               user.imgUrl ||
               'https://x.boardgamearena.net/data/avatar/0/85/85115/85115684_184.jpg?h=000000'
@@ -21,7 +21,9 @@ export default class UserRow extends Component {
         <td>{user.username}</td>
         <td>{user.wins}</td>
         <td>{user.games}</td>
-        <td>{user.wins>0?((user.wins / user.games) * 100).toFixed(0):0}%</td>
+        <td>
+          {user.wins > 0 ? ((user.wins / user.games) * 100).toFixed(0) : 0}%
+        </td>
       </tr>
     );
   }

@@ -48,7 +48,7 @@ export default class Users extends Component {
       username: this.state.user.username,
       imgUrl: this.state.imgUrl
     };
-    fetch(`/users/update/${this.state.user._id}`, {
+    fetch(`api/users/update/${this.state.user._id}`, {
       method: 'POST',
       body: JSON.stringify(user),
       headers: { 'Content-type': 'application/json' }

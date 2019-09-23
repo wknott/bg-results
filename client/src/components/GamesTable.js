@@ -6,10 +6,10 @@ export default class GamesTable extends Component {
   render() {
     const { games, handleImageChange } = this.props;
     return (
-      <Table responsive striped bordered hover variant="dark">
+      <Table responsive size="sm" striped bordered hover variant="dark">
         <thead>
           <tr>
-            <td>Image</td>
+            <td width="100px">Image</td>
             <td>Name</td>
             <td>Min</td>
             <td>Max</td>
@@ -20,15 +20,10 @@ export default class GamesTable extends Component {
             return (
               <tr key={index}>
                 <td
-                  className="game-img"
                   style={{ cursor: 'pointer' }}
                   onClick={() => handleImageChange(game)}
                 >
-                  <Image
-                    className="imgGameList"
-                    src={game.imgUrl || gameIcon}
-                    rounded
-                  />
+                  <Image className="img-game" src={game.imgUrl || gameIcon} />
                 </td>
                 <td>{game.name}</td>
                 <td>{game.minPlayers}</td>

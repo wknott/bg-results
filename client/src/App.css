@@ -28,15 +28,13 @@
   text-shadow: none;
 }
 
-.imgGame {
-  object-fit: cover;
+.img-game-statistics {
   margin-bottom: 1rem;
   height: auto; /* Set a small width */
   width: 100px; /* Set a small width */
 }
 
-.imgGameList {
-  object-fit: cover;
+.img-game {
   height: auto;
   width: 100px;
 }

@@ -81,7 +81,7 @@ export default class GameStatistics extends Component {
                       <Row>
                         <Col className="game-col">
                           <Image
-                            className="imgGame"
+                            className="img-game-statistics"
                             src={game.imgUrl || gameIcon}
                           />
                         </Col>

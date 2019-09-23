@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Table } from 'react-bootstrap';
-import UserInput from './UserRow';
+import UserRow from './UserRow';
 
 export default class UsersTable extends Component {
   render() {
@@ -18,7 +18,7 @@ export default class UsersTable extends Component {
         </thead>
         <tbody>
           {users.map((user, index) => (
-            <UserInput
+            <UserRow
               handleImageChange={handleImageChange}
               key={index}
               user={user}

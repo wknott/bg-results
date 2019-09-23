@@ -27,7 +27,7 @@ export default class Table7WondersDuel extends Component {
     super(props);
     this.state = {
       users: [],
-      scores: Array.from({ length: 2 }, () => ({
+      scores: Array.from({ length: 3 }, () => ({
         user: null,
         points: {
           military: null,
@@ -128,17 +128,10 @@ export default class Table7WondersDuel extends Component {
                 }
                 style={{
                   cursor: 'pointer',
-                  backgroundColor: 'primary',
                   textAlign: 'center'
                 }}
               >
-                <Image
-                  src={addButton}
-                  width="32"
-                  height="32"
-                  alt=""
-                  style={{ margin: 4 }}
-                />
+                <Image src={addButton} width="auto" height="24  " alt="" />
               </td>
               {this.state.scores.map((score, index) => (
                 <td
@@ -146,7 +139,7 @@ export default class Table7WondersDuel extends Component {
                   key={index}
                 >
                   <select
-                    className="form-control"
+                    style={{ WebkitAppearance: 'none', border: 0 }}
                     onChange={e => this.onChangeUser(e, score)}
                   >
                     <option value="">Player</option>
@@ -158,24 +151,20 @@ export default class Table7WondersDuel extends Component {
                   </select>
                 </td>
               ))}
-              <td
-                onClick={() =>
-                  this.onChangeNumberOfPlayers(this.state.scores.length - 1)
-                }
-                style={{
-                  cursor: 'pointer',
-                  backgroundColor: 'primary',
-                  textAlign: 'center'
-                }}
-              >
-                <Image
-                  src={deleteButton}
-                  width="32"
-                  height="32"
-                  alt=""
-                  style={{ margin: 4 }}
-                />
-              </td>
+              {
+                <td
+                  onClick={() =>
+                    this.onChangeNumberOfPlayers(this.state.scores.length - 1)
+                  }
+                  style={{
+                    cursor: 'pointer',
+                    backgroundColor: 'primary',
+                    textAlign: 'center'
+                  }}
+                >
+                  <Image src={deleteButton} width="auto" height="24" alt="" />
+                </td>
+              }
             </tr>
           </thead>
           <tbody>

@@ -8,11 +8,11 @@ export default class UsersTable extends Component {
     return (
       <Table responsive size="sm" striped bordered hover variant="dark">
         <thead>
-          <tr>
-            <td>#</td>
+          <tr style={{ fontSize: '11px', fontWeight: 400 }}>
+            <td width="100px">Image</td>
             <td>Name</td>
-            <td>W</td>
-            <td>G</td>
+            <td>Wins</td>
+            <td>Games</td>
             <td>%</td>
           </tr>
         </thead>

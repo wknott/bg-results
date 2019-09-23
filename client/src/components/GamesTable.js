@@ -8,7 +8,7 @@ export default class GamesTable extends Component {
     return (
       <Table responsive size="sm" striped bordered hover variant="dark">
         <thead>
-          <tr>
+          <tr style={{ fontSize: '11px', fontWeight: 400 }}>
             <td width="100px">Image</td>
             <td>Name</td>
             <td>Min</td>

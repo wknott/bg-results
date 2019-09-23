@@ -8,8 +8,6 @@ import {
   CardColumns,
   Table,
   ButtonGroup,
-  OverlayTrigger,
-  Tooltip,
   Container,
   Col,
   Row,
@@ -98,65 +96,21 @@ export default class GameStatistics extends Component {
                       </Row>
                     </Container>
 
-                    <Table responsive hover striped bordered variant="dark">
+                    <Table
+                      size="sm"
+                      responsive
+                      hover
+                      striped
+                      bordered
+                      variant="dark"
+                    >
                       <thead>
-                        <tr>
-                          <td>
-                            {' '}
-                            <strong>Name</strong>
-                          </td>
-                          <td>
-                            <OverlayTrigger
-                              placement="top-start"
-                              delay={{ show: 250, hide: 400 }}
-                              overlay={
-                                <Tooltip>
-                                  <strong>Number of wins</strong>
-                                </Tooltip>
-                              }
-                            >
-                              <strong>W</strong>
-                            </OverlayTrigger>
-                          </td>
-                          <td>
-                            <OverlayTrigger
-                              placement="top-start"
-                              delay={{ show: 250, hide: 400 }}
-                              overlay={
-                                <Tooltip>
-                                  <strong>Number of games</strong>
-                                </Tooltip>
-                              }
-                            >
-                              <strong>G</strong>
-                            </OverlayTrigger>
-                          </td>
-                          <td>
-                            <OverlayTrigger
-                              placement="top-start"
-                              delay={{ show: 250, hide: 400 }}
-                              overlay={
-                                <Tooltip>
-                                  <strong>Percent of wins</strong>
-                                </Tooltip>
-                              }
-                            >
-                              <strong>%</strong>
-                            </OverlayTrigger>
-                          </td>
-                          <td>
-                            <OverlayTrigger
-                              placement="top-start"
-                              delay={{ show: 250, hide: 400 }}
-                              overlay={
-                                <Tooltip>
-                                  <strong>Average points per game</strong>
-                                </Tooltip>
-                              }
-                            >
-                              <strong>P</strong>
-                            </OverlayTrigger>
-                          </td>
+                        <tr style={{ fontSize: '11px', fontWeight: 400 }}>
+                          <td>Name</td>
+                          <td>Wins</td>
+                          <td>Games</td>
+                          <td>%</td>
+                          <td>Points</td>
                         </tr>
                       </thead>
                       <tbody>

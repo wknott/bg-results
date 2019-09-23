@@ -11,6 +11,7 @@ import {
 import { addGamesAndWinns } from '../logic/game-statistics';
 import NumberOfPlayersButtonGroup from './NumberOfPlayersButtonGroup';
 import Table7WondersDuel from './Table7WondersDuel';
+import Table7Wonders from './Table7Wonders';
 export default class CreateResult extends Component {
   constructor(props) {
     super(props);
@@ -21,7 +22,7 @@ export default class CreateResult extends Component {
       users: [],
       loading: false,
       showButtons: false,
-      showTable: false
+      showTable: ''
     };
     const {
       location: { state }
@@ -58,25 +59,31 @@ export default class CreateResult extends Component {
         game => game._id === gameId
       );
       if (name === '7 Cudów Świata Pojedynek') {
-        console.log(this.props.history);
         this.setState({
           gameId: e.target.value,
           scores: [],
-          showTable: true,
+          showTable: 'duel',
+          showButtons: false
+        });
+      } else if (name === '7 Cudów Świata') {
+        this.setState({
+          gameId: e.target.value,
+          scores: [],
+          showTable: 'wonders',
           showButtons: false
         });
       } else if (minPlayers !== maxPlayers)
         this.setState({
           gameId: e.target.value,
           showButtons: true,
-          showTable: false
+          showTable: ''
         });
       else {
         this.onChangeNumberOfPlayers(minPlayers);
         this.setState({
           gameId: e.target.value,
           showButtons: false,
-          showTable: false
+          showTable: ''
         });
       }
     }
@@ -208,8 +215,13 @@ export default class CreateResult extends Component {
             )}
           </Form>
           <div style={{ marginTop: '-2rem' }}>
-            {this.state.showTable ? (
+            {this.state.showTable === 'duel' ? (
               <Table7WondersDuel history={this.props.history} />
+            ) : (
+              <></>
+            )}
+            {this.state.showTable === 'wonders' ? (
+              <Table7Wonders history={this.props.history} />
             ) : (
               <></>
             )}

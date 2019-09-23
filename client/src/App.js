@@ -8,7 +8,7 @@ import CreateResult from './components/CreateResult';
 import Results from './components/Results';
 import NavbarBGR from './components/Navbar';
 import GameStatistics from './components/GameStatistics';
-import Result7Wonders from './components/Result7Wonders';
+import Result7Wonders from './components/Table7Wonders';
 import Table7WondersDuel from './components/Table7WondersDuel';
 import './App.css';
 

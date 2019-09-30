@@ -24,9 +24,12 @@ dbConnection.once('open', () => {
 const usersRouter = require('./users');
 const gamesRouter = require('./games');
 const resultsRouter = require('./results');
+const results7WondersDuelRouter = require('./results7WondersDuel');
 app.use('/api/users', usersRouter);
 app.use('/api/games', gamesRouter);
 app.use('/api/results', resultsRouter);
+app.use('/api/results-7-wonders-duel', results7WondersDuelRouter);
+
 
 const buildPath = path.join(__dirname, '../client/build');
 app.use(express.static(buildPath));

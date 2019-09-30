@@ -11,6 +11,7 @@ import coinImg from '../coin.svg';
 import militaryImg from '../military.svg';
 import sigma from '../sigma.png';
 import { addGamesAndWinns } from '../logic/game-statistics';
+import Result7WondersDuel from './Result7WondersDuel';
 
 const pointsProps = [
   { title: 'blue', img: blueCard, color: '#C7EAFA' },
@@ -90,12 +91,19 @@ export default class Table7WondersDuel extends Component {
           points: Object.values(points).reduce((x, y) => x + y, 0)
         }));
         const result = { game: gameId, scores: newScores };
+        const result7WondersDuel = { game: gameId, scores };
         fetch('api/results/add', {
           method: 'POST',
           body: JSON.stringify(result),
           headers: { 'Content-Type': 'application/json' }
         }).then(() => {
-          this.props.history.push('/');
+          fetch('api/results-7-wonders-duel/add', {
+            method: 'POST',
+            body: JSON.stringify(result7WondersDuel),
+            headers: { 'Content-Type': 'application/json' }
+          }).then(() => {
+            this.props.history.push('/');
+          });
         });
       });
   };

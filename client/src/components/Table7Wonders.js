@@ -199,14 +199,14 @@ export default class Table7WondersDuel extends Component {
                       />
                     </td>
                   ))}
+                  <td>
+                    <Image src={img} width="40" height="40" alt="" />
+                  </td>
                 </tr>
               );
             })}
             <tr>
-              <td
-                width="20%"
-                style={{ backgroundColor: 'black', textAlign: 'center' }}
-              >
+              <td style={{ backgroundColor: 'black', textAlign: 'center' }}>
                 <Image
                   src={sigma}
                   width="32"
@@ -230,6 +230,15 @@ export default class Table7WondersDuel extends Component {
                   {Object.values(score.points).reduce((x, y) => x + y, 0)}
                 </td>
               ))}
+              <td style={{ backgroundColor: 'black', textAlign: 'center' }}>
+                <Image
+                  src={sigma}
+                  width="32"
+                  height="32"
+                  alt=""
+                  style={{ margin: 4 }}
+                />
+              </td>
             </tr>
           </tbody>
         </Table>

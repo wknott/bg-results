@@ -5,19 +5,20 @@ import blueCard from '../blue.svg';
 import greenCard from '../green.svg';
 import yellowCard from '../yellow.svg';
 import guildCard from '../guild.svg';
+import whiteCard from '../white.svg';
 import wonderImg from '../wonder.svg';
 import tokenImg from '../token.svg';
 import coinImg from '../coin.svg';
 import militaryImg from '../military.svg';
 import sigma from '../sigma.png';
 import { addGamesAndWinns } from '../logic/game-statistics';
-import Result7WondersDuel from './Result7WondersDuel';
 
 const pointsProps = [
   { title: 'blue', img: blueCard, color: '#C7EAFA' },
   { title: 'green', img: greenCard, color: '#D8EAD3' },
   { title: 'yellow', img: yellowCard, color: '#FEFBD7' },
   { title: 'guild', img: guildCard, color: '#D0D4EA' },
+  { title: 'leader', img: whiteCard, color: '#c5c5c5' },
   { title: 'wonder', img: wonderImg, color: '#E6E7E9' },
   { title: 'token', img: tokenImg, color: '#D8EAD3' },
   { title: 'coin', img: coinImg, color: '#FEFBD7' },
@@ -36,6 +37,7 @@ export default class Table7WondersDuel extends Component {
           green: null,
           yellow: null,
           guild: null,
+          leader: null,
           wonder: null,
           token: null,
           coin: null,

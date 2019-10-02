@@ -18,6 +18,7 @@ const result7WondersDuelSchema = new Schema({
             green: Number,
             yellow: Number,
             guild: Number,
+            leader: Number,
             wonder: Number,
             token: Number,
             coin: Number,

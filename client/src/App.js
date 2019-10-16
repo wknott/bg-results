@@ -10,6 +10,7 @@ import NavbarBGR from './components/Navbar';
 import GameStatistics from './components/GameStatistics';
 import Result7Wonders from './components/Table7Wonders';
 import Table7WondersDuel from './components/Table7WondersDuel';
+import UsersPositions from './components/UsersPositions';
 import './App.css';
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Route path="/gamestats" exact component={GameStatistics} />
         <Route path="/7-wonders" exact component={Result7Wonders} />
         <Route path="/7-wonders-duel" exact component={Table7WondersDuel} />
+        <Route path="/users-positions" exact component={UsersPositions} />
       </div>
     </Router>
   );

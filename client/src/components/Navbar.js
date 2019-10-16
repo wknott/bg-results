@@ -26,6 +26,9 @@ export default class NavbarBGR extends Component {
             <Nav.Link as={Link} to="/gamestats" href="#">
               Game stats
             </Nav.Link>
+            <Nav.Link as={Link} to="/users-positions" href="#">
+              Users Positions
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

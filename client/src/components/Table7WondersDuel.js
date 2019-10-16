@@ -5,7 +5,7 @@ import blueCard from '../blue.svg';
 import greenCard from '../green.svg';
 import yellowCard from '../yellow.svg';
 import guildCard from '../guild.svg';
-import whiteCard from '../white.svg';
+import leaderCard from '../white.svg';
 import wonderImg from '../wonder.svg';
 import tokenImg from '../token.svg';
 import coinImg from '../coin.svg';
@@ -18,7 +18,7 @@ const pointsProps = [
   { title: 'green', img: greenCard, color: '#D8EAD3' },
   { title: 'yellow', img: yellowCard, color: '#FEFBD7' },
   { title: 'guild', img: guildCard, color: '#D0D4EA' },
-  { title: 'leader', img: whiteCard, color: '#c5c5c5' },
+  { title: 'leader', img: leaderCard, color: '#c5c5c5' },
   { title: 'wonder', img: wonderImg, color: '#E6E7E9' },
   { title: 'token', img: tokenImg, color: '#D8EAD3' },
   { title: 'coin', img: coinImg, color: '#FEFBD7' },

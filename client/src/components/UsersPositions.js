@@ -14,7 +14,7 @@ export default class UsersPositions extends Component {
     super(props);
     this.state = {
       users: [],
-      players: []
+      selectedUsers: []
     };
   }
 
@@ -29,14 +29,20 @@ export default class UsersPositions extends Component {
     });
   }
   handleChoice = user => {
-    const newPlayers = this.state.players;
-    if (newPlayers.indexOf(user) === -1) newPlayers.push(user);
-    this.setState({ players: newPlayers });
+    if (this.state.selectedUsers.indexOf(user) === -1) {
+      this.setState({
+        selectedUsers: [...this.state.selectedUsers, user]
+      });
+    } else {
+      this.setState({
+        selectedUsers: this.state.selectedUsers.filter(u => u !== user)
+      });
+    }
   };
   handleShuffle = () => {
-    const newPlayers = this.state.players;
-    shuffleArray(newPlayers);
-    this.setState({ players: newPlayers });
+    const newselectedUsers = this.state.selectedUsers;
+    shuffleArray(newselectedUsers);
+    this.setState({ selectedUsers: newselectedUsers });
   };
   render() {
     return (
@@ -51,21 +57,33 @@ export default class UsersPositions extends Component {
                     onClick={() => this.handleChoice(user)}
                     key={user._id}
                   >
-                    <td>{user.username}</td>
+                    {this.state.selectedUsers.includes(user) === true ? (
+                      <td style={{ backgroundColor: '#007bff' }}>
+                        {user.username}
+                      </td>
+                    ) : (
+                      <td>{user.username}</td>
+                    )}
                   </tr>
                 ))}
               </tbody>
             </Table>
           </Col>
           <Col>
-            <Button onClick={this.handleShuffle}>Shuffle</Button>
-            {this.state.players.map((player, index) => (
+            <Button
+              size="lg"
+              style={{ marginBottom: '1rem' }}
+              onClick={this.handleShuffle}
+            >
+              Shuffle
+            </Button>
+            {this.state.selectedUsers.map((user, index) => (
               <Row key={index}>
                 <Col>
                   <h5 style={{ color: 'white' }}>
                     {index + 1}
                     {'. '}
-                    {player.username}
+                    {user.username}
                   </h5>
                 </Col>
                 {/* <Col><Image className="img-user" src={player.imgUrl}/></Col> */}

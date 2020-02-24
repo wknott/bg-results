@@ -12,6 +12,7 @@ import { addGamesAndWinns } from '../logic/game-statistics';
 import NumberOfPlayersButtonGroup from './NumberOfPlayersButtonGroup';
 import Table7WondersDuel from './Table7WondersDuel';
 import Table7Wonders from './Table7Wonders';
+import TableWingspan from './TableWingspan';
 export default class CreateResult extends Component {
   constructor(props) {
     super(props);
@@ -70,6 +71,13 @@ export default class CreateResult extends Component {
           gameId: e.target.value,
           scores: [],
           showTable: 'wonders',
+          showButtons: false
+        });
+      } else if (name === 'Na Skrzydłach') {
+        this.setState({
+          gameId: e.target.value,
+          scores: [],
+          showTable: 'wingspan',
           showButtons: false
         });
       } else if (minPlayers !== maxPlayers)
@@ -222,6 +230,11 @@ export default class CreateResult extends Component {
             )}
             {this.state.showTable === 'wonders' ? (
               <Table7Wonders history={this.props.history} />
+            ) : (
+              <></>
+            )}
+            {this.state.showTable === 'wingspan' ? (
+              <TableWingspan history={this.props.history} />
             ) : (
               <></>
             )}

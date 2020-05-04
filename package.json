@@ -22,5 +22,8 @@
     "postinstall": "npm install --prefix client && npm install --prefix server",
     "build": "npm run build --prefix client",
     "start": "node server/index.js"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0"
   }
 }

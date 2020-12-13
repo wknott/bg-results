@@ -1,5 +1,5 @@
 # BGResults
-First version of my web app for adding and storing board games results. 
+The first version of my web app for adding and storing board game results.
 
 ## Demo
 Check out [the website](https://bgresults.herokuapp.com/).
